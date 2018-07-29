@@ -1,0 +1,105 @@
+[2018-07-28 Sat 02:43:56]SQLTool.py-3500-139740840265472-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-07-28 Sat 03:04:09]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('MySQL' in Boolean mode) ;"
+[2018-07-28 Sat 03:04:09]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('MySQL' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:14:25]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-07-28 Sat 03:14:25]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:26:04]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-07-28 Sat 03:26:04]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:27:39]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-07-28 Sat 03:27:39]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:27:44]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:27:44]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:28:02]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12';"
+[2018-07-28 Sat 03:28:02]SQLTool.py-4410-140324777596672-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:29:55]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-07-28 Sat 03:29:55]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:30:07]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:30:07]SQLTool.py-4410-140324779443968-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:30:28]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12';"
+[2018-07-28 Sat 03:30:28]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:30:48]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:30:48]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:31:04]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12';"
+[2018-07-28 Sat 03:31:04]SQLTool.py-4410-140324778125056-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:00]SQLTool.py-5512-140073153840896-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12';"
+[2018-07-28 Sat 03:34:00]SQLTool.py-5512-140073153840896-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where port = '12' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:04]SQLTool.py-5512-140073152784128-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:34:04]SQLTool.py-5512-140073152784128-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:08]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-07-28 Sat 03:34:08]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:10]SQLTool.py-5512-140073153840896-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:34:10]SQLTool.py-5512-140073153840896-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:13]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:34:13]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-07-28 Sat 03:34:17]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-07-28 Sat 03:34:17]SQLTool.py-5512-140073154897664-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
