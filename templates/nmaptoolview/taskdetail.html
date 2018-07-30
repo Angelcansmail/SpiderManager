@@ -483,23 +483,18 @@
             var str = '';
             str = 'taskid=' + taskid;
 
-            xmlhttp.open("POST", "/nmaptool/taskdetail/eachtask/", false);
+            xmlhttp.open("POST", "/nmaptool/taskdetail/eachtask", false);
             xmlhttp.onreadystatechange = callback;
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xmlhttp.send(str);
         }
         function callback() {
-
             if (xmlhttp.readyState != 4) {
-
                 document.getElementById("ipinfo").innerHTML = "<h3 class=\"name\" >IP:*****</h3><span class=\"area\" >加载中</span>";
                 document.getElementById("hostinfo").innerHTML = "<p >无</p>";
-
             }
             else {
-
                 if (xmlhttp.status == 200) {
-
                     var a = xmlhttp.responseText;
                     ipshow(a);
                 }
@@ -546,14 +541,9 @@
 
             }
             else if (data2.ipstate == '0') {
-
-
                 document.getElementById("ipinfo").innerHTML = "<h3 class=\"name\" >IP:" + data2.ip + "</h3> <span class=\"label label-" + labelstatus + "\">" + Active + "</span>";
-
             } else {
                 document.getElementById("ipinfo").innerHTML = "<h3 class=\"name\" >IP:" + data2.ip + "</h3> <span class=\"label label-" + labelstatus + "\">" + Active + "</span>";
-
-
                 document.getElementById("hostinfo").innerHTML = "<p >供应商:" + data2.ips.vendor + "</p>" +
                         "<p >操作系统:" + data2.ips.osfamily + "</p>" +
                         "<p >内核:" + data2.ips.osgen + "</p>" +
@@ -561,11 +551,8 @@
                         "<p >连接状态:" + data2.ips.state + "</p>" +
                         "<p >域名:<a href=\"http://" + data2.ips.hostname + "\">" + data2.ips.hostname + "</a></p>" +
                         "<p >上次更新时间:" + data2.ips.updatetime + "</p>";
-
                 //        if(data2.jobstate!='1'){
-
                 var datalength = data2.portslength;
-
                 var pagesize = data2.portspagecount;
                 var nowpage = data2.portspage;
                 var ports = data2.ports;
@@ -670,7 +657,7 @@
             var str = '';
             str = 'page=' + number + '&taskid=' + taskid;
             nowpage = currpage;
-            xmlhttp.open("POST", "/nmaptool/taskdetail/eachtask/", false);
+            xmlhttp.open("POST", "/nmaptool/taskdetail/eachtask", false);
             xmlhttp.onreadystatechange = portcallback;
             xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
             xmlhttp.send(str);
@@ -699,4 +686,5 @@
     <script src="/static/nmaptool/js/bootstrap.min.js"></script>
     <script src="/static/nmaptool/js/theme.js"></script>
 </body>
+
 </html>

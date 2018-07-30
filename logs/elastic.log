@@ -1,0 +1,4 @@
+[2018-07-30 Mon 13:54:31]elastictool.py-3785-140094486832896-92-    INFO-"None"
+[2018-07-30 Mon 13:54:31]elastictool.py-3785-140094486832896-108-   ERROR-"error: You cannot write to a wildcard index."
+[2018-07-30 Mon 15:38:14]elastictool.py-7380-139952386754304-92-    INFO-"None"
+[2018-07-30 Mon 15:38:14]elastictool.py-7380-139952386754304-108-   ERROR-"error: You cannot write to a wildcard index."

@@ -5,7 +5,7 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponse
 
 from nmaptoolbackground.control import portcontrol
-
+from spidertool import webtool
 import json
 import datetime
 
@@ -29,7 +29,7 @@ def detailmapview(request):
 # 查询信息结果
 def detailpage(request):
     from spidertool import redistool, webtool
-    content = request.POST.get('content','MySQL')
+    content = request.POST.get('content', '')
     page = request.POST.get('page','0')
     username = request.COOKIES.get('username','')
     response_data = {}
@@ -41,13 +41,13 @@ def detailpage(request):
         jsonmsg = '{' + content + '}'
         jsoncontent = json.loads(jsonmsg)
     except Exception,e:
-        print e
+        print "Error:", e
         pass
 
     # content: "ip":"110.110.110.120" --> jsoncontent: {u'ip': u'110.110.110.120'}
     if jsoncontent is None:
         if content != '' and len(content) > 0:
-            print '存在内容，进入elasticsearch 检索'
+            print '内容非空，进入elasticsearch检索'
 #         extra='    or   script  like \'%'+content+'%\' or detail  like \'%'+content+'%\'  or timesearch like ' +'\'%'+content+'%\' or head like \'%' +content+'%\') and  snifferdata.ip=ip_maindata.ip '
 #         ports,portcount,portpagecount = portcontrol.portabstractshow(ip=content,port=content,timesearch=content,state=content,name=content,product=content,version=content,page=page,extra=extra,command='or')
             try:
@@ -58,10 +58,8 @@ def detailpage(request):
                     print '从redids取的数据'
                     try:
                         response_data['result'] = '1'
-
                         response_data['ports'] = redisresult['ports']
                         response_data['portslength'] = redisresult['portslength']
-
                         response_data['portspagecount'] = redisresult['portspagecount']
                         response_data['portspage'] = redisresult['portspage']
                     except Exception,e:
@@ -85,7 +83,7 @@ def detailpage(request):
                     import sys
                     sys.path.append("..")
                     from elasticsearchmanage import elastictool
-                    ports,portcount,portpagecount=elastictool.search(page=page,dic=None,content=content)
+                    ports,portcount,portpagecount = elastictool.search(page=page,dic=None,content=content)
 
                     redisdic = {}
 
@@ -227,4 +225,32 @@ def detailpage(request):
         # return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='GB2312'),
         #             content_type="application/json")
 
-    
+# 获得该ip信息 
+def ipinfo(request):
+    ip = request.POST.get('ip','127.0.0.1')
+    response_data = {}
+    response_data['result'] = '0'
+    data={}
+    data['ip']=ip
+
+    try:
+        import sys
+        sys.path.append("..")
+        from elasticsearchmanage import ipestool
+        ips, ipcount, ippagecount = ipestool.ipsearch(dic=data)
+        response_data['result'] = '1'
+
+        response_data['ips'] = ips
+        response_data['iplength'] = ipcount
+        response_data['ippagecount'] = ippagecount
+    except Exception,e:
+        print "Ipinfo_1() Error()", e
+        pass
+    try:
+        return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
+                        content_type="application/json")
+    except Exception,e:
+        print "Ipinfo_2() Error:", e
+        return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='latin-1'),
+                            content_type="application/json")
+

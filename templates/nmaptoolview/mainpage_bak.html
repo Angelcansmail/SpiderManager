@@ -391,7 +391,6 @@
     }
     function jobcallback() {
         if (xmlhttp.readyState != 4) {
-
         }
         else {
             if (xmlhttp.status == 200) {
@@ -409,6 +408,7 @@
     }
 
     function infoshow(a) {
+
         var data2 = JSON.parse(a);
         var result = data2.result;
         var datalength = data2.length;
@@ -525,8 +525,8 @@
         xmlhttp.send(str);
 
     }
-
     function createcallback() {
+
         if (xmlhttp.readyState != 4) {
 
             // document.getElementById("head").innerHTML = "<font color='red'>数据加载中...</font>"  ;
@@ -549,6 +549,7 @@
             }
         }
     }
+
 
 </script>
 <script type="text/javascript">

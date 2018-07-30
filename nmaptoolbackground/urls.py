@@ -17,7 +17,7 @@ urlpatterns  =  [
     url(r'^mainpage$', route.indexpage, name = 'index'),
 	url(r'^groupitem$', route.groupitem, name = "groupitem"),
 	url(r'^taskdetail$',route.taskdetail,name = 'taskdetail'),
-	url(r'^taskdetail/eachtask/$', route.ipmain, name = 'ipmain'),
+	url(r'^taskdetail/eachtask$', route.ipmain, name = 'ipmain'),
 
     url(r'^jobshow$',route.jobshow, name = 'jobshow'),
     url(r'^addjob$',route.addjob, name = 'addjob'),
@@ -26,7 +26,7 @@ urlpatterns  =  [
     url(r'^jobdestroy$',route.destroyjob,name = 'destroyjob'),
 
     url(r'^chartshow$',route.chartshow,name='chartshow'),      
-    url(r'^chartdata/$',route.chartdata,name='chartdata'),
+    url(r'^chartdata$',route.chartdata,name='chartdata'),
 
     url(r'^getwork$',route.getwork,name='getwork'),      
     url(r'^uploadipinfo$',route.upload_ip_info,name='uploadipinfo'),
