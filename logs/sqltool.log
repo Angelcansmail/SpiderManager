@@ -200,3 +200,9 @@ select username, role, userpower from user_table where username = 'admin' and pa
 [2018-07-29 Sun 05:26:50]SQLTool.py-2567-139637761926912-174-    INFO-"
 ======================查询表['user_table']======================
 select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-07-30 Mon 05:26:34]SQLTool.py-17987-139990251554560-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('MySQL' in Boolean mode) ;"
+[2018-07-30 Mon 05:26:34]SQLTool.py-17987-139990251554560-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('MySQL' in Boolean mode)  order by snifferdata.port    limit  0,15;"
