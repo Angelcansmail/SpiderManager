@@ -92,7 +92,7 @@
                 </th>
                 <th class="col-md-2">
                     <span class="line"></span>端口号
-                </th>
+               </th>
                 <th class="col-md-3">
                     <span class="line"></span>状态
                 </th>
@@ -148,6 +148,7 @@
         var number = currpage;
         var str = '';
         str = 'page=' + number + '&username=' + message;
+
         nowpage = currpage;
         xmlhttp.open("POST", "/nmaptool/tasks/taskquery/", false);
         xmlhttp.onreadystatechange = callback;
@@ -202,14 +203,14 @@
 
     function jobcallback() {
         if (xmlhttp.readyState != 4) {
-            alert('jobcallback xmlhttp's state[%d] error', xmlhttp.readyState);
+
         }
         else {
             if (xmlhttp.status == 200) {
                 var a = xmlhttp.responseText;
                 var data2 = JSON.parse(a);
 
-                alert(data2);   <!-- result为返回的json串中的状态，1正确 0错误-->
+                alert(data2);   // result为返回的json串中的状态，1正确 0错误
                 if (data2.result == '1') {
                     window.location.reload();
                 }
@@ -264,7 +265,6 @@
                                     "aria-valuenow=\"60\" aria-valuemin=\"0\" aria-valuemax=\"100\"" +
                                     "style=\"width: " + percentage + "%;\"><span >" + percentage + "%</span> </div> </div></td>";
                         }
-
                         break;
                     case '4':
                         Active = '挂起';
@@ -290,14 +290,13 @@
                         statusshow = "<td><span class=\"label label-" + labelstatus + "\">" + Active + "</span>";
                         break;
                 }
-
                 var temport = ''
                 if (jobs[i].tasksport == '') {
                     temport = '全部可用端口';
                 }
-                else
+                else {
                     temport = jobs[i].tasksport;
-                bodyhtml += "<tr>" +
+                    bodyhtml += "<tr>" +
                         "<td><input type=\"checkbox\">" +
                         "<div class=\"img\"><img src=\"/static/nmaptool/img/owl.png\"></div>" +
                         "<a href=\"/nmaptool/groupitem?groupid=" + jobs[i].tasksid + "\">" + jobs[i].tasksname + "</a></td>" +
@@ -314,22 +313,15 @@
                         "</ul>" +
                         "</td>" +
                         "</tr>";
-
+                }
             }
             document.getElementById("head").innerHTML = bodyhtml;
         }
         var pagehtml = "";
-
         if (pagesize > 0) {
-
-
             if (currpage <= 1) {
-
                 pagehtml += "<li class=\"active\"><a onclick='loadtask(" + (currpage - 1).toString() + ");' href='javascript:void(0);'>1</a></li>";
-
-
             } else {
-
                 pagehtml += "<li ><a onclick='loadtask(" + (currpage - 2).toString() + ");' href='javascript:void(0);'>&laquo;</a></li>";
                 pagehtml += "<li ><a onclick='loadtask(" + (currpage - 2).toString() + ");' href='javascript:void(0);'>" + (currpage - 1).toString() + "</a></li>";
                 pagehtml += "<li class=\"active\"><a onclick='loadtask(" + (currpage - 1).toString() + ");' href='javascript:void(0);'>" + currpage.toString() + "</a></li>";
@@ -343,12 +335,8 @@
                 pagehtml += "<li ><a onclick='loadtask(" + (currpage + 1 ) + ");' href='javascript:void(0);'>" + (currpage + 2).toString() + "</a></li>";
                 pagehtml += "<li ><a onclick='loadtask(" + (currpage ) + ");' href='javascript:void(0);'>&raquo;</a></li>";
             }
-
-
         }
-
         document.getElementById("page").innerHTML = pagehtml;
-
     }
 
 
@@ -359,30 +347,25 @@
         var priority = document.getElementById("priority").value;
         var abstract = document.getElementById("abstract").value;
 
-        alert('add jobname[%s] jobaddress[%s] jobport[%s], priority[%s] abstract[%s]', jobname, jobaddress, jobport, priority, abstract);
         xmlhttp = GetXmlHttp(xmlhttp);
-
         xmlhttp.open("POST", "/nmaptool/tasks/addtask/", true);
         xmlhttp.onreadystatechange = createcallback;
         var str = 'jobname=' + jobname + '&jobaddress=' + jobaddress + '&jobport=' + jobport + '&priority=' + priority + '&abstract=' + abstract;
+        alert(str);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
-
     }
+
     function createcallback() {
         if (xmlhttp.readyState != 4) {
-
-            // document.getElementById("head").innerHTML = "<font color='red'>数据加载中...</font>"  ;
+            document.getElementById("head").innerHTML = "<font color='red'>数据加载中...</font>"  ;
         }
         else {
-
             if (xmlhttp.status == 200) {
-
                 var a = xmlhttp.responseText;
                 var data2 = JSON.parse(a);
 
                 if (data2.result == '1') {
-
                     window.location.reload();
                 }
                 else {

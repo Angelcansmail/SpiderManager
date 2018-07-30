@@ -12,6 +12,7 @@
 
 commit=$1
 
+rm *.pyc
 rm */*.pyc
 rm */*/*.pyc
 rm */*/*/*.pyc

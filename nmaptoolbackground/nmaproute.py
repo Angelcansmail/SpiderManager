@@ -39,9 +39,7 @@ def login(request):
         ctx['power'] = power
 
         # return render(request, 'nmaptoolview/post.html', ctx)
-
         # return render(request, 'nmaptoolview/taskmain.html', {'data': '用户名和密码正确', 'username':username})
-
         if result:
             # 在base/navbar.html模板中使用username参数
             response = render(request, 'nmaptoolview/taskmain.html', {'data': '用户名和密码正确', 'username':username})
@@ -50,7 +48,7 @@ def login(request):
             webtool.setCookies(response, loginuser, 3600)
             return response
         else:
-            return render('nmaptoolview/login.html', {'data': '用户名和密码错误'})
+            return render(request, 'nmaptoolview/login.html', {'data': '用户名和密码错误'})
 
 # 注销登录
 def logout(request):
@@ -76,8 +74,8 @@ def indexpage(request):
 def groupitem(request):
     islogin = request.COOKIES.get('islogin', False)
     username = request.COOKIES.get('username','')
-    groupid= request.GET.get('groupid','')  #groupid哪里赋值的?groupsid
-    print username, groupid
+    groupid = request.GET.get('groupid','')  #groupid哪里赋值的 tasksid(tasksdata表)
+    print ("======================groupitem(groupid:%s)======================"%groupid)
 
     if islogin:
         return render_to_response('nmaptoolview/mainpage.html',{'username':username,'groupid':groupid})

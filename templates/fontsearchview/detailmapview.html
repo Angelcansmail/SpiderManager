@@ -53,18 +53,11 @@
 
 <main>
     <!--<main    class="packages-list-container" id="all-packages">-->
-
-
     <div class="container">
         <div class="list-group packages">
-
-
             <iframe id="detailmap" height="300" style="width:100%;" allowfullscreen="true" frameborder=”no” border=”0″
                     marginwidth=”0″ marginheight=”0″ scrolling=”no” allowtransparency=”yes”>
-
-
             </iframe>
-
 
             <div class="host">
                 <div class="row-fluid">
@@ -78,8 +71,6 @@
             </div>
         </div>
     </div>
-
-
 </main>
 
 <footer id="footer" class="footer hidden-print">
@@ -105,6 +96,7 @@
 <script src="/static/fontsearch/js/jquery.scrollTo.js"></script>
 <script src="/static/fontsearch/js/site.min.js"></script>
 <script src="/static/fontsearch/js/h.js" type="text/javascript"></script>
+
 <script>
      var xmlhttp;
      var xmlhttpport;
@@ -115,7 +107,6 @@
         }
         else if (window.ActiveXObject) //IE浏览器用activexobject对象创建
         {
-
             try {
                 xmlhttp = new ActiveXObject("Msxml2.XMLHTTP.3.0");
             } catch (e) {
@@ -123,136 +114,106 @@
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 } catch (e) {
 
-
                 }
             }
         }
         return xmlhttp;
     }
+
     function getinfo(){
         getport();
         var ip="{{ip}}";
         xmlhttp = GetXmlHttp(xmlhttp);
         str = 'ip=' + ip ;
+        alert(str);
 
-        xmlhttp.open("POST", "/search/ipinfo/", true);
+        xmlhttp.open("POST", "/fontsearch/ipinfo", true);
         xmlhttp.onreadystatechange = callback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
     }
-  function callback() {
 
+    function callback() {
         if (xmlhttp.readyState != 4) {
-
 
         }
         else {
-
             if (xmlhttp.status == 200) {
-
                 var a = xmlhttp.responseText;
-
                 showipinfo(a);
-
             }
         }
     }
-     function showipinfo(result) {
 
+    function showipinfo(result) {
+        var data2 = JSON.parse(result);
+        if (data2.result == '0') {
+            document.getElementById("ipinfo").innerHTML = "没有相关信息";
+        }
+        else {
+            var ports = data2.ips;
+            var datalength = data2.ipcount;
+            var pagesize = data2.ippagecount;
+            var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
+            var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
+            var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
+            var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
+            var bodyhtml = "";
+            bodyhtml+=  "<div class=\"page-header\"> <h2><i class=\"fa fa-globe\"></i>"+ports[0].ip+""+
+                "<small style=\"padding-left:10px;\"> </small>"+
+                "</h2> </div> <table class=\"table\"> <tbody>"+
+                "<tr> <td>City</td> <th>"+(ports[0].county==0?'':ports[0].county)+' '+city+' '+region+"</th></tr>"+
+                "<tr><td>Country</td>  <th>"+country+"</th></tr>"+
+                "<tr><td>System</td> <th>"+(ports[0].osfamily == null ? '' :ports[0].osfamily)+' '+(ports[0].osgen == null ? '' :ports[0].osgen)+"</th></tr>"+
+                "<tr><td>ISP</td> <th>"+isp+"</th></tr>"+
+                "<tr><td>Last Update</td><th>"+ports[0].updatetime+"</th></tr>"+
+                "<tr> <td>Hostnames</td><th>"+ports[0].hostname+"</th></tr>"+
+                "</tbody></table>"
 
-         var data2 = JSON.parse(result);
-
-
-
-         if (data2.result == '0') {
-             document.getElementById("ipinfo").innerHTML = "没有相关信息";
-
-         }
-         else {
-             var ports = data2.ips;
-
-             var datalength = data2.ipcount;
-             var pagesize = data2.ippagecount;
-
-             var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
-             var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
-             var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
-             var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
-             var bodyhtml = "";
-                bodyhtml+=  "<div class=\"page-header\"> <h2><i class=\"fa fa-globe\"></i>"+ports[0].ip+""+
-                            "<small style=\"padding-left:10px;\"> </small>"+
-                            "</h2> </div> <table class=\"table\"> <tbody>"+
-                            "<tr> <td>City</td> <th>"+(ports[0].county==0?'':ports[0].county)+' '+city+' '+region+"</th></tr>"+
-                             "<tr><td>Country</td>  <th>"+country+"</th></tr>"+
-                             "<tr><td>System</td> <th>"+(ports[0].osfamily == null ? '' :ports[0].osfamily)+' '+(ports[0].osgen == null ? '' :ports[0].osgen)+"</th></tr>"+
-                             "<tr><td>ISP</td> <th>"+isp+"</th></tr>"+
-                             "<tr><td>Last Update</td><th>"+ports[0].updatetime+"</th></tr>"+
-                             "<tr> <td>Hostnames</td><th>"+ports[0].hostname+"</th></tr>"+
-                             "</tbody></table>"
-
-             document.getElementById("ipinfo").innerHTML = bodyhtml;
+            document.getElementById("ipinfo").innerHTML = bodyhtml;
 
             var latitude=ports[0].location['geoip']['location']['latitude'];
             var longitude=ports[0].location['geoip']['location']['longitude'];
             window.frames["detailmap"].src = '/search/map/?latitude='+latitude+'&longitude='+longitude;
+        }
+    }
 
-
-         }
-     }
     function getport(){
-
         xmlhttpport = GetXmlHttp(xmlhttpport);
 
         var ip="{{ip}}";
         content = "\"ip\":\""+ip+'\"';
         var str = '';
 
-
         str = 'content=' + content
-
         xmlhttpport.open("POST", "/fontsearch/searchdetail", true);
         xmlhttpport.onreadystatechange = portcallback;
         xmlhttpport.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttpport.send(str);
-
     }
-  function portcallback() {
 
+    function portcallback() {
         if (xmlhttpport.readyState != 4) {
-
 
         }
         else {
-
             if (xmlhttpport.status == 200) {
-
                 var a = xmlhttpport.responseText;
-
                 showportinfo(a);
-
             }
         }
     }
 
-
-
-
-
-
-function showportinfo(result) {
+    function showportinfo(result) {
         var data2 = JSON.parse(result);
-
-
-
-         if (data2.result == '0') {
-             document.getElementById("portinfo").innerHTML = "没有相关信息";
-
-         }
-         else {
-             var porthtml="";
-             var servicehtml="";
-             servicehtml="</ul><div style=\"clear:both\"></div><div class=\"page-header\"> <h2><i class=\"fa fa-th-list\"></i>Services</h2></div> <ul class=\"services\">"
-             porthtml="<div class=\"page-header\"><h2><i class=\"fa fa-th-large\"></i>Ports</h2> </div> <ul class=\"ports\">";
+        if (data2.result == '0') {
+            document.getElementById("portinfo").innerHTML = "没有相关信息";
+        }
+        else {
+            var porthtml = "";
+            var servicehtml = "";
+            servicehtml ="</ul><div style=\"clear:both\"></div><div class=\"page-header\"> <h2><i class=\"fa fa-th-list\"></i>Services</h2></div> <ul class=\"services\">"
+            porthtml ="<div class=\"page-header\"><h2><i class=\"fa fa-th-large\"></i>Ports</h2> </div> <ul class=\"ports\">";
 
             var datalength = data2.portslength;
             var pagesize = data2.portspagecount;
@@ -260,7 +221,6 @@ function showportinfo(result) {
 
             var bodyhtml = "";
             for (var i = 0; i < datalength; i++) {
-
                 var potocalname = '';
                 if (ports[i].name == null) {
                     switch (ports[i].port) {

@@ -6,7 +6,7 @@ reload(sys);
 sys.setdefaultencoding('utf8');
 from elasticsearch_dsl.query import MultiMatch, Match
 from datetime import datetime
-from elasticsearch_dsl import DocType, String, Date, Integer, MultiSearch, Search, Q
+from elasticsearch_dsl import DocType, Date, Integer, MultiSearch, Search, Q
 from elasticsearch_dsl.connections import connections
 import mapping
 from logger import initLog
@@ -16,6 +16,7 @@ logger = initLog('logs/elastic.log', 2, True)
 
 connections.create_connection(hosts=['localhost'])
 import base64
+
 def decodestr(msg):
     chardit1 = chardet.detect(msg)
 
@@ -35,8 +36,10 @@ def decodestr(msg):
 
     except Exception,e:
         return str(msg)
+
 def getproperty(dic,property):
     return decodestring(str(dic.get(property,' ')))
+
 def decodestring(msg):
     item=msg
     if str==type(msg):
@@ -50,11 +53,8 @@ def decodestring(msg):
         except Exception,e:
             print e,42
         return decodestr(item)
-
-
     else:
         return ' '
-
 
 def get_table_obj(_cls_name):  
     obj =  getattr(mapping,_cls_name)  
@@ -66,8 +66,8 @@ def setvalue(instance,key,value):
 
 def default():
     print 'there is error'
-def inserttableinfo_byparams(table,select_params,insert_values,extra='',updatevalue=None,primarykey=1):
 
+def inserttableinfo_byparams(table,select_params,insert_values,extra='',updatevalue=None,primarykey=1):
     instanceins=None
     if table=='snifferdata':
         primarykey=2
@@ -113,17 +113,18 @@ def replaceinserttableinfo_byparams(table,select_params,insert_values,primarykey
 # inserttableinfo_byparams('snifferdata', ['ip','port','product'], [('1','2','http')],primarykey=2)
 
 
-def search(page='0',dic=None,content=None):
+def search(page='0',dic=None, content=None):
     limitpage=15
     validresult=False
     orderlabel=0
     orderarray = []
+    print ("======================elastictool::search() dic:%s, content:%s======================"%(dict, content))
     if content is not None:
         q = Q("multi_match", query=content, fields=['ip', 'name','product',
-                'script' ,'detail' ,'head'  ,'hackinfo','keywords' ,'disclosure'  ])
+                'script' ,'detail' ,'head'  ,'hackinfo','keywords' ,'disclosure'])
     else:
         searcharray=[]
-        keys=dic.keys()
+        keys = dic.keys()
         orderlabel=0
 
         for key in keys:
@@ -160,12 +161,14 @@ def search(page='0',dic=None,content=None):
             if key=='order':
                 orderarray.append(dic[key])
                 orderlabel=1
-        q=Q('bool', must=searcharray)
+        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'mysql')
+        q = Q('bool', must=searcharray)
+    print ("======================elasticsearch Q:\n%s\n"%q)
+    # elasticsearch检索数据库信息
     if orderlabel == 0:
         s = Search(index='datap', doc_type='snifferdata').query(q)
     else:
-        s=Search(index='datap', doc_type='snifferdata').query(q).sort(orderarray[0])
-
+        s = Search(index='datap', doc_type='snifferdata').query(q).sort(orderarray[0])
 #     s = Search.from_dict({"query": {
 #     "bool":{
 #             "must":[               
@@ -183,9 +186,11 @@ def search(page='0',dic=None,content=None):
 # 
 # }
 # })
-    s= s[int(page)*limitpage:int(page)*limitpage+limitpage]
+    s = s[int(page)*limitpage:int(page)*limitpage+limitpage]
 
     response = s.execute()
+    print ("======================elasticsearch results:%s, response::%s======================"%(str(s), str(response)))
+
     if response.success():
         portarray=[]
         count= response.hits.total
@@ -217,14 +222,8 @@ def search(page='0',dic=None,content=None):
                 # city=''
                 # hackinfo=getproperty(dic,'hackinfo')
                 # disclosure=getproperty(dic,'disclosure')
-
-
                 portarray.append(aport)
-
         return portarray,count,pagecount
-
-
-
     else:
         print '查询失败'
         return [],0,0

@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^searchmain$', route.mainpage, name='searchmain'),
     url(r'^searchdetail$', route.detailpage, name='searchdetail'),
     url(r'^detailmapview$', route.detailmapview, name='detailmapview'),
+    url(r'^ipinfo$', route.ipinfo, name='ipinfo'),
 ]
