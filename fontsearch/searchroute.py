@@ -53,6 +53,7 @@ def detailpage(request):
             try:
                 item = webtool.md5('sch_'+str(content)+'page'+str(page))
                 redisresult = redistool.get(str(item))
+                print "redistool::detailpage() redisresult?", redisresult
 
                 if redisresult :
                     print '从redids取的数据'

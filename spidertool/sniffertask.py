@@ -25,6 +25,7 @@ class snifferTask(TaskTool):
         # INFO
         self.logger = initLog('logs/sniffertask.log', 2, True,'sniffertask')
         self.sqlTool = Sqldatatask.getObject()
+        # 获取nmap的参数
         self.sniffer = sniffertool.SniffrtTool(logger=self.logger)
         self.config = config.Config
 
@@ -72,14 +73,15 @@ class snifferTask(TaskTool):
     
 if __name__ == "__main__":   
     links = []
-    temp= job.Job(jobaddress='www.bnuz.edu.cn',jobport='400-800',jobname='task1')
-    temp1=  job.Job(jobaddress='localhost',jobport='400-800',jobname='task2')
-    temp2=  job.Job(jobaddress='www.cctv.com',jobport='400-800',jobname='task3')
-    temp3=  job.Job(jobaddress='www.vip.com',jobport='400-800',jobname='task4')
+    temp= job.Job(jobaddress='www.bnuz.edu.cn',jobport='400-402',jobname='task1')
+    temp1=  job.Job(jobaddress='localhost',jobport='400-402',jobname='task2')
+    temp2=  job.Job(jobaddress='www.cctv.com',jobport='400-402',jobname='task3')
+    temp3=  job.Job(jobaddress='www.vip.com',jobport='400-402',jobname='task4')
     links.append(temp)
     links.append(temp1)
     links.append(temp2)
     links.append(temp3)
+
     S_produce= snifferTask(1) #表示创建的是线程
     S_produce.set_deal_num(10) #进程数?
     starttime = datetime.datetime.now()
@@ -91,6 +93,5 @@ if __name__ == "__main__":
 
     print (endtime - starttime).seconds
 #   print b
-
 
 

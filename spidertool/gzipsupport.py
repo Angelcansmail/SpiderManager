@@ -3,11 +3,11 @@
 import urllib2
 from gzip import GzipFile
 from StringIO import StringIO
+
 class ContentEncodingProcessor(urllib2.BaseHandler):
 	"""
 		A handler to add gzip capabilities to urllib2 requests 
 	"""
- 
 	# add headers to requests
  	def http_request(self, req):
 		req.add_header("Accept-Encoding", "gzip, deflate")
@@ -17,7 +17,7 @@ class ContentEncodingProcessor(urllib2.BaseHandler):
 	# decode
 	def http_response(self, req, resp):
 		old_resp = resp
-	# gzip
+        # gzip
 		if resp.headers.get("content-encoding") == "gzip":
 # 			print '解码gzip'
 			gz = GzipFile(fileobj=StringIO(resp.read()),mode="r")

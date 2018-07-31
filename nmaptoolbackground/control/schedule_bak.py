@@ -14,14 +14,17 @@ class schedulecontrol:
         self.scheduler = BackgroundScheduler()
         self.scheduler.start()
 
-    def addschedule(self,event, day_of_week='0-7', hour='11',minute='57' ,second='0',id='',type='cron',run_date='',args=None):
+    # 非阻塞方法
+    def addschedule(self,event, day_of_week='0-6', hour='11',minute='57' ,second='0',id='',type='cron',run_date='',args=None):
         if id=='':
             id=str(time.strftime("%Y-%m-%d %X", time.localtime()))
         if type=='date':
+        # 指定时间执行一次
             if run_date == '':
                 self.scheduler.add_job(event, args=args)
             else:
                 self.scheduler.add_job(event, 'date', run_date=run_date, args=args)
+        # cron
         else:
             self.scheduler.add_job(event,type, day_of_week=day_of_week, hour=hour,minute=minute ,second=second,id=id)
 
@@ -30,7 +33,7 @@ class schedulecontrol:
 
 if __name__ == "__main__":           
     temp = schedulecontrol()
-    temp.addschedule(tick,'0-7','0-23','0-59','*/5')
+    temp.addschedule(tick,'0-6','0-23','0-59','*/5')
     while True:
         pass
 

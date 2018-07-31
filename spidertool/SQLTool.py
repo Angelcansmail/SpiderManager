@@ -402,6 +402,7 @@ class DBmanager:
 	
 		#self.__cur.execute('insert into webdata(address, content, meettime) values(%s, %s, %s)', ['这个稳重', '123123', '1992-12-12 12:12:12'])
 		#self.__conn.commit()   
+# from a string eg: str='area', return "area"
 def formatstring(str):
 	return '\''+str+'\''
 

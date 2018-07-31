@@ -10,32 +10,40 @@ try:
     if redisinstance is None:
         import redis
         pool = redis.ConnectionPool(host='127.0.0.1', port=6379)
-#host是redis主机，需要redis服务端和客户端都起着 redis默认端口是6379
+        #host是redis主机，需要redis服务端和客户端都起着 redis默认端口是6379
         redisinstance = redis.Redis(connection_pool=pool)
+
 except Exception,e:
     print e
 
 def getObject():
     return redisinstance
 
+
 def expire(key,expiration):
     if redisinstance is None:
         return None
     redisinstance.expire(key, expiration)
 
+#from ip to location
 def get(key):
+    # content's md5 value; redisinstance获取链接的数据库db
+    print "redistool::get()", key, redisinstance
+
     if redisinstance is None:
         return None
-    prev_topicList=None
+    prev_topicList = None
     try:
         prev_topicList_redis = redisinstance.get(key)
         prev_topicList = prev_topicList_redis
+        # print ("prev_topicList_redis:%s\tprev_topicList:%s" % (str(prev_topicList_redis), str(prev_topicList)))
+        # 没有key，就是正常的关键词检索，非字典
         if prev_topicList_redis is None:
             return prev_topicList_redis
         # import pickle
-        # prev_topicList=pickle.loads(prev_topicList_redis)
+        # prev_topicList = pickle.loads(prev_topicList_redis)
         prev_topicList = json.loads(prev_topicList_redis,encoding='utf-8')
-        prev_topicList=debase64(prev_topicList)
+        prev_topicList = debase64(prev_topicList)
     except Exception,e:
         print e,'redis-get'
         try:
@@ -50,10 +58,8 @@ def debase64(dic):
 
 def decode_base64(data):
     """Decode base64, padding being optional.
-
     :param data: Base64 data as an ASCII byte string
     :returns: The decoded byte string.
-
     """
     import base64
     missing_padding = len(data) % 4
@@ -66,8 +72,8 @@ def enbase64(dic):
     return iterobj(dic,base64.b64encode)
 
 def iterobj(dic,func):
-    print ("iterobj() dic:%s, func:%s"%(str(dic), str(func)))
-    if dic == None:
+    # print ("iterobj() dic:%s, func:%s"%(str(dic), str(func)))
+    if dic==None:
         return None
     elif type(dic) == int:
         return dic
@@ -117,11 +123,11 @@ def jdefault(o):
          return o.isoformat()
 
     return o.__dict__
-
 def object2dict(obj):
 	d = {}
 	d['__class__'] = obj.__class__.__name__
 	d['__module__'] = obj.__module__
 	d.update(obj.__dict__)
+
 
 	return d

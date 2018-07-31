@@ -56,9 +56,12 @@ def decodestring(msg):
     else:
         return ' '
 
-def get_table_obj(_cls_name):  
-    obj =  getattr(mapping,_cls_name)  
+# 调用mapping.py下的_cls_name(一个表名)函数，返回该表初始化对象
+def get_table_obj(_cls_name):
+    obj = getattr(mapping, _cls_name)
     return obj 
+
+# set value to instance's key
 def setvalue(instance,key,value):
 	setattr(instance, key, value)
 # data = mapping.snifferdata.getdata(id='116.13.94.6:80')
@@ -67,47 +70,45 @@ def setvalue(instance,key,value):
 def default():
     print 'there is error'
 
-def inserttableinfo_byparams(table,select_params,insert_values,extra='',updatevalue=None,primarykey=1):
-    instanceins=None
-    if table=='snifferdata':
-        primarykey=2
-
-    instanceins=None
-
-        
-    
+def inserttableinfo_byparams(table,select_params,insert_values, extra='', updatevalue=None,primarykey=1):
+    instanceins = None
     instanceitem=None
 
+    if table == 'snifferdata':
+        primarykey = 2
+
     for item in insert_values:
-        eachitem=None
-        if type(item).__name__=='str':
+        eachitem = None
+        if type(item).__name__ == 'str':
             eachitem=tuple(item)
         else:
             eachitem=item
-        instanceins= get_table_obj(table)
+        # 表对象
+        instanceins = get_table_obj(table)
         # logger and logger.info('get each insert: %s', eachitem)
+# 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
         if extra or updatevalue:
-            # logger and logger.info('更新数据')
+            logger and logger.info('更新数据')
             instanceitem = instanceins.getdata(id=':'.join(eachitem[:primarykey]))
+            print "inserttableinfo_byparasm::instanceitem::", instanceitem
             logger and logger.info(str(instanceitem))
             if instanceitem is None:
-                # logger and logger.info('找不到该数据，创建数据')
-                instanceins=get_table_obj(table)
-                instanceitem=instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
+                logger and logger.info('找不到该数据，创建数据')
+                instanceins = get_table_obj(table)
+                instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
         else:
-            instanceitem=instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
+            instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
 
         for i in xrange(0,len(select_params)):
-
-
-            # logger and logger.info('更新数据%s :%s',select_params[i],decodestr(str(eachitem[i])))
-            setvalue(instanceitem,select_params[i],decodestr(str(eachitem[i])))
+            logger and logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
+            setvalue(instanceitem, select_params[i], decodestr(str(eachitem[i])))
         try:
             res=instanceitem.save()
         except Exception,e:
             logger and logger.error('error: %s', str(e))
         else:
             logger and logger.info('insert success')
+
 def replaceinserttableinfo_byparams(table,select_params,insert_values,primarykey=1):
     inserttableinfo_byparams(table,select_params,insert_values,primarykey=primarykey)
 # inserttableinfo_byparams('snifferdata', ['ip','port','product'], [('1','2','http')],primarykey=2)
@@ -118,10 +119,11 @@ def search(page='0',dic=None, content=None):
     validresult=False
     orderlabel=0
     orderarray = []
-    print ("======================elastictool::search() dic:%s, content:%s======================"%(dict, content))
+    print ("======================elastictool::search() dic:%s, content:%s======================"%(str(dict), str(content)))
     if content is not None:
         q = Q("multi_match", query=content, fields=['ip', 'name','product',
                 'script' ,'detail' ,'head'  ,'hackinfo','keywords' ,'disclosure'])
+    # 何时会执行？进入search前已经判断content是否为空了
     else:
         searcharray=[]
         keys = dic.keys()
@@ -193,14 +195,15 @@ def search(page='0',dic=None, content=None):
 
     if response.success():
         portarray=[]
-        count= response.hits.total
+        count = response.hits.total
         print '返回的集中率为%d' % count
         if count == 0:
             pagecount = 0;
-        elif count %limitpage> 0:
+        elif count % limitpage> 0:
             pagecount=int((count+limitpage-1)/limitpage) 
         else:
             pagecount = count / limitpage
+
         from nmaptoolbackground.model import ports
         count=len(response)
         print '返回的实际数量为%d' % count 
