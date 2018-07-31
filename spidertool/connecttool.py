@@ -14,40 +14,46 @@ import ssl
 import chardet
 from Queue import Queue
 import json
-WEBCONFIG=webconfig.WebConfig
+WEBCONFIG = webconfig.WebConfig
+
 class ConnectTool:
-	def  __init__(self,WEBCONFIG=WEBCONFIG,debuglevel=0):
-		self.__RedirectHandler=webtool.RedirectHandler()
+	def __init__(self, WEBCONFIG=WEBCONFIG, debuglevel=0):
+        # 声明一些问题在301/302
+		self.__RedirectHandler = webtool.RedirectHandler()
 		self.__encoding_support = gzipsupport.ContentEncodingProcessor()
 		"""
 		启用代理模块
-		"""
-		self.__enable_proxy=WEBCONFIG.enable_proxy
+        """
+
+		self.__enable_proxy = WEBCONFIG.enable_proxy    #False
+        # proxy_name:http, proxy_address:http://abc.com:80
+        # http:http://abc.com:8
 		self.__proxy_handler= urllib2.ProxyHandler({WEBCONFIG.proxy_name:WEBCONFIG.proxy_address})
 		self.__null_proxy_handler= urllib2.ProxyHandler({})
-		urllib2.socket.setdefaulttimeout(WEBCONFIG.time_out)                                    #设置超时时间
-		self.__headers = { 
-			'User-Agent' :		 WEBCONFIG.useragent,
-			'Referer':		 WEBCONFIG.Referer
+		#设置超时时间10s
+		urllib2.socket.setdefaulttimeout(WEBCONFIG.time_out)               
+		self.__headers = {
+			'User-Agent' : WEBCONFIG.useragent,
+			'Referer': WEBCONFIG.Referer
 			 }
-
-		self.__cookie=cookielib.CookieJar()
-		self.__cJar=cookielib.LWPCookieJar()
-		self.__httpcookieprocessor=urllib2.HTTPCookieProcessor(self.__cookie)
-		self.__httpHandler= urllib2.HTTPHandler(debuglevel=debuglevel)
-		self.__httpsHandler=urllib2.HTTPSHandler(debuglevel=debuglevel)
+		self.__cookie = cookielib.CookieJar()
+		self.__cJar = cookielib.LWPCookieJar()
+		self.__httpcookieprocessor = urllib2.HTTPCookieProcessor(self.__cookie)
+		self.__httpHandler = urllib2.HTTPHandler(debuglevel=debuglevel)
+		self.__httpsHandler = urllib2.HTTPSHandler(debuglevel=debuglevel)
 		self.__opener=''
 		if self.__enable_proxy:
-			self.__opener=urllib2.build_opener(self.__encoding_support,self.__httpcookieprocessor,self.__proxy_handler,self.__httpHandler,self.__httpsHandler,self.__RedirectHandler)
+			self.__opener = urllib2.build_opener(self.__encoding_support,self.__httpcookieprocessor,self.__proxy_handler,self.__httpHandler,self.__httpsHandler,self.__RedirectHandler)
 		else:
-			self.__opener=urllib2.build_opener(self.__encoding_support,self.__httpcookieprocessor,self.__null_proxy_handler,self.__httpHandler,self.__httpsHandler,self.__RedirectHandler)
+			self.__opener = urllib2.build_opener(self.__encoding_support,self.__httpcookieprocessor,self.__null_proxy_handler,self.__httpHandler,self.__httpsHandler,self.__RedirectHandler)
+        # urllib2.install_opener() 会设置 urllib2 的全局 opener
+        # 这样后面的使用会很方便，但不能做更细致的控制，比如想在程序中使用两个不同的 Proxy 设置等。比较好的做法是不使用 install_opener 去更改全局的设置，而只是直接调用 opener 的 open 方法代替全局的 urlopen 方法
 		urllib2.install_opener(self.__opener)
 
-	def  getHTML(self,URL,way='GET',params={},times=1,header=None,type=''):
+	def getHTML(self,URL,way='GET',params={},times=1,header=None,type=''):
 		print datetime.datetime.now()
 		data=None
 		if type=='':
-			
 			data = urllib.urlencode(params)
 		if type=='JSON':
 			data=json.dumps(params) 
@@ -57,12 +63,8 @@ class ConnectTool:
 			header=self.__headers
 		if way=='POST':
 			req = urllib2.Request(url, data=data, headers=header)
-
-
 		elif len(params)==0:
 			req= urllib2.Request(url,headers=header)
-
-
 		else :
 			req= urllib2.Request(url+'?'+data,header)
 
@@ -82,9 +84,6 @@ class ConnectTool:
 			
 			chardit1 = chardet.detect(msg)
 			the_page = str(msg)
-
-			
-
 			
 			try:
 				return temp.decode(chardit1['encoding']).encode('utf-8'),the_page.decode(chardit1['encoding']).encode('utf-8')
@@ -117,16 +116,7 @@ class ConnectTool:
 		#response.close()
 
 
-
-
-
-
 if __name__ == "__main__":		
-	p=ConnectTool()
-	w,a=p.getHTML('http://211.162.202.130:700')
-
+	p = ConnectTool()
+	w, a = p.getHTML('http://211.162.202.130:700')
  	print w,a
-	
-	
-	
-	

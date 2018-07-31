@@ -15,7 +15,7 @@ once=None
 stack_size(32768*16)
 
 class ThreadTool:
-	def __init__(self,isThread=1,needfinishqueue=0,deamon=False):
+	def __init__(self,isThread=1,needfinishqueue=1,deamon=False):
 		self.isThread=isThread
 		self.idletask={}
 		self.Threads=[]

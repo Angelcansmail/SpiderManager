@@ -4,11 +4,14 @@ import urllib2
 import time
 import re,json
 import httplib
+
+# urllib2 默认情况下会针对 HTTP 3XX 返回码自动进行 redirect 动作，无需人工配置, 但不想自动redirect，可以自己定义
 class RedirectHandler(urllib2.HTTPRedirectHandler):
 	def http_error_301(self,req,fp,code,msg,headers):
 		print '301问题'
 	def http_error_302(self,req,fp,code,msg,headers):
 		print '302问题'
+
 def formatstring(str):
 	return '\''+str+'\''
 
@@ -69,11 +72,12 @@ def getLocationinfo(ip):
 		httpClient = httplib.HTTPConnection('ip.taobao.com', 80, timeout=30)
 		httpClient.request('GET', '/service/getIpInfo.php?ip='+ip)
  
-#response是HTTPResponse对象
+        #response是HTTPResponse对象
 		response = httpClient.getresponse()
-#		 print response.status
-#		 print response.reason
-		response_data= response.read()
+		print response.status
+		print response.reason
+		response_data = response.read().strip() # 我理解数据应该存储到ip_maindata
+#        {"code":0,"data":{"ip":"110.110.110.120","country":"\xe4\xb8\xad\xe5\x9b\xbd","area":"","region":"\xe9\xbb\x91\xe9\xbe\x99\xe6\xb1\x9f","city":"\xe5\x93\x88\xe5\xb0\x94\xe6\xbb\xa8","county":"XX","isp":"\xe9\x93\x81\xe9\x80\x9a","country_id":"CN","area_id":"","region_id":"230000","city_id":"230100","county_id":"xx","isp_id":"100020"}}
 		
 	except Exception, e:
 		print '接受的数据出现异常'+str(e)
@@ -86,6 +90,7 @@ def getLocationinfo(ip):
 			print response_data
 			print str(e)+'json error'
 			return {}
+
 def md5(str):
 	import hashlib
 	m = hashlib.md5()   

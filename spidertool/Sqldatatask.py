@@ -21,19 +21,23 @@ class SqlDataTask(TaskTool):
 		self.sqlhelp = SQLTool.getObject()  #DBmanager初始化
 		self.sqlhelp.connectdb()
 
-	def task(self,req,threadname):
+	def task(self, req, threadname):
 		print threadname + '数据库任务　执行任务中' + str(datetime.datetime.now())
 # 		self.sqlhelp.connectdb()
+        # 获取存入的数据库操作方法，如getLocationIpInfo中的func:inserttableinfo_params;Dic:对应该操作函数的对应参数字典
 		func = req.getFunc()
 		Dic = req.getDic()
  		print ("======================func:%s, Dic:%s======================"%(func,Dic))
+        # ans 获取存储的功能，getattr(object, name[, default])
 		ans = getattr(self.sqlhelp, func, 'default')(**Dic)
+
 		try:
 			import sys
 			sys.path.append("..")
 			from elasticsearchmanage import elastictool
 
-			ans = getattr(elastictool, func, 'default')(**Dic)   #获取elastictoo对象的fuc属性值, 如果属性不存在则用default填充
+            # 调用elastictool中的func函数，参数通过Dic传过去
+			ans = getattr(elastictool, func, 'default')(**Dic)
 		except Exception,e:
 			print 'error in elasticsearch', e
 		del Dic

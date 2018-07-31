@@ -32,9 +32,8 @@ class SniffrtTool(object):
         self.logger = logger
         try:
             self.nma = nmap.PortScanner()     # instantiate nmap.PortScanner object
-
-            self.params='-A -Pn -sC -R -v -O -T5'
-#             self.params='-sV -T4 -O '         #快捷扫描加强版
+#             self.params='-A -Pn -sC -R -v -O -T5'
+            self.params='-sV -T4 -O '         #快捷扫描加强版
 #             self.params='-sS -sU -T4 -A -v'   #深入扫描
         except nmap.PortScannerError:
 #             print('Nmap not found', sys.exc_info()[0])
@@ -44,9 +43,10 @@ class SniffrtTool(object):
             self.logger and self.logger.info('Unexpected error:%s',sys.exc_info()[0])
 
         self.config = config.Config
-        self.sqlTool = Sqldatatask.getObject()
+        self.sqlTool = Sqldatatask.getObject()  # init DBmanager, and connect database and thread number
 #         self.sqlTool=SQLTool.getObject()
-        self.portscan = portscantask.getObject()
+        self.portscan = portscantask.getObject()    #设置一些网络参数配置
+        # init DBmanager and thread number
         self.getlocationtool = getLocationTool.getObject()
 
     def scaninfo(self,hosts='localhost', port='', arguments='',hignpersmission='0',callback=''):
@@ -193,15 +193,14 @@ class SniffrtTool(object):
     def scanaddress(self,hosts=[], ports=[],arguments=''):
         temp=''
         for i in range(len(hosts)):
-
             if len(ports)<=i:
-                result=self.scaninfo(hosts=hosts[i],arguments=arguments)
-                if result is   None:
+                result = self.scaninfo(hosts=hosts[i],arguments=arguments)
+                if result is None:
                     pass
                 else:
-                    temp+=result
+                    temp += result
             else:
-                result=self.scaninfo(hosts=hosts[i], port=ports[i],arguments=arguments)
+                result = self.scaninfo(hosts=hosts[i], port=ports[i],arguments=arguments)
                 if result is   None:
                     pass
                 else:
@@ -256,16 +255,10 @@ orderq='-A -P0   -Pn  -sC  -p '
 
 if __name__ == "__main__":   
 
-    temp=SniffrtTool()
+    temp = SniffrtTool()
 #     hosts=['www.cctv.com','localhost','www.baidu.com']'www.cctv.com' www.vip.com
-    hosts=['www.baidu.com']
+    hosts=['localhost']
     temp.scanaddress(hosts,ports=['80'],arguments='')
-
-
-            
-        
-
-
-#     print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+    print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
 
 
