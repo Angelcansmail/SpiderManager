@@ -1552,3 +1552,484 @@ select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_main
 [2018-07-31 Tue 16:10:34]SQLTool.py-6288-140035121460992-174-    INFO-"
 ======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
 select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 01:01:15]SQLTool.py-3424-140199354361600-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-01 Wed 01:01:15]SQLTool.py-3424-140199354361600-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 05:28:14]SQLTool.py-7612-139840704677632-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-01 Wed 05:28:14]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 05:28:14]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 05:28:40]SQLTool.py-7612-139840704677632-373-    INFO-"插入数据库操作
+insert into tasksdata(createtime, tasksaddress, tasksname, status, username, tasksid, taskport)     values(%s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 05:28:40]SQLTool.py-7612-139840704677632-374-    INFO-"插入数据库内容为:
+[('2018-08-01 05:28:40', u'192.168.119.123', u'test', '1', 'admin', UUID('bfd2488c-954b-11e8-9e28-74e50ba386da'), u'111')]"
+[2018-08-01 Wed 05:28:40]SQLTool.py-7612-139840705206016-373-    INFO-"插入数据库操作
+insert into taskdata(username, taskid, taskname, taskprior, taskstatus, taskaddress, taskport, createtime, forcesearch, groupsid)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 05:28:40]SQLTool.py-7612-139840705206016-374-    INFO-"插入数据库内容为:
+[('admin', UUID('bfdd95c0-954b-11e8-9e28-74e50ba386da'), UUID('bfd2488c-954b-11e8-9e28-74e50ba386da'), '1', '1', '192.168.119.123', u'111', '2018-08-01 05:28:40.885416', '0', UUID('bfd2488c-954b-11e8-9e28-74e50ba386da'))]"
+[2018-08-01 Wed 05:28:41]SQLTool.py-7612-139840704677632-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-01 Wed 05:29:20]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 05:29:20]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 06:04:48]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 06:04:48]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where ip = '110.110.110.120';"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['ip_maindata']======================
+select ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state, city from ip_maindata where ip = '110.110.110.120' order by updatetime desc limit 0,15;"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['snifferdata']======================
+select count(*) from snifferdata where ip = '110.110.110.120' and ( port='12');"
+[2018-08-01 Wed 06:04:50]SQLTool.py-7612-139840706262784-174-    INFO-"
+======================查询表['snifferdata']======================
+select ip, port, timesearch, state, name, product, version, script, detail, head, hackinfo from snifferdata where ip = '110.110.110.120' and ( port='12') order by port limit 0,15;"
+[2018-08-01 Wed 06:05:44]SQLTool.py-7612-139840707315456-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('110.110.110.120' in Boolean mode) ;"
+[2018-08-01 Wed 06:05:52]SQLTool.py-7612-139840707315456-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-01 Wed 06:05:52]SQLTool.py-7612-139840707315456-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 06:07:32]SQLTool.py-7612-139840700733184-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-01 Wed 06:07:32]SQLTool.py-7612-139840700733184-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 07:27:00]SQLTool.py-12433-139956655261440-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-01 Wed 07:27:00]SQLTool.py-12433-139956655261440-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 09:17:58]SQLTool.py-4307-139821445506816-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-01 Wed 09:17:58]SQLTool.py-4307-139821446035200-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 09:17:58]SQLTool.py-4307-139821446035200-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:18:50]SQLTool.py-4307-139821447620352-373-    INFO-"插入数据库操作
+insert into tasksdata(createtime, tasksaddress, tasksname, status, username, tasksid, taskport)     values(%s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 09:18:50]SQLTool.py-4307-139821447620352-374-    INFO-"插入数据库内容为:
+[('2018-08-01 09:18:50', u'www.taobao.com', u'ip_maindata', '1', 'admin', UUID('e70baf68-956b-11e8-a374-74e50ba386da'), u'88')]"
+[2018-08-01 Wed 09:18:50]SQLTool.py-4307-139821445506816-373-    INFO-"插入数据库操作
+insert into taskdata(username, taskid, taskname, taskprior, taskstatus, taskaddress, taskport, createtime, forcesearch, groupsid)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 09:18:50]SQLTool.py-4307-139821445506816-374-    INFO-"插入数据库内容为:
+[('admin', UUID('e71464b4-956b-11e8-a374-74e50ba386da'), UUID('e70baf68-956b-11e8-a374-74e50ba386da'), '1', '1', 'www.taobao.com', u'88', '2018-08-01 09:18:50.571126', '0', UUID('e70baf68-956b-11e8-a374-74e50ba386da'))]"
+[2018-08-01 Wed 09:18:51]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-01 Wed 09:18:52]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 09:18:52]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:18:56]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = 'e70baf68-956b-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 09:18:56]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = 'e70baf68-956b-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:18:57]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = 'e71464b4-956b-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 09:18:57]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = 'e71464b4-956b-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:18:57]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = 'e71464b4-956b-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 09:18:57]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = 'e71464b4-956b-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:18:57]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where hostname = 'www.taobao.com';"
+[2018-08-01 Wed 09:26:17]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:26:17]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where ip = '110.110.110.120';"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state, city from ip_maindata where ip = '110.110.110.120' order by updatetime desc limit 0,15;"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select count(*) from snifferdata where ip = '110.110.110.120' and ( port='12');"
+[2018-08-01 Wed 09:26:19]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select ip, port, timesearch, state, name, product, version, script, detail, head, hackinfo from snifferdata where ip = '110.110.110.120' and ( port='12') order by port limit 0,15;"
+[2018-08-01 Wed 09:26:41]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:26:41]SQLTool.py-4307-139821447620352-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where ip = '110.110.110.120';"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state, city from ip_maindata where ip = '110.110.110.120' order by updatetime desc limit 0,15;"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select count(*) from snifferdata where ip = '110.110.110.120' and ( port='12');"
+[2018-08-01 Wed 09:27:06]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select ip, port, timesearch, state, name, product, version, script, detail, head, hackinfo from snifferdata where ip = '110.110.110.120' and ( port='12') order by port limit 0,15;"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where ip = '110.110.110.120';"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['ip_maindata']======================
+select ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state, city from ip_maindata where ip = '110.110.110.120' order by updatetime desc limit 0,15;"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select count(*) from snifferdata where ip = '110.110.110.120' and ( port='12');"
+[2018-08-01 Wed 09:33:17]SQLTool.py-4307-139821448410880-174-    INFO-"
+======================查询表['snifferdata']======================
+select ip, port, timesearch, state, name, product, version, script, detail, head, hackinfo from snifferdata where ip = '110.110.110.120' and ( port='12') order by port limit 0,15;"
+[2018-08-01 Wed 10:14:50]SQLTool.py-6375-140536174282496-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-01 Wed 10:14:50]SQLTool.py-6375-140536174282496-174-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-08-01 Wed 12:03:07]SQLTool.py-7758-140261699778304-174-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-01 Wed 12:03:07]SQLTool.py-7758-140261696612096-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 12:03:07]SQLTool.py-7758-140261696612096-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:06:15]SQLTool.py-7758-140261698725632-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 12:06:15]SQLTool.py-7758-140261698725632-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:07:08]SQLTool.py-7862-140277078009600-373-    INFO-"插入数据库操作
+insert into tasksdata(createtime, tasksaddress, tasksname, status, username, tasksid, taskport)     values(%s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 12:07:08]SQLTool.py-7862-140277078009600-374-    INFO-"插入数据库内容为:
+[('2018-08-01 12:07:08', 'www.taobao.com', 'ip_maindata', '1', 'admin', UUID('6a013642-9583-11e8-a374-74e50ba386da'), '88')]"
+[2018-08-01 Wed 12:07:08]SQLTool.py-7862-140277076690688-373-    INFO-"插入数据库操作
+insert into taskdata(username, taskid, taskname, taskprior, taskstatus, taskaddress, taskport, createtime, forcesearch, groupsid)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s) "
+[2018-08-01 Wed 12:07:08]SQLTool.py-7862-140277076690688-374-    INFO-"插入数据库内容为:
+[('admin', UUID('6a0ef8f4-9583-11e8-a374-74e50ba386da'), UUID('6a013642-9583-11e8-a374-74e50ba386da'), '1', '1', 'www.taobao.com', '88', '2018-08-01 12:07:08.741988', '0', UUID('6a013642-9583-11e8-a374-74e50ba386da'))]"
+[2018-08-01 Wed 12:08:35]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-01 Wed 12:08:35]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:08:40]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '6a013642-9583-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 12:08:40]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '6a013642-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:08:41]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 12:08:41]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:08:41]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da';"
+[2018-08-01 Wed 12:08:41]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-01 Wed 12:08:41]SQLTool.py-7862-140277078009600-174-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where hostname = 'www.taobao.com';"
+[2018-08-02 Thu 05:38:50]SQLTool.py-6168-139820253886208-176-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-02 Thu 05:38:51]SQLTool.py-6168-139820250982144-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-02 Thu 05:38:51]SQLTool.py-6168-139820250982144-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-02 Thu 05:39:12]SQLTool.py-6168-139820252829440-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-02 Thu 05:39:12]SQLTool.py-6168-139820252829440-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-08-02 Thu 05:39:35]SQLTool.py-6168-139820252301056-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 05:39:35]SQLTool.py-6168-139820252301056-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port    limit  0,15;"
+[2018-08-02 Thu 05:39:44]SQLTool.py-6168-139820250982144-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 05:39:44]SQLTool.py-6168-139820250982144-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port    limit  0,15;"
+[2018-08-02 Thu 06:09:32]SQLTool.py-7775-139742560282368-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-02 Thu 06:09:32]SQLTool.py-7775-139742560282368-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port    limit  0,15;"
+[2018-08-02 Thu 06:37:56]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 06:37:56]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 06:38:18]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 06:38:18]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 06:40:02]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 06:40:02]SQLTool.py-8065-140008361592576-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 06:40:09]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 06:40:09]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:16:48]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 08:16:48]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:16:53]SQLTool.py-8065-140008357390080-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 08:16:53]SQLTool.py-8065-140008357390080-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:17:01]SQLTool.py-8065-140008356599552-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 08:17:01]SQLTool.py-8065-140008356599552-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:18:25]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-02 Thu 08:18:25]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:18:51]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 08:18:51]SQLTool.py-8065-140008357918464-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 08:41:16]SQLTool.py-10332-139631781771008-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 08:41:16]SQLTool.py-10332-139631781771008-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 16:09:06]SQLTool.py-9830-140382415353600-176-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-02 Thu 16:09:06]SQLTool.py-9830-140382619121408-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-02 Thu 16:09:06]SQLTool.py-9830-140382619121408-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:10]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '6a013642-9583-11e8-a374-74e50ba386da';"
+[2018-08-02 Thu 16:09:10]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '6a013642-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:11]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da';"
+[2018-08-02 Thu 16:09:11]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:11]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da';"
+[2018-08-02 Thu 16:09:11]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '6a0ef8f4-9583-11e8-a374-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:11]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where hostname = 'www.taobao.com';"
+[2018-08-02 Thu 16:09:16]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-02 Thu 16:09:16]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '14032678-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da';"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where taskid = '1410a6d6-90ac-11e8-af6f-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['ip_maindata']======================
+select count(*) from ip_maindata where ip = '110.110.110.120';"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['ip_maindata']======================
+select ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state, city from ip_maindata where ip = '110.110.110.120' order by updatetime desc limit 0,15;"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['snifferdata']======================
+select count(*) from snifferdata where ip = '110.110.110.120' and ( port='12');"
+[2018-08-02 Thu 16:09:17]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['snifferdata']======================
+select ip, port, timesearch, state, name, product, version, script, detail, head, hackinfo from snifferdata where ip = '110.110.110.120' and ( port='12') order by port limit 0,15;"
+[2018-08-02 Thu 16:09:32]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata where username = 'admin' and tasksid = '8626f210-93ff-11e8-8777-74e50ba386da';"
+[2018-08-02 Thu 16:09:32]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata where username = 'admin' and tasksid = '8626f210-93ff-11e8-8777-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:35]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-02 Thu 16:09:35]SQLTool.py-9830-140382619121408-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-02 Thu 16:09:35]SQLTool.py-9830-140382619121408-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382413768448-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata where username = 'admin' and tasksid = '8626f210-93ff-11e8-8777-74e50ba386da';"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382413768448-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata where username = 'admin' and tasksid = '8626f210-93ff-11e8-8777-74e50ba386da' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select count(*) from taskdata where groupsid = '8626f210-93ff-11e8-8777-74e50ba386da' and taskname = '8626f210-93ff-11e8-8777-74e50ba386da' and username = 'admin' and taskaddress = 'www.jd.com';"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382414296832-176-    INFO-"
+======================查询表['taskdata']======================
+select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress, taskport, result, endtime, createtime, forcesearch, groupsid from taskdata where groupsid = '8626f210-93ff-11e8-8777-74e50ba386da' and taskname = '8626f210-93ff-11e8-8777-74e50ba386da' and username = 'admin' and taskaddress = 'www.jd.com' order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382415353600-375-    INFO-"插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-02 16:09:37',country='', country_id='',area='', area_id='0',region='', region_id='',city='', city_id='0',county='', county_id='0',isp='', isp_id='0'"
+[2018-08-02 Thu 16:09:37]SQLTool.py-9830-140382415353600-376-    INFO-"插入数据库内容为:
+[('www.jd.com', u'', '', u'', '0', u'', '', u'', '0', u'', '0', u'', '0', '2018-08-02 16:09:37')]"
+[2018-08-02 Thu 16:09:39]SQLTool.py-9830-140382618330880-176-    INFO-"
+======================查询表['user_table']======================
+select username, role, userpower from user_table where username = 'admin' and password = 'admin' order by username desc;"
+[2018-08-02 Thu 16:09:40]SQLTool.py-9830-140382617802496-176-    INFO-"
+======================查询表['tasksdata']======================
+select count(*) from tasksdata;"
+[2018-08-02 Thu 16:09:40]SQLTool.py-9830-140382617802496-176-    INFO-"
+======================查询表['tasksdata']======================
+select username, tasksid, tasksname, status, starttime, tasksaddress, taskport, endtime, createtime, num, completenum from tasksdata order by createtime desc limit 0,15;"
+[2018-08-02 Thu 16:09:56]SQLTool.py-9830-140382398158592-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-02 Thu 16:09:56]SQLTool.py-9830-140382398158592-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 16:10:05]SQLTool.py-9830-140382399477504-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120';"
+[2018-08-02 Thu 16:10:05]SQLTool.py-9830-140382399477504-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = '110.110.110.120' order by snifferdata.port limit 0,15;"
+[2018-08-02 Thu 16:10:31]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn';"
+[2018-08-02 Thu 16:10:31]SQLTool.py-9830-140382414825216-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"

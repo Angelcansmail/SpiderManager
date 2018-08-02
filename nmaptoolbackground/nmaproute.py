@@ -246,7 +246,7 @@ def ipmain(request):
             ip = jobs[0].getJobaddress()   
             port = jobs[0].getPort()
             jobstatuss = jobs[0].getStatus()
-            isip = webtool.isip(ip)
+            isip = webtool.isip(ip) #xxx.xxx.xxx.xxx
 
             # ips:所有结果存入的一个list中(每个结果都是一个Ip对象) counts:查询到的结果数量, pagecounts:页面数
             if isip:
@@ -305,19 +305,22 @@ def upload_ip_info(request):
     func = request.POST.get('func','')
     dic = request.POST.get('dic','{}')
     nowdic = eval(dic)  #存在安全隐患, 改用json库
-    tempwprk = Sqldata.SqlData(func, nowdic)    #赋值给Sqldata类, 后期通过getXXX获取
+    tempwprk = Sqldata.SqlData(func, nowdic)    #赋值给Sqldata类, 后期通过getXXX获取, 在Sqldatatask.py中
     sqldatawork.append(tempwprk)
     sqlTool = Sqldatatask.getObject()
     sqlTool.add_work(sqldatawork)
-#     works=request.POST.get('workdetail',[])
-#     print works
-#     tempvendor=request.POST.get('vendor','')
-#     temposfamily=request.POST.get('osfamily','')
-#     temposgen=request.POST.get('osgen','')
-#     tempaccuracy=request.POST.get('accuracy','')
-#     temphostname=request.POST.get('hostname','')
-#     tempstate=request.POST.get('state','')
-#     ipcontrol.ip_info_upload(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)
+    works = request.POST.get('workdetail',[])
+    print "nmaproute::upload_ip_info():", works
+    temphosts = request.POST.get('ip','')
+    tempvendor=request.POST.get('vendor','')
+    temposfamily=request.POST.get('osfamily','')
+    temposgen=request.POST.get('osgen','')
+    tempaccuracy=request.POST.get('accuracy','')
+    localtime = str(time.strftime("%Y-%m-%d %X",  time.localtime()))
+    temphostname=request.POST.get('hostname','')
+    tempstate=request.POST.get('state','')
+    ipcontrol.ip_info_upload(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)
+
     data={}
     data['result']='1'
     return HttpResponse(json.dumps(data,skipkeys=True,default=webtool.object2dict), content_type="application/json")   

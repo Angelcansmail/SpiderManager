@@ -29,7 +29,6 @@ class IPTool(TaskTool, IPTool):
 
     def task(self,req,threadname):
         if len(req)>2:
-
             startip=str(req[0])
             stopip=str(req[1])
             taskid = req[2].get('taskid','')
@@ -39,13 +38,13 @@ class IPTool(TaskTool, IPTool):
             command=req[2].get('command','')
             status = req[2].get('status','')
             mode=req[2].get('mode','2')
-            if command=='create':
-                if mode==1:
+
+            if command == 'create':
+                if mode == 1:
                     self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
                 else:
-
                     jobs, count, pagecount=jobcontrol.jobshow(groupid=taskid)
-                    if count>0:
+                    if count > 0:
                         ip=jobs[0].getJobaddress()
 
                         print '当前数据库读到最后一次的任务是:'+ip
@@ -57,19 +56,13 @@ class IPTool(TaskTool, IPTool):
                             startipnum = startipnum + 1
                             ip = self.num2ip(startipnum)
                             self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status)
-
                     else:
                         self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
-
-
                 pass
             elif command=='work':
                 if mode == 1:
                     self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
                 elif mode ==0:
-
-
-
                     jobs, count, pagecount = jobcontrol.jobshow(groupid=taskid,jobstatus='5')
                     if count > 0:
                         ip = jobs[0].getJobaddress()
@@ -88,9 +81,7 @@ class IPTool(TaskTool, IPTool):
                             self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status)
 
                     else:
-
                         self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
-
                 else:
                     portarray, count, pagecount=portcontrol.portshow(order='timesearch desc')
                     if count>0:
@@ -129,7 +120,6 @@ class IPTool(TaskTool, IPTool):
                     startipnum = startipnum + x
                     ip=self.num2ip(startipnum)
 
-
                 if isjob == '0':
                     ajob = job.Job(jobaddress=str(ip), jobport='', forcesearch='0', isjob='0')
                 else:
@@ -141,10 +131,7 @@ class IPTool(TaskTool, IPTool):
                         ajob = jobitems[0]
                         print ajob.getJobid()
 
-
-
                 if command=='create':
-
                     insertdata.append((username, ajob.getJobid(), ajob.getJobname(), ajob.getPriority(), ajob.getStatus(),
                             ajob.getJobaddress(),ajob.getPort(),ajob.getCreatetime(),ajob.getForcesearch(),ajob.getGroupsid()
                             ))
@@ -160,12 +147,14 @@ class IPTool(TaskTool, IPTool):
                                "select_params": ['username', 'taskid', 'taskname', 'taskprior', 'taskstatus',
                                                  'taskaddress', 'taskport', 'createtime', 'forcesearch', 'groupsid'],
                                "insert_values": insertdata}
+                        print "spidertool::iptask::getIplist() command==create"
                         tempwprk = Sqldata.SqlData('inserttableinfo_byparams', dic)
                         sqldatawprk.append(tempwprk)
                         self.sqlTool.add_work(sqldatawprk)
                         sqldatawprk = []
                         insertdata=[]
                         pass
+
                 elif command=='work':
                     tasktotally=taskcontrol.getObject()
                     self.getlocationtool.add_work([str(ip)])
@@ -175,8 +164,6 @@ class IPTool(TaskTool, IPTool):
                             time.sleep(60*5)
                         else:
                             break
-
-
                     # updatedata = []
                     # dic = {
                     #     "table": [self.config.tasktable],
@@ -202,7 +189,7 @@ class IPTool(TaskTool, IPTool):
                 "set_params": [setvalue],
                 "request_params": ['tasksid'],
                 "equal_params": ['\''+str(taskid)+'\'']
-            }
+                }
                 updateitem = Sqldata.SqlData('updatetableinfo_byparams', dic)
                 updatedata = []
                 updatedata.append(updateitem)

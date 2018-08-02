@@ -38,6 +38,7 @@ class Ip(object):
                     self.location = Location(ip=str(self.ip)).getData()
             except Exception, e:
                 self.location = Location(ip=str(self.ip)).getData()
+
     def setIP(self,ip):
         self.ip=ip
 

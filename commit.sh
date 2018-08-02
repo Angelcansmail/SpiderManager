@@ -10,12 +10,12 @@
 #
 #================================================================
 
-commit=$1
+content=$1
 
 rm *.pyc
 rm */*.pyc
 rm */*/*.pyc
 rm */*/*/*.pyc
 git add *
-git commit -m $commit
+git commit -m $content
 git push origin master

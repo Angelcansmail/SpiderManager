@@ -33,7 +33,6 @@ def decodestr(msg):
                     return msg.decode('gbk')
                 else:
                     return msg.decode(chardit1['encoding']).encode('utf-8')
-
     except Exception,e:
         return str(msg)
 
@@ -105,7 +104,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         try:
             res=instanceitem.save()
         except Exception,e:
-            logger and logger.error('error: %s', str(e))
+            logger and logger.error('Error: %s', str(e))
         else:
             logger and logger.info('insert success')
 
@@ -190,6 +189,7 @@ def search(page='0',dic=None, content=None):
 # })
     s = s[int(page)*limitpage:int(page)*limitpage+limitpage]
 
+    # elasticsearch_dsl/search.py
     response = s.execute()
     print ("======================elasticsearch results:%s, response::%s======================"%(str(s), str(response)))
 
@@ -205,9 +205,9 @@ def search(page='0',dic=None, content=None):
             pagecount = count / limitpage
 
         from nmaptoolbackground.model import ports
-        count=len(response)
+        count = len(response)
         print '返回的实际数量为%d' % count 
-        if count>0:
+        if count > 0:
             for temp in response :
                 dic=temp.to_dict()
                 aport=ports.Port(ip=getproperty(dic,'ip'),port=getproperty(dic,'port'),timesearch=getproperty(dic,'timesearch'),state=getproperty(dic,'state'),name=getproperty(dic,'name'),product=getproperty(dic,'product'),version=getproperty(dic,'version'),script=base64.b64encode(str(getproperty(dic,'script'))),detail=getproperty(dic,'detail'),head=getproperty(dic,'head'),city='',hackinfo=getproperty(dic,'hackinfo'),disclosure=getproperty(dic,'disclosure'),keywords=getproperty(dic,'keywords'),webtitle=base64.b64encode(str(getproperty(dic,'webtitle'))),webkeywords=getproperty(dic,'webkeywords'))
@@ -226,7 +226,7 @@ def search(page='0',dic=None, content=None):
                 # hackinfo=getproperty(dic,'hackinfo')
                 # disclosure=getproperty(dic,'disclosure')
                 portarray.append(aport)
-        return portarray,count,pagecount
+        return portarray, count, pagecount
     else:
         print '查询失败'
         return [],0,0

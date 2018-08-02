@@ -70,11 +70,11 @@ def loadtask(request,username=''):
     priority = request.POST.get('priority','')
     abstract = request.POST.get('abstract','')
     forcesearch = request.POST.get('forcesearch','0')
-    tempjob=None
+    tempjob = None
 
     if taskaddress=='' or tasksname=='':
         return tempjob, False
-    tempjob=tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,forcesearch=forcesearch)
+    tempjob = tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,forcesearch=forcesearch)
 
     return tempjob,True
 
@@ -146,6 +146,7 @@ def createjob(job):
     info['command'] = 'create'
     info['status'] = status
     info['mode'] = mode
+
     identifyip(jobaddress, info)
 
 def startjob(job):
@@ -229,11 +230,11 @@ def identifyip(msg, dic):
     regix="(\d+\.\d+\.\d+\.\d+)\-(\d+\.\d+\.\d+\.\d+)"
     for i in msg:
         m1 = re.search(regix, i)
-        print m1,i,'this is 237'
+        print m1,i,'this is taskscontrol::identifyip()'
         if m1:
-            iprange=m1.group().split('-')
-            print iprange,i
-            startip=iprange[0]
+            iprange = m1.group().split('-')
+            print "taskscontrol::identifyip()", iprange, i
+            startip = iprange[0]
             stopip = iprange[1]
             listitem.add_work([(startip, stopip, dic)])
         else:
@@ -241,7 +242,7 @@ def identifyip(msg, dic):
             m2 = re.search(regixx, i)
             if m2:
                 ary.add(m2.group())
-            else:   # 非法ip?
+            else:   # web页面地址,eg:www.baidu.com
                 ary.add(i)
     for i in ary:
         listitem.add_work([(i, i, dic)])

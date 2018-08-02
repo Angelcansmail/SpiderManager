@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env pythen
 # -*- coding: utf-8 -*-
 import sys
 reload(sys)
@@ -35,18 +35,17 @@ def get(key):
         # import pickle
         # prev_topicList=pickle.loads(prev_topicList_redis)
         prev_topicList = json.loads(prev_topicList_redis,encoding='utf-8')
-        prev_topicList=debase64(prev_topicList)
+        prev_topicList = debase64(prev_topicList)
     except Exception,e:
         print e,'redis-get'
         try:
             prev_topicList=eval(prev_topicList)
         except Exception,e:
             print e
-
     return prev_topicList
 
 def debase64(dic):
-    return iterobj(dic,decode_base64)
+    return iterobj(dic, decode_base64)
 
 def decode_base64(data):
     """Decode base64, padding being optional.
@@ -56,16 +55,18 @@ def decode_base64(data):
 
     """
     import base64
+    print "redistool::decode_base64() before_data", data
     missing_padding = len(data) % 4
     if missing_padding != 0:
-        data += b'='* (4 - missing_padding)
+        data += b'='* (4 - missing_padding) # bytes格式,=填充
+    print "redistool::decode_base64() after_data", data   #MA==
     return base64.decodestring(data)
 
 def enbase64(dic):
     import base64
     return iterobj(dic,base64.b64encode)
 
-def iterobj(dic,func):
+def iterobj(dic, func):
     print ("iterobj() dic:%s, func:%s"%(str(dic), str(func)))
     if dic == None:
         return None
@@ -101,7 +102,7 @@ def set(key,value):
     if redisinstance is None:
         return
     import copy
-    topicList_json=copy.deepcopy(value)
+    topicList_json = copy.deepcopy(value)
     # topicList_json=value
     try:
         # import pickle

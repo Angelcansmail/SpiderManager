@@ -6,8 +6,12 @@ from django.http import HttpResponse
 
 from nmaptoolbackground.control import portcontrol
 from spidertool import webtool
+from fontsearch.control import mapcontrol
+
 import json
 import datetime
+
+timeout=60*20
 
 def indexpage(request):
     username = request.COOKIES.get('username','')
@@ -53,9 +57,9 @@ def detailpage(request):
             try:
                 item = webtool.md5('sch_'+str(content)+'page'+str(page))
                 redisresult = redistool.get(str(item))
-                print "redistool::detailpage() redisresult?", redisresult
+                print "searchdroute::detailpage() redisresult?", redisresult
 
-                if redisresult :
+                if redisresult:
                     print '从redids取的数据'
                     try:
                         response_data['result'] = '1'
@@ -84,10 +88,9 @@ def detailpage(request):
                     import sys
                     sys.path.append("..")
                     from elasticsearchmanage import elastictool
-                    ports,portcount,portpagecount = elastictool.search(page=page,dic=None,content=content)
+                    ports, portcount, portpagecount = elastictool.search(page=page,dic=None,content=content)
 
                     redisdic = {}
-
                     redisdic['ports'] = ports
                     redisdic['portslength'] = portcount
                     redisdic['portspagecount'] = portpagecount
@@ -98,10 +101,9 @@ def detailpage(request):
                     response_data['portslength'] = portcount
                     response_data['portspagecount'] = portpagecount
                     response_data['portspage'] = page
-
-
             except Exception,e:
-                print e
+                # 连接失败/
+                print "search Error! in 模糊检索", e
                 try:
                     # 模糊检索 match against
                     extra = ' where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '
@@ -115,9 +117,7 @@ def detailpage(request):
                     print e
             print '检索完毕'
             response_data['result'] = '1'
-
             response_data['keywords'] = content.split()
-
             response_data['username']=username
     else:
         action = jsoncontent.keys()
@@ -216,7 +216,6 @@ def detailpage(request):
             response_data['username']=username
 
     try:
-
         return HttpResponse(json.dumps(response_data,skipkeys=True,default=webtool.object2dict), content_type="application/json")
     except Exception,e:
         print e
@@ -228,7 +227,7 @@ def detailpage(request):
 
 # 获得该ip信息 
 def ipinfo(request):
-    ip = request.POST.get('ip','127.0.0.1')
+    ip = request.POST.get('ip','')
     response_data = {}
     response_data['result'] = '0'
     data={}
@@ -254,4 +253,92 @@ def ipinfo(request):
         print "Ipinfo_2() Error:", e
         return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='latin-1'),
                             content_type="application/json")
+
+def mapsearchmain(request):
+    username = request.COOKIES.get('username', '')
+    return render_to_response('fontsearchview/mapsearchmain.html',{'username':username})
+
+def mapsearch(request):
+    from spidertool import redistool,webtool
+    content = request.POST.get('content', '')
+    username = request.COOKIES.get('username', '')
+    response_data = {}
+    response_data['result'] = '0'
+    jsoncontent = None
+    ports = None
+    import json
+    try:
+        jsonmsg = '{' + content + '}'
+        jsoncontent = json.loads(jsonmsg)
+    except Exception, e:
+        print e
+        pass
+
+    if jsoncontent is None or jsoncontent =={}:
+        redisresult = redistool.get(content)
+
+        """
+        if redisresult:
+            print 'searchroute::mapsearch() 从redis取的数据'
+            response_data['result'] = '1'
+
+            response_data['ports'] = redisresult['ports']
+            response_data['portslength'] = redisresult['portslength']
+            response_data['resultsize'] = redisresult['resultsize']
+        else:
+        """
+        if True:
+            print "mapsearch() redis无结果"
+            # ports has name and value
+            ports, portcount, resultsize = mapcontrol.mapshow(searchcontent=content, isdic=0)
+
+            redisdic={}
+            redisdic['ports'] = ports
+            redisdic['portslength'] = portcount
+            redisdic['resultsize'] = resultsize
+            redistool.set(content, redisdic)
+
+            response_data['result'] = '1'
+            response_data['ports'] = ports
+            response_data['portslength'] = portcount
+            response_data['resultsize'] = resultsize
+
+        response_data['username'] = username
+    else:
+        action = jsoncontent.keys()
+
+        if len(content) == 0:
+            return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
+                                    content_type="application/json")
+
+        redisresult = redistool.get(webtool.md5(str(jsoncontent.__str__)))
+        if redisresult:
+            print '从redids取的数据'
+            response_data['result'] = '1'
+
+            response_data['ports'] = redisresult['ports']
+            response_data['portslength'] = redisresult['portslength']
+            response_data['resultsize'] = redisresult['resultsize']
+        else:
+            ports, portcount, portpagecount = getattr(mapcontrol, 'mapshow', 'mapshow')(**jsoncontent)
+            redisdic = {}
+            redisdic['ports'] = ports
+            redisdic['portslength'] = portcount
+            redisdic['resultsize'] = portpagecount
+            redistool.set(webtool.md5(str(jsoncontent.__str__)), redisdic)
+            response_data['result'] = '1'
+            response_data['ports'] = ports
+            response_data['portslength'] = portcount
+            response_data['resultsize'] = portpagecount
+
+        response_data['username'] = username
+
+    try:
+        return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
+                            content_type="application/json")
+    except Exception, e:
+        print e
+        return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='latin-1'),
+                            content_type="application/json")
+
 
