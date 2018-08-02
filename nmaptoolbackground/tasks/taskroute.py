@@ -59,6 +59,7 @@ def addtask(request):
                             content_type="application/json")
 
     result = taskscontrol.addtask(job)
+    # save ip, a iptask.object
     temp = taskscontrol.createjob(job)
 
     if result:

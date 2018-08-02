@@ -113,6 +113,7 @@ class DBmanager:
 			print 'request_params, equals_params长度不相等'
 			return (0, 0, 0, 0)
 
+        # mapcontrol设定usesql为1, 试先拼接好了sql语句
 		if usesql == 1:
 			sql = table
 			try:
@@ -138,9 +139,10 @@ class DBmanager:
 				col = None
 				if content is not None:
 					col = len(content)
+				print ("======================debug::searchtableinfo_byparams()======================\n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n"%(result,  content,  count,  col))
 				return result,  content,  count,  col
 			else:
-				print '没有相关信息'
+				print table, '没有相关信息'
 				return (0,  0,  0,  0)
 		elif  self.__isconnect == 1:
 			try:

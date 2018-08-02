@@ -1,6 +1,6 @@
 #!/usr/bin/python
 #coding:utf-8
-from spidertool import SQLTool ,config,Sqldatatask
+from spidertool import SQLTool, Sqldata, config, Sqldatatask
 from ..model import ipmain
 import time 
 limitpage=15
@@ -84,9 +84,6 @@ def ipadd(ip):
     updatetime=ip.getUpdatetime()
     accurate=ip.getAccurate()
     hostname=ip.getHostname()
-
-    
-    
     
     request_params=[]
     values_params=[]
@@ -117,7 +114,7 @@ def ipadd(ip):
     if city != '':
         request_params.append('city')
         values_params.append(city)
-    table=localconfig.iptable
+    table = localconfig.iptable
     DBhelp=SQLTool.DBmanager()
     DBhelp.connectdb()
 
@@ -125,14 +122,13 @@ def ipadd(ip):
     DBhelp.closedb()
 
     return tempresult
+
 def ip_info_upload(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate):
-    localtime=str(time.strftime("%Y-%m-%d %X", time.localtime()))
-    sqlTool=Sqldatatask.getObject()
-#     sqldatawprk=[]
-#     dic={"table":self.config.iptable,"select_params": ['ip','vendor','osfamily','osgen','accurate','updatetime','hostname','state'],"insert_values": [(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)]}
-#     tempwprk=Sqldata.SqlData('replaceinserttableinfo_byparams',dic)
-#     sqldatawprk.append(tempwprk)
-#     sqlTool.add_work(sqldatawprk)
-    pass 
-    
-    
+    localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
+    sqlTool = Sqldatatask.getObject()
+    sqldatawprk = []
+    dic = {"table":localconfig.iptable,"select_params": ['ip','vendor','osfamily','osgen','accurate','updatetime','hostname','state'],"insert_values": [(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)]}
+    tempwprk = Sqldata.SqlData('replaceinserttableinfo_byparams', dic)
+    sqldatawprk.append(tempwprk)
+    sqlTool.add_work(sqldatawprk)
+    pass

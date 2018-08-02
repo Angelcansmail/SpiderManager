@@ -22,11 +22,13 @@ def ipsearch(page='0',dic=None,content=None):
     orderarray = []
     print ("======================ipestool::ipsearch() dic:%s, content:%s======================"%(dict, content))
     if content is not None:
+        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'database')
         q = Q("multi_match", query=content, fields=['ip', 'city','vendor',
                 'isp' ,'region' ,'country'  ,'updatetime','county' ,'osfamily'  ])
+    # GET方式访问/ipsearch传入dict(貌似只有一个ip)
     else:
         searcharray=[]
-        keys=dic.keys()
+        keys = dic.keys()
         orderlabel=0
 
         for key in keys:
@@ -38,17 +40,16 @@ def ipsearch(page='0',dic=None,content=None):
                 searcharray.append(Q('term', isp=dic[key]))
             if key=='region':
                 searcharray.append(Q('term', region=dic[key]))
-
             if key=='order':
                 orderarray.append(dic[key])
                 orderlabel=1
-        q = Q('bool', must=searcharray)
-    print ("======================elasticsearch Q:\n%s\n"%q)
+        q = Q('bool', must=searcharray) # Bool(must=[Term(ip='110.110.110.120')])
+    print ("======================elasticsearch Q:======================\n%s\n"%q)
 
-    if orderlabel==0:
+    if orderlabel == 0:
         s = Search(index='datap', doc_type='ip_maindata').query(q)
     else:
-        s=Search(index='datap', doc_type='ip_maindata').query(q).sort(orderarray[0])
+        s = Search(index='datap', doc_type='ip_maindata').query(q).sort(orderarray[0])
 
     s = s[int(page)*limitpage:int(page)*limitpage+limitpage]
 
@@ -70,11 +71,12 @@ def ipsearch(page='0',dic=None,content=None):
         print '返回的实际数量为%d' % count
         from elastictool import getproperty
 
-        if count>0:
+        if count > 0:
             for temp in response :
-                dicc=temp.to_dict()
-
-                aip=ipmain.Ip(ip=getproperty(dicc,'ip'),vendor=getproperty(dicc,'vendor'),osfamily=getproperty(dicc,'osfamily'),osgen=getproperty(dicc,'osgen'),accurate=getproperty(dicc,'accurate'),state=getproperty(dicc,'state'),hostname=getproperty(dicc,'hostname'),updatetime=getproperty(dicc,'updatetime'),city=getproperty(dicc,'city'),isp=getproperty(dicc,'isp'),county=getproperty(dicc,'county'),country=getproperty(dicc,'country'),region=getproperty(dicc,'region'))
+                dicc = temp.to_dict()
+                print dicc
+                aip = ipmain.Ip(ip=getproperty(dicc,'ip'),vendor=getproperty(dicc,'vendor'),osfamily=getproperty(dicc,'osfamily'),osgen=getproperty(dicc,'osgen'),accurate=getproperty(dicc,'accurate'),state=getproperty(dicc,'state'),hostname=getproperty(dicc,'hostname'),updatetime=getproperty(dicc,'updatetime'),city=getproperty(dicc,'city'),isp=getproperty(dicc,'isp'),county=getproperty(dicc,'county'),country=getproperty(dicc,'country'),region=getproperty(dicc,'region'))
+                print ('======================ipestool get ip\"s response:======================\n%s' % str(aip))
                 portarray.append(aip)
         else:
             pass

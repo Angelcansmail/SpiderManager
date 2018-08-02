@@ -7,13 +7,14 @@ import re
 limitpage=15
 DBhelp=None
 
+# searchroute::detailpage传入page, extra, command='or'
 def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',page='0',extra='',command='and',head='',city='',hackinfo='',disclosure=''):
-    localconfig=config.Config()
-    table=localconfig.porttable
-    iptable=localconfig.iptable
-    validresult=False
-    request_params=[]
-    values_params=[]
+    localconfig = config.Config()
+    table = localconfig.porttable   #snifferdata
+    iptable = localconfig.iptable   #ip_maindata
+    validresult = False
+    request_params = []
+    values_params = []
 
     if ip != '':
         request_params.append(table+'.'+'ip')
@@ -53,8 +54,8 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
     DBhelp=SQLTool.DBmanager()
     DBhelp.connectdb()
     
-    content=None
-    result=None
+    content = None
+    result = None
     try:
         result,content,count,col=DBhelp.searchtableinfo_byparams([table+' left join ip_maindata on snifferdata.ip=ip_maindata.ip'], ['count(*)'], request_params, values_params,extra=extra,command=command)
     except Exception,e:
@@ -74,11 +75,11 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
 
 #     print pagecount
     if pagecount>0:
-        limit='    limit  '+str(int(page)*limitpage)+','+str(limitpage)
+        limit = ' limit '+str(int(page)*limitpage)+','+str(limitpage)
         try:
-            result,content,count,col=DBhelp.searchtableinfo_byparams([table+' left join ip_maindata on snifferdata.ip=ip_maindata.ip'], [table+'.'+'ip','port','timesearch',table+'.'+'state','name','product','version','script','detail','head','city','hackinfo','disclosure'], request_params, values_params,limit=limit,order=table+'.'+'port',extra=extra,command=command)
+            result, content, count, col = DBhelp.searchtableinfo_byparams([table + ' left join ip_maindata on snifferdata.ip=ip_maindata.ip'], [table+'.'+'ip','port','timesearch',table+'.'+'state','name','product','version','script','detail','head','city','hackinfo','disclosure'], request_params, values_params,limit=limit,order=table+'.'+'port',extra=extra,command=command)
         except Exception,e:
-            print str(e)+'portcontrol 69'
+            print str(e) + 'portcontrol 69'
             if DBhelp is not None:
                 DBhelp.closedb()
             return [],0,0
@@ -96,7 +97,7 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
 
 #                 aport=ports.Port(ip=temp[0],port=temp[1],timesearch=temp[2],state=temp[3],name=temp[4],product=temp[5],version=temp[6],script=temp[7])
                 portarray.append(aport)
-        print str(count)+'          '+str(pagecount)
+        print str(count)+' '+str(pagecount)
         return portarray,count,pagecount
     return [],0,pagecount
 
@@ -169,7 +170,7 @@ def portshow(ip='',port='',timesearch='',state='',name='',product='',version='',
 #    print pagecount
 
     if pagecount > 0:
-        limit=' limit ' + str(int(page)*limitpage) + ',' + str(limitpage)
+        limit = ' limit ' + str(int(page)*limitpage) + ',' + str(limitpage)
         try:
             result, content, count, col=DBhelp.searchtableinfo_byparams([table], ['ip','port','timesearch','state','name','product','version','script','detail','head','hackinfo'], request_params, values_params,limit,order=order,extra=extra,command=command)
         except Exception,e:
@@ -202,9 +203,6 @@ def portadd(port):
     version=port.getAccurate()
     script=port.getHostname()
 
-    
-    
-    
     request_params=[]
     values_params=[]
     if ip != '':
