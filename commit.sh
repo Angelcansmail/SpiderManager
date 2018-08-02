@@ -17,5 +17,5 @@ rm */*.pyc
 rm */*/*.pyc
 rm */*/*/*.pyc
 git add *
-git commit -m $content
+git commit -m "$content"
 git push origin master
