@@ -2033,3 +2033,9 @@ select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_main
 [2018-08-02 Thu 16:10:31]SQLTool.py-9830-140382414825216-176-    INFO-"
 ======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
 select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where snifferdata.ip = 'www.bgpc.gov.cn' order by snifferdata.port limit 0,15;"
+[2018-08-03 Fri 04:56:55]SQLTool.py-14385-140255055767296-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where city = '北京';"
+[2018-08-03 Fri 04:56:55]SQLTool.py-14385-140255055767296-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where city = '北京' order by snifferdata.port limit 0,15;"

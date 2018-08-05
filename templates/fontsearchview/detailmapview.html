@@ -155,6 +155,8 @@
             var ports = data2.ips;
             var datalength = data2.ipcount;
             var pagesize = data2.ippagecount;
+            // location什么时候赋值的, getLocation.py?
+            alert([ports[0].country, ports[0].location, ports[0].city, ports[0].isp, ports[0].region]);
             var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
             var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
             var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
@@ -173,9 +175,9 @@
 
             document.getElementById("ipinfo").innerHTML = bodyhtml;
 
-            var latitude=ports[0].location['geoip']['location']['latitude'];
-            var longitude=ports[0].location['geoip']['location']['longitude'];
-            window.frames["detailmap"].src = '/search/map/?latitude='+latitude+'&longitude='+longitude;
+            var latitude = ports[0].location['geoip']['location']['latitude'];
+            var longitude = ports[0].location['geoip']['location']['longitude'];
+            window.frames["detailmap"].src = '/fontsearch/map?latitude='+latitude+'&longitude='+longitude;
         }
     }
 
@@ -219,6 +221,7 @@
             var datalength = data2.portslength;
             var pagesize = data2.portspagecount;
             var ports = data2.ports;
+            alert(["showportinfo", ports]);
 
             var bodyhtml = "";
             for (var i = 0; i < datalength; i++) {
@@ -245,26 +248,15 @@
                                     "<div class=\"protocol\">"+potocalname+"</div>"+
                                     "<div class=\"state\">"+ports[i].product+"</div>";
                 if(potocalname=='http'||potocalname=='https'||potocalname=='ftp'){
-
                     servicehtml+= "<a href=\"" + potocalname + "://" + ports[i].ip + ':' + ports[i].port+"\" target=\"_blank\" class=\"link\"><i class=\"fa fa-mail-forward\">&nbsp; </i></a> ";
-
-
                 }
-                     servicehtml+= "</div><div class=\"service-main\"><pre>"+(ports[i].head == null  ? '无' : encodeHtml(ports[i].head ).toString()) +
-"</pre><div class=\"clear\"></div> </div> </li> ";
-
-
-
+                     servicehtml+= "</div><div class=\"service-main\"><pre>"+(ports[i].head == null  ? '无' : encodeHtml(ports[i].head ).toString()) + "</pre><div class=\"clear\"></div> </div> </li> ";
                 // xmp
             }
 servicehtml+="</ul>";
-
             document.getElementById("portinfo").innerHTML = porthtml+servicehtml;
-
-
          }
 }
-
         encodeHtml = function (s) {
         return (typeof s != "string") ? s :
                 s.replace(/"|&|'|<|>|[\x00-\x20]|[\x7F-\xFF]|[\u0100-\u2700]/g,
