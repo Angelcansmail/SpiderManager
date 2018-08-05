@@ -122,16 +122,13 @@ def detailpage(request):
     else:
         action = jsoncontent.keys()
         if 'use' in action or 'city' in action:
-            del jsoncontent['use']
+            if 'use' in action:
+                del jsoncontent['use']
             jsoncontent['page']=page
             if 'all' in action:
-                
-                extra='     where     match(version,product,head,detail,script,hackinfo,disclosure,keywords) against(\''+jsoncontent['all']+'\' in Boolean mode)  '
-
+                extra = ' where match(version,product,head,detail,script,hackinfo,disclosure,keywords) against(\''+jsoncontent['all']+'\' in Boolean mode)  '
                 ports,portcount,portpagecount = portcontrol.portabstractshow(page=page,extra=extra,command='or')
-
             else:
-        
                 ports, portcount, portpagecount = getattr(portcontrol, 'portabstractshow','portabstractshow')(**jsoncontent)
             response_data['result'] = '1'
             response_data['keywords'] = jsoncontent.values()
@@ -143,7 +140,6 @@ def detailpage(request):
         else:
             if len(content)==0:
                 return HttpResponse(json.dumps(response_data,skipkeys=True,default=webtool.object2dict), content_type="application/json")  
- 
             print '进入elasticsearch 具体关键词匹配'
             try:
                 item = str(webtool.md5('sch_' + str(jsoncontent) + '_page' + str(page)))
@@ -177,8 +173,6 @@ def detailpage(request):
                         redisdic['portspage'] = page
                         redistool.set(item, redisdic)
                         redistool.expire(item, timeout)
-
-
                 else:
                     import sys
                     sys.path.append("..")
@@ -253,6 +247,12 @@ def ipinfo(request):
         print "Ipinfo_2() Error:", e
         return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='latin-1'),
                             content_type="application/json")
+
+def map(request):
+    username = request.COOKIES.get('username', '')
+    latitude = request.GET.get('latitude', 0)
+    longitude = request.GET.get('longitude', 0)
+    return render_to_response('fontsearchview/map.html', {'data': '', 'username': username,'latitude':latitude,'longitude':longitude})
 
 def mapsearchmain(request):
     username = request.COOKIES.get('username', '')
