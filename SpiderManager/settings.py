@@ -1,3 +1,5 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
 """
 Django settings for SpiderManager project.
 
@@ -26,7 +28,8 @@ SECRET_KEY = 'ph&sh%pbiqbfa$cdbz&rq&mdpr#2t=eh999=h%&x9&yg!q(a=n'
 DEBUG = True
 
 ALLOWED_HOSTS = ['200.200.200.200']
-
+# 设置项是否开启URL访问地址后面不为/跳转至带有/的路径
+# APPEND_SLASH = True
 
 # Application definition
 
@@ -112,7 +115,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
+# TIME_ZONE = 'UTC'
 
 USE_I18N = True
 

@@ -238,13 +238,13 @@ def ipinfo(request):
         response_data['iplength'] = ipcount
         response_data['ippagecount'] = ippagecount
     except Exception,e:
-        print "Ipinfo_1() Error()", e
+        print "======================searchroute::ipinfo() ipestool.ipsearch======================\nError:", e
         pass
     try:
         return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
                         content_type="application/json")
     except Exception,e:
-        print "Ipinfo_2() Error:", e
+        print "======================searchroute::ipinfo() Ipinfo_2() ======================\nError:", e
         return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict, encoding='latin-1'),
                             content_type="application/json")
 

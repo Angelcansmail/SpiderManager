@@ -25,11 +25,10 @@ class Portscantool:
         self.socketclient=None
         try:
             from detection import port_identify
-            head,ans,keywords,hackinfo=port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
-            if ans==None:
+            head,ans,keywords,hackinfo = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
+            if ans == None:
                 self.socketclient=  socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socketclient.connect((ip,int(port)))
-
 #             message = "GET / HTTP/1.1\r\nHost: oschina.net\r\n\r\n"
                 message =portway.get(name,"GET  world \r\n\r\n")
                 if self.socketclient:
@@ -51,16 +50,9 @@ class Portscantool:
    
 if __name__ == "__main__":
     temp=Portscantool()
-    temp.do_scan(ip='172.20.13.11', port='80')
+    temp.do_scan(ip='122.114.49.116', port='3306')
 #     temp.do_scan('218.106.87.35', '110')
     
-
-
-
-
-
-
-
 
 
 

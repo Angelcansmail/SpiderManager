@@ -1,13 +1,10 @@
 #!/usr/bin/python
 #coding:utf-8
-#!/usr/bin/python
-#coding:utf-8
-from spidertool.ThreadTool import ThreadTool
 import datetime
 import time
 from lib.logger import initLog
-from spidertool import config,webconfig
-from spidertool.TaskTool import TaskTool
+from spidertool import config, webconfig
+from spidertool.TaskTool import TaskTool, ThreadTool
 import objgraph
 import gc
 from fuzzdetect import InfoDisScanner 
@@ -43,23 +40,19 @@ class FuzzTask(TaskTool):
         keywords='' if req[5] is None else req[5]
         nmapscript='' if req[6] is None else req[6]
         protocol='' if req[7] is None else req[7]
-#         print 'poc   未启动内存增长状况'
-#         gc.collect()
-#         objgraph.show_growth()
-#         temp=default.PocController(logger=logger)
-
-        
+        print 'poc   未启动内存增长状况'
+        gc.collect()
+        objgraph.show_growth()
+        temp = default.PocController(logger=logger)
         self.logger and self.logger.info('FUZZ检测:   %s:%s,%s',ip,port,protocol)
-       
         self.fuzzscan.scanvul(ip=ip,port=port,protocal=protocol)
 
-#         self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords, hackinfo=nmapscript)
-        
+#        self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords, hackinfo=nmapscript)
         self.logger and self.logger.info('%sFUZZ检测任务结束%s', threadname,str(datetime.datetime.now()))
-#         print 'poc   内存增长状况'
-#         gc.collect()
-#         objgraph.show_growth()
-#         print 'objgraph.by_type:',objgraph.by_type('dict')
+        print 'poc   内存增长状况'
+        gc.collect()
+        objgraph.show_growth()
+        print 'objgraph.by_type:',objgraph.by_type('dict')
 #         chain =objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
 #         objgraph.show_chain(chain,filename='chain.png')
         ans=''
@@ -67,10 +60,5 @@ class FuzzTask(TaskTool):
         return ans
 
 if __name__ == "__main__":
-
-    fuz=getObject()
-
-
-
-
+    fuz = getObject()
 

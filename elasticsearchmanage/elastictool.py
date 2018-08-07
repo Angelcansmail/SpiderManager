@@ -11,6 +11,7 @@ from elasticsearch_dsl.connections import connections
 import mapping
 from logger import initLog
 import chardet
+import traceback
 logger = initLog('logs/elastic.log', 2, True)
 # Define a default Elasticsearch client
 
@@ -83,9 +84,10 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         else:
             eachitem=item
         # 表对象
+        logger and logger.info('get_table_obj%s', table)
         instanceins = get_table_obj(table)
-        # logger and logger.info('get each insert: %s', eachitem)
-# 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
+        logger and logger.info('get each insert: %s', eachitem)
+        # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
         if extra or updatevalue:
             logger and logger.info('更新数据')
             instanceitem = instanceins.getdata(id=':'.join(eachitem[:primarykey]))
@@ -104,7 +106,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         try:
             res=instanceitem.save()
         except Exception,e:
-            logger and logger.error('Error: %s', str(e))
+            logger and logger.error('Error: %s', str(traceback.print_exc()))
         else:
             logger and logger.info('insert success')
 

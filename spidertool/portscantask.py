@@ -33,7 +33,6 @@ class PortscanTask(TaskTool):
     def task(self,req,threadname):
         self.logger and self.logger.info('%s 端口扫描　执行任务中%s', threadname,str(datetime.datetime.now()))
 #         print req[0],req[1],req[2],req[3]
-
         if req[3]!='open':
             return ''
         ip=req[1]
@@ -47,20 +46,16 @@ class PortscanTask(TaskTool):
         webkey=''
         webtitle=''
         if (req[0]=='http' or req[0]=='https') or (req[0] in ['tcpwrapped','None'] and port in ['80','8080','7001']):
-
             if ip[0:4]=='http':
                 address=ip+':'+port
             else:
                 if  port=='443':
                     address='https'+'://'+ip+':'+port
-
                 else:
                     if req[0]=='tcpwrapped' and port in ['80','8080','7001']:
                         address = 'http://' + ip + ':' + port
                     else:
                         address=req[0]+'://'+ip+':'+port
-
-
             head,ans = self.connectpool.getConnect(address)
             import webutil
             webinfo=webutil.getwebinfo(ans)
@@ -68,8 +63,7 @@ class PortscanTask(TaskTool):
             webtitle=webinfo['title']
             try:
                 from detection import page_identify
-
-                keywords,hackinfo=page_identify.identify_main(head=head,context=ans,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
+                keywords,hackinfo = page_identify.identify_main(head=head,context=ans,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
             except:
                 pass
         else:
@@ -109,16 +103,9 @@ class PortscanTask(TaskTool):
 
 if __name__ == "__main__":
     links = [('http','www.ytu.edu.cn','80','open','weblogic','weblogic')]
-
     f = PortscanTask()
-
     f.add_work(links)
 
-
-        
     while True:
         pass
-
-
-
 

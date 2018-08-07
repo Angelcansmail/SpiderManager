@@ -1,0 +1,16 @@
+[2018-08-07 Tue 14:02:14]SQLTool.py-14235-140276452443904-375-    INFO-"插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-07 14:02:14',country='0', country_id='0',area='0', area_id='0',region='0', region_id='0',city='0', city_id='0',county='0', county_id='0',isp='0', isp_id='0'"
+[2018-08-07 Tue 14:02:14]SQLTool.py-14235-140276452443904-376-    INFO-"插入数据库内容为:
+[('www.baidu.com', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2018-08-07 14:02:14')]"
+[2018-08-07 Tue 14:33:10]SQLTool.py-15556-140290759890688-375-    INFO-"插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-07 14:33:10',country='0', country_id='0',area='0', area_id='0',region='0', region_id='0',city='0', city_id='0',county='0', county_id='0',isp='0', isp_id='0'"
+[2018-08-07 Tue 14:33:10]SQLTool.py-15556-140290759890688-376-    INFO-"插入数据库内容为:
+[('www.baidu.com', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2018-08-07 14:33:10')]"
+[2018-08-07 Tue 14:54:15]SQLTool.py-16507-139714764396288-375-    INFO-"插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-07 14:54:15',country='', country_id='',area='', area_id='0',region='', region_id='',city='', city_id='0',county='', county_id='0',isp='', isp_id='0'"
+[2018-08-07 Tue 14:54:15]SQLTool.py-16507-139714764396288-376-    INFO-"插入数据库内容为:
+[('www.bgpc.gov.cn', u'', '', u'', '0', u'', '', u'', '0', u'', '0', u'', '0', '2018-08-07 14:54:15')]"
+[2018-08-07 Tue 14:57:35]SQLTool.py-16670-139874908141312-375-    INFO-"插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-07 14:57:35',country='0', country_id='0',area='0', area_id='0',region='0', region_id='0',city='0', city_id='0',county='0', county_id='0',isp='0', isp_id='0'"
+[2018-08-07 Tue 14:57:35]SQLTool.py-16670-139874908141312-376-    INFO-"插入数据库内容为:
+[('www.bgpc.gov.cn', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '0', '2018-08-07 14:57:35')]"

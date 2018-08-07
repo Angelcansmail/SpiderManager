@@ -345,7 +345,7 @@ def chartdata(request):
 #         print response.status
 #         print response.reason
         response_data = ans
-        print response_data
+#         print response_data
     except Exception, e:
         print '接受的数据出现异常'+str(e)
     finally:

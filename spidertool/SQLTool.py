@@ -128,7 +128,7 @@ class DBmanager:
 						self.connectdb()
 						count = self.__cur.execute(sql)
 					else:
-						self.logger and self.logger.error('数据库错误%s',  str(e))
+						logger and logger.error('数据库错误%s',  str(e))
 						return (0,  0,  0,  0)
 				except Exception,  e:
 					return (0,  0,  0,  0)
@@ -417,16 +417,18 @@ def escapeword(word):
 	else:
 		msg = ''
 	return msg
+
 def escapewordby(word):
 	if word is None:
 		return ''
 	else:
-		
 		content = ''
 		content = str(MySQLdb.escape_string(str(decodestr(word))))
 		return content
+
 def getproperty(dic, property):
 	return decodestring(str(dic.get(property, '')))
+
 def encodestring(msg):
 	if str:
 		return decodestr(msg).encode('string_escape')

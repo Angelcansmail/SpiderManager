@@ -62,7 +62,7 @@ def ipsearch(page='0',dic=None,content=None):
         print '返回的集中率为%d' % count
         if count == 0:
             pagecount = 0;
-        elif count %limitpage> 0:
+        elif count % limitpage> 0:
             pagecount=int((count+limitpage-1)/limitpage)
         else:
             pagecount = count / limitpage

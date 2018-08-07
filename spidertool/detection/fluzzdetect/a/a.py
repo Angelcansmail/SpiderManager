@@ -1,0 +1,2 @@
+def funa():
+    print "a"

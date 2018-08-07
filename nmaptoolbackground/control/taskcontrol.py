@@ -44,10 +44,10 @@ def taskadd(array):
     nmaptask.add_work(array)
 
 #定时任务添加函数
-def addschedule(event, day_of_week='0-7', hour='11',minute='57' ,second='0',id=''):
+def addschedule(event, day_of_week='0-6', hour='11',minute='57' ,second='0',id=''):
     global mainschedule
     if mainschedule is None:
-        mainschedule=schedule.schedulecontrol()
+        mainschedule = schedule.schedulecontrol()
     mainschedule.addschedule(event,day_of_week,hour,minute,second,id=id)
 
 #定时任务初始化函数
@@ -56,13 +56,13 @@ def scheduleinit():
     import taskitem
 #     scapyitem=scapytask.ScapyTask()#被动嗅探
     global mainschedule
-    mainschedule=schedule.schedulecontrol()
+    mainschedule = schedule.schedulecontrol()
     # mainschedule.addschedule(event=taskitem.recovertask,type='date')  # 异常宕机恢复
     # mainschedule.addschedule(event=taskitem.normaltask,type='date')  # 后台异步任务
 
 #     mainschedule.addschedule(taskitem.listiptask,'0-7','*/21','13','0',id='listiptask')#自定义扫描段任务器
-    mainschedule.addschedule(taskitem.tick,'0-7','0-23','*/5','0',id='nmap')#nmap定时任务器
-#     mainschedule.addschedule(taskitem.ticknormal,'0-7','0-23','*/14','0',id='zmap')#zmap定时任务器
+    mainschedule.addschedule(taskitem.tick,'0-6','0-23','*/5','0',id='nmap')#nmap定时任务器
+#     mainschedule.addschedule(taskitem.ticknormal,'0-6','0-23','*/14','0',id='zmap')#zmap定时任务器
 #     mainschedule.addschedule(taskitem.gchelp,'0-7','0-23','0','0',id='gc')#gc collect   
 
     print 'init schedule'
