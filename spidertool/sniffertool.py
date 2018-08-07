@@ -45,7 +45,7 @@ class SniffrtTool(object):
         self.config = config.Config
         self.sqlTool = Sqldatatask.getObject()  # init DBmanager, and connect database and thread number
 #         self.sqlTool=SQLTool.getObject()
-        self.portscan = portscantask.getObject()    #设置一些网络参数配置
+        self.portscan = portscantask.getObject()    #设置一些网络参数配置, 查看portScantask.log
         # init DBmanager and thread number
         self.getlocationtool = getLocationTool.getObject()
 

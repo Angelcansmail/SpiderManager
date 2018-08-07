@@ -56,7 +56,7 @@ class GetLocationTask(TaskTool):
     def task(self, req, threadname):
         print 'getLocationTool::task() ip location do ......the ip is ' + req
         ip = req
-        jsondata = webtool.getLocationinfo(req) #获取该ip对应的信息，返回一个json结构的字典
+        jsondata = webtool.getLocationinfo(req) #使用ip.taobao.com获取该ip对应的信息，返回一个json结构的字典
         country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id = getlocationjsondata(jsondata)
         localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
         insertdata=[]
@@ -86,7 +86,7 @@ class GetLocationTask(TaskTool):
 #}
 #
 def test():
-    jsondata=webtool.getLocationinfo('123.123.123.123')
+    jsondata = webtool.getLocationinfo('123.123.123.120')
     if jsondata.get('code','1') == 0:
         country=jsondata['data'].get('country','0')
         country_id = str( jsondata['data'].get('country_id','0'))
@@ -104,7 +104,7 @@ def test():
         return country,country_id,area,area_id,region,region_id,city,city_id,county,county_id,isp,isp_id
 
 if __name__  ==  "__main__":
-    a=getObject()
-    a.add_work(['www.baidu.com'])
+    a = getObject()
+    a.add_work(['www.bgpc.gov.cn'])
     while True:
         pass

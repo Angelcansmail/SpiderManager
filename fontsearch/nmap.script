@@ -1,0 +1,51 @@
+cloverzh@cloverPC:~/workspace/SpiderManager/fontsearch$ nmap --script external 202.103.243.110 
+
+Starting Nmap 7.01 ( https://nmap.org ) at 2018-08-06 17:20 CST
+Pre-scan script results:
+| targets-asn: 
+|_  targets-asn.asn is a mandatory parameter
+Nmap scan report for 202.103.243.110
+Host is up (0.076s latency).
+Not shown: 932 filtered ports, 63 closed ports
+PORT     STATE SERVICE
+25/tcp   open  smtp
+| smtp-enum-users: 
+|_  Couldn't establish connection on port 25
+|_smtp-open-relay: Couldn't establish connection on port 25
+80/tcp   open  http
+|_http-cross-domain-policy: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+110/tcp  open  pop3
+443/tcp  open  https
+|_http-cross-domain-policy: ERROR: Script execution failed (use -d to debug)
+|_http-xssed: No previously reported XSS vuln.
+| ssl-google-cert-catalog: 
+|_  No DB entry
+8080/tcp open  http-proxy
+|_http-cross-domain-policy: ERROR: Script execution failed (use -d to debug)
+
+Host script results:
+| asn-query: 
+| BGP: 202.103.192.0/18 | Country: CN
+|   Origin AS: 4134 - CHINANET-BACKBONE No.31,Jin-rong Street, CN
+|_    Peer AS: 174 701 1299 2914 3257 3356 11164
+| dns-blacklist: 
+|   SPAM
+|_    l2.apews.org - SPAM
+| hostmap-ip2hosts: 
+|_  hosts: Error: found no hostnames but not the marker for "no hostnames found" (pattern error?)
+|_hostmap-robtex: 
+| ip-geolocation-geoplugin: 
+| 202.103.243.110
+|   coordinates (lat,lon): 22.8167,108.3167
+|_  state: Guangxi, China
+|_ip-geolocation-maxmind: ERROR: Script execution failed (use -d to debug)
+|_whois-domain: You should provide a domain name.
+| whois-ip: Record found at whois.apnic.net
+| inetnum: 202.103.192.0 - 202.103.255.255
+| netname: CHINANET-GX
+| descr: CHINANET Guangxi province network
+|_country: CN
+
+Nmap done: 1 IP address (1 host up) scanned in 295.76 seconds
+

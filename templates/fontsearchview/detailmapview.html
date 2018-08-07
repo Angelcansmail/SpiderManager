@@ -114,6 +114,7 @@
                     xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
                 } catch (e) {
 
+                    // Services下的箭头对应的链接
                 }
             }
         }
@@ -126,8 +127,9 @@
         var ip="{{ip}}";
         xmlhttp = GetXmlHttp(xmlhttp);
         str = 'ip=' + ip ;
-        alert(str);
+        alert(["detailmapview::getinfo()", str]);
 
+        // get result, ips, iplength, ippagecount
         xmlhttp.open("POST", "/fontsearch/ipinfo", true);
         xmlhttp.onreadystatechange = callback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -136,9 +138,9 @@
 
     function callback() {
         if (xmlhttp.readyState != 4) {
-
         }
         else {
+            alert(["getinfo xmlhttp.status=", xmlhttp.status]);
             if (xmlhttp.status == 200) {
                 var a = xmlhttp.responseText;
                 showipinfo(a);
@@ -149,6 +151,7 @@
     function showipinfo(result) {
         var data2 = JSON.parse(result);
         if (data2.result == '0') {
+            alert("showipinfo data2.result=0!!!");
             document.getElementById("ipinfo").innerHTML = "没有相关信息";
         }
         else {
@@ -156,13 +159,15 @@
             var datalength = data2.ipcount;
             var pagesize = data2.ippagecount;
             // location什么时候赋值的, getLocation.py?
-            alert([ports[0].country, ports[0].location, ports[0].city, ports[0].isp, ports[0].region]);
             var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
             var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
             var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
             var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
+            alert(["ip:", ports[0].ip, "country:", ports[0].country, "location:", ports[0].location, "city", ports[0].city, "isp", ports[0].isp, "region", ports[0].region]);
+
             var bodyhtml = "";
-            bodyhtml+=  "<div class=\"page-header\"> <h2><i class=\"fa fa-globe\"></i>"+ports[0].ip+""+
+
+            bodyhtml += "<div class=\"page-header\"> <h2><i class=\"fa fa-globe\"></i>"+ports[0].ip+""+
                 "<small style=\"padding-left:10px;\"> </small>"+
                 "</h2> </div> <table class=\"table\"> <tbody>"+
                 "<tr> <td>City</td> <th>"+(ports[0].county==0?'':ports[0].county)+' '+city+' '+region+"</th></tr>"+
@@ -173,6 +178,7 @@
                 "<tr> <td>Hostnames</td><th>"+ports[0].hostname+"</th></tr>"+
                 "</tbody></table>"
 
+            alert(["showipinfo::bodyhtml()", bodyhtml]);
             document.getElementById("ipinfo").innerHTML = bodyhtml;
 
             var latitude = ports[0].location['geoip']['location']['latitude'];
@@ -221,7 +227,7 @@
             var datalength = data2.portslength;
             var pagesize = data2.portspagecount;
             var ports = data2.ports;
-            alert(["showportinfo", ports]);
+            alert(["showportinfo datalength:", datalength, "pagesize:", pagesize, "port_name:", ports[0].name, "ports:", ports[0].port]);
 
             var bodyhtml = "";
             for (var i = 0; i < datalength; i++) {
@@ -242,21 +248,21 @@
                 else {
                     potocalname = ports[i].name;
                 }
-                porthtml+="<li><a href=\"#"+ports[i].port+"\">"+ports[i].port+"</a> </li>";
-                servicehtml+="<li class=\"service service-long\"><a name=\""+ports[i].port+"\"></a><div class=\"service-details\">"+
+                porthtml += "<li><a href=\"#"+ports[i].port+"\">"+ports[i].port+"</a> </li>";
+                servicehtml += "<li class=\"service service-long\"><a name=\""+ports[i].port+"\"></a><div class=\"service-details\">"+
                                     "<div class=\"port\">"+ports[i].port+"</div>"+
                                     "<div class=\"protocol\">"+potocalname+"</div>"+
                                     "<div class=\"state\">"+ports[i].product+"</div>";
                 if(potocalname=='http'||potocalname=='https'||potocalname=='ftp'){
                     servicehtml+= "<a href=\"" + potocalname + "://" + ports[i].ip + ':' + ports[i].port+"\" target=\"_blank\" class=\"link\"><i class=\"fa fa-mail-forward\">&nbsp; </i></a> ";
                 }
-                     servicehtml+= "</div><div class=\"service-main\"><pre>"+(ports[i].head == null  ? '无' : encodeHtml(ports[i].head ).toString()) + "</pre><div class=\"clear\"></div> </div> </li> ";
+                servicehtml+= "</div><div class=\"service-main\"><pre>"+(ports[i].head == null  ? '无' : encodeHtml(ports[i].head ).toString()) + "</pre><div class=\"clear\"></div> </div> </li> ";
                 // xmp
             }
 servicehtml+="</ul>";
             document.getElementById("portinfo").innerHTML = porthtml+servicehtml;
          }
-}
+    }
         encodeHtml = function (s) {
         return (typeof s != "string") ? s :
                 s.replace(/"|&|'|<|>|[\x00-\x20]|[\x7F-\xFF]|[\u0100-\u2700]/g,

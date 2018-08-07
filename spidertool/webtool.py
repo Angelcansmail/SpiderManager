@@ -4,6 +4,7 @@ import urllib2
 import time
 import re,json
 import httplib
+import traceback
 
 # urllib2 默认情况下会针对 HTTP 3XX 返回码自动进行 redirect 动作，无需人工配置, 但不想自动redirect，可以自己定义
 class RedirectHandler(urllib2.HTTPRedirectHandler):
@@ -74,13 +75,13 @@ def getLocationinfo(ip):
  
         #response是HTTPResponse对象
 		response = httpClient.getresponse()
-		print response.status
-		print response.reason
+		# print response.status #200
+		# print response.reason #OK
 		response_data = response.read().strip() # 我理解数据应该存储到ip_maindata
 #        {"code":0,"data":{"ip":"110.110.110.120","country":"中国","area":"","region":"黑龙江","city":"哈尔滨","county":"XX","isp":"铁通","country_id":"CN","area_id":"","region_id":"230000","city_id":"230100","county_id":"xx","isp_id":"100020"}}
 		
 	except Exception, e:
-		print '接受的数据出现异常'+str(e)
+		print '接受的数据出现异常'+str(traceback.print_exc())
 	finally:
 		if httpClient:
 			httpClient.close()

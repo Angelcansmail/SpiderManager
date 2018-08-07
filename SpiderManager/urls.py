@@ -27,7 +27,6 @@ handler500 = "nmaptoolbackground.nmaproute.page_error"
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # /usr/local/lib/python2.7/dist-packages/django/contrib/admin/static/admin/img/
     url(r'^favicon.ico$', RedirectView.as_view(url='/static/favicon.ico')),
     url(r'^status/$', route.indexpage, name='status'),
     url(r'^testdata/$', route.testdata, name='testdata'),

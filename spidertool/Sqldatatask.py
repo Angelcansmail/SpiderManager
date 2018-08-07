@@ -56,7 +56,7 @@ if __name__ == "__main__":
 
 	#f.start_task()
 	while f.has_work_left():
-		v,b=f.get_finish_work()
+		v,b = f.get_finish_work()
 		
 	while True:
 		pass
