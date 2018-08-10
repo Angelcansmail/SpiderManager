@@ -14,7 +14,7 @@ def tick():
         pass
     else:
         num = random.randint(1, 1)
-        temp = zmaptool.getObject()
+        temp = zmaptool.getObject() #init DB/portscan...
         temp.do_scan(port=operator.get(str(num)), num='20', needdetail='1')
     print('Tick! The time is: %s' % datetime.now())
 
@@ -25,6 +25,6 @@ def zmaptask():
     print('Tick! The time is: %s' % datetime.now())
 
 def listiptask():
-    listitem=iptask.getObject()
+    listitem = iptask.getObject()
     listitem.add_work([('172.20.13.11','172.20.13.12')])
     print '自定义任务已经启动'

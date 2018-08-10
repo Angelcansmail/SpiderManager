@@ -3,6 +3,7 @@
 import traceback
 
 try:
+    # 定义的plugins都需要自己补充
     import component_func, port_func
     from plugins import port_template
     from vuldect import pocsearchtask
@@ -19,7 +20,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
     # port:3306:mysql 873:rsync 22:ssh2 21:ftpdeal有内容
     port_function = getFunc(name,port,productname)
     if port_function != None:
-        head,ans,keywords,hackinfo = port_function(ip=ip,port=port,name=name,productname=productname)
+        head, ans, keywords, hackinfo = port_function(ip=ip,port=port,name=name,productname=productname)
     else:
         temp = pocsearchtask.getObject()
         temp.add_work([(head, context, ip, port, productname, keywords, nmapscript, name)])
@@ -42,7 +43,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
 def getFunc(name,port,productname):
     func=None
     print ("detection::port_identify::getFunc() name:%s port:%s"%(name, port))
-    if name !='' and name != 'None':
+    if name !='' and name != None:
         func = component_func.componentFunc.get(name,None)
     if str(port) !='':
         func = port_func.portFunc.get(str(port),None)

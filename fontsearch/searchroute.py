@@ -185,7 +185,6 @@ def detailpage(request):
                     response_data['portspagecount'] = portpagecount
                     response_data['portspage'] = page
 
-
                     redisdic = {}
                     redisdic['ports'] = ports
                     redisdic['portslength'] = portcount
@@ -206,9 +205,7 @@ def detailpage(request):
 
             response_data['result'] = '1'
             response_data['keywords'] = jsoncontent.values()
-
             response_data['username']=username
-
     try:
         return HttpResponse(json.dumps(response_data,skipkeys=True,default=webtool.object2dict), content_type="application/json")
     except Exception,e:

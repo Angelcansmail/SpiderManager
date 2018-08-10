@@ -240,7 +240,7 @@ class DBmanager:
 					sql += '('
 					for j in range(0, length-1):
 						sql = sql + select_params[j]+', '
-					sql = sqli + select_params[length-1]+')'
+					sql = sql + select_params[length-1]+')'
 					sql = sql + ' values('	
 					for j in range(0, length-1):
 						sql = sql + '%s' + ', '	
@@ -435,8 +435,6 @@ def encodestring(msg):
 	else:
 		return '' 
 
-
-
 def decodestr(msg):
 	chardit1 = chardet.detect(msg)
 
@@ -445,11 +443,10 @@ def decodestr(msg):
 		if chardit1['encoding']  ==  'utf-8':
 			return msg
 		else:
-
 			return msg.decode(chardit1['encoding']).encode('utf-8')
-
 	except Exception,  e:
 		return str(msg)
+
 def getdecodeproperty(dic, property):
 	return decodestring(str(dic.get(property, '')))
 def decodestring(msg):

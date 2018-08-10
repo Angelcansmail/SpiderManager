@@ -35,7 +35,7 @@ class ConnectTool:
 		self.__headers = {
 			'User-Agent' : WEBCONFIG.useragent,
 			'Referer': WEBCONFIG.Referer
-			 }
+        }
 		self.__cookie = cookielib.CookieJar()
 		self.__cJar = cookielib.LWPCookieJar()
 		self.__httpcookieprocessor = urllib2.HTTPCookieProcessor(self.__cookie)
@@ -75,21 +75,21 @@ class ConnectTool:
 			context = ssl._create_unverified_context()
 			response = urllib2.urlopen(req,context=context)
 
-			temp=str(response.info())
-# 			print 'cooke信息如下：'
-# 			for item in self.__cookie:
-# 				print 'Name = '+item.name
-# 				print 'Value = '+item.value
-			msg=response.read()
-			
+# header信息(如:Server,Content-Type, Set-Cookie:...
+			temp = str(response.info())
+			print 'connecttool::getHTML() cooke信息如下：'
+			for item in self.__cookie:
+				print 'Name = '+item.name
+				print 'Value = '+item.value
+			msg = response.read()
+
 			chardit1 = chardet.detect(msg)
 			the_page = str(msg)
 			
 			try:
 				return temp.decode(chardit1['encoding']).encode('utf-8'),the_page.decode(chardit1['encoding']).encode('utf-8')
-
 			except Exception,e:
-				return temp,the_page
+				return temp, the_page
 			
 #		response = urllib2.urlopen('http://www.baidu.com',timeout=10)
 #		print 'head is %s' % response.info()

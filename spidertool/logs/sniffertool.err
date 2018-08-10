@@ -1,0 +1,159 @@
+nohup: 忽略输入
+sqltool : INFO     替换插入表ip_maindata操作
+replace into ip_maindata(ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state) values(%s, %s, %s, %s, %s, %s, %s, %s)
+portscantask: INFO     Thread-3 端口扫描　执行任务中2018-08-10 11:20:39.090942
+sqltool : INFO     插入表ip_maindata内容为:
+[('122.114.49.116', 'null', 'null', 'null', 'null', '2018-08-10 11:20:39', 'www.ykgs.gov.cn ', 'up')]
+root    : INFO     get_table_objip_maindata
+root    : INFO     get each insert: ('122.114.49.116', 'null', 'null', 'null', 'null', '2018-08-10 11:20:39', 'www.ykgs.gov.cn ', 'up')
+root    : INFO     更新数据ip :122.114.49.116
+root    : INFO     更新数据vendor :null
+root    : INFO     更新数据osfamily :null
+root    : INFO     更新数据osgen :null
+root    : INFO     更新数据accurate :null
+root    : INFO     更新数据updatetime :2018-08-10 11:20:39
+root    : INFO     更新数据hostname :www.ykgs.gov.cn 
+root    : INFO     更新数据state :up
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 92, in save
+    return super(ip_maindata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None
+sqltool : INFO     替换插入表snifferdata操作
+replace into snifferdata(ip, port, timesearch, state, name, product, version, script, portnumber) values(%s, %s, %s, %s, %s, %s, %s, %s, %s)
+sqltool : INFO     插入表snifferdata内容为:
+[('122.114.49.116', '80', '2018-08-10 11:20:39', 'filtered', 'http', '', '', '{}', '80')]
+root    : INFO     get_table_objsnifferdata
+root    : INFO     get each insert: ('122.114.49.116', '80', '2018-08-10 11:20:39', 'filtered', 'http', '', '', '{}', '80')
+root    : INFO     更新数据ip :122.114.49.116
+root    : INFO     更新数据port :80
+root    : INFO     更新数据timesearch :2018-08-10 11:20:39
+root    : INFO     更新数据state :filtered
+root    : INFO     更新数据name :http
+root    : INFO     更新数据product :
+root    : INFO     更新数据version :
+root    : INFO     更新数据script :{}
+root    : INFO     更新数据portnumber :80
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 42, in save
+    return super(snifferdata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None
+sqltool : INFO     插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-10 11:20:59',country='中国', country_id='CN',area='', area_id='0',region='河南', region_id='410000',city='郑州', city_id='410100',county='XX', county_id='xx',isp='电信', isp_id='100017'
+sqltool : INFO     插入数据库内容为:
+[('122.114.49.116', u'\u4e2d\u56fd', 'CN', u'', '0', u'\u6cb3\u5357', '410000', u'\u90d1\u5dde', '410100', u'XX', 'xx', u'\u7535\u4fe1', '100017', '2018-08-10 11:20:59')]
+root    : INFO     get_table_objip_maindata
+root    : INFO     get each insert: ('122.114.49.116', u'\u4e2d\u56fd', 'CN', u'', '0', u'\u6cb3\u5357', '410000', u'\u90d1\u5dde', '410100', u'XX', 'xx', u'\u7535\u4fe1', '100017', '2018-08-10 11:20:59')
+root    : INFO     更新数据
+root    : INFO     ip_maindata(index=u'datap', doc_type=u'ip_maindata', id=u'122.114.49.116')
+root    : INFO     更新数据ip :122.114.49.116
+root    : INFO     更新数据country :中国
+root    : INFO     更新数据country_id :CN
+root    : INFO     更新数据area :
+root    : INFO     更新数据area_id :0
+root    : INFO     更新数据region :河南
+root    : INFO     更新数据region_id :410000
+root    : INFO     更新数据city :郑州
+root    : INFO     更新数据city_id :410100
+root    : INFO     更新数据county :XX
+root    : INFO     更新数据county_id :xx
+root    : INFO     更新数据isp :电信
+root    : INFO     更新数据isp_id :100017
+root    : INFO     更新数据updatetime :2018-08-10 11:20:59
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 92, in save
+    return super(ip_maindata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None
+portscantask: INFO     Thread-4 端口扫描　执行任务中2018-08-10 11:21:07.754428
+sqltool : INFO     替换插入表ip_maindata操作
+replace into ip_maindata(ip, vendor, osfamily, osgen, accurate, updatetime, hostname, state) values(%s, %s, %s, %s, %s, %s, %s, %s)
+sqltool : INFO     插入表ip_maindata内容为:
+[('123.127.181.60', 'null', 'null', 'null', 'null', '2018-08-10 11:21:07', 'zhengxie.bjtzh.gov.cn ', 'up')]
+root    : INFO     get_table_objip_maindata
+root    : INFO     get each insert: ('123.127.181.60', 'null', 'null', 'null', 'null', '2018-08-10 11:21:07', 'zhengxie.bjtzh.gov.cn ', 'up')
+root    : INFO     更新数据ip :123.127.181.60
+root    : INFO     更新数据vendor :null
+root    : INFO     更新数据osfamily :null
+root    : INFO     更新数据osgen :null
+root    : INFO     更新数据accurate :null
+root    : INFO     更新数据updatetime :2018-08-10 11:21:07
+root    : INFO     更新数据hostname :zhengxie.bjtzh.gov.cn 
+root    : INFO     更新数据state :up
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 92, in save
+    return super(ip_maindata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None
+sqltool : INFO     替换插入表snifferdata操作
+replace into snifferdata(ip, port, timesearch, state, name, product, version, script, portnumber) values(%s, %s, %s, %s, %s, %s, %s, %s, %s)
+sqltool : INFO     插入表snifferdata内容为:
+[('123.127.181.60', '90', '2018-08-10 11:21:07', 'closed', 'dnsix', '', '', '{}', '90')]
+root    : INFO     get_table_objsnifferdata
+root    : INFO     get each insert: ('123.127.181.60', '90', '2018-08-10 11:21:07', 'closed', 'dnsix', '', '', '{}', '90')
+root    : INFO     更新数据ip :123.127.181.60
+root    : INFO     更新数据port :90
+root    : INFO     更新数据timesearch :2018-08-10 11:21:07
+root    : INFO     更新数据state :closed
+root    : INFO     更新数据name :dnsix
+root    : INFO     更新数据product :
+root    : INFO     更新数据version :
+root    : INFO     更新数据script :{}
+root    : INFO     更新数据portnumber :90
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 42, in save
+    return super(snifferdata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None
+sqltool : INFO     插入数据库操作
+insert into ip_maindata(ip, country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id, updatetime)     values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s) on duplicate key update updatetime='2018-08-10 11:21:09',country='中国', country_id='CN',area='', area_id='0',region='北京', region_id='110000',city='北京', city_id='110100',county='XX', county_id='xx',isp='联通', isp_id='100026'
+sqltool : INFO     插入数据库内容为:
+[('123.127.181.60', u'\u4e2d\u56fd', 'CN', u'', '0', u'\u5317\u4eac', '110000', u'\u5317\u4eac', '110100', u'XX', 'xx', u'\u8054\u901a', '100026', '2018-08-10 11:21:09')]
+root    : INFO     get_table_objip_maindata
+root    : INFO     get each insert: ('123.127.181.60', u'\u4e2d\u56fd', 'CN', u'', '0', u'\u5317\u4eac', '110000', u'\u5317\u4eac', '110100', u'XX', 'xx', u'\u8054\u901a', '100026', '2018-08-10 11:21:09')
+root    : INFO     更新数据
+root    : INFO     ip_maindata(index=u'datap', doc_type=u'ip_maindata', id=u'123.127.181.60')
+root    : INFO     更新数据ip :123.127.181.60
+root    : INFO     更新数据country :中国
+root    : INFO     更新数据country_id :CN
+root    : INFO     更新数据area :
+root    : INFO     更新数据area_id :0
+root    : INFO     更新数据region :北京
+root    : INFO     更新数据region_id :110000
+root    : INFO     更新数据city :北京
+root    : INFO     更新数据city_id :110100
+root    : INFO     更新数据county :XX
+root    : INFO     更新数据county_id :xx
+root    : INFO     更新数据isp :联通
+root    : INFO     更新数据isp_id :100026
+root    : INFO     更新数据updatetime :2018-08-10 11:21:09
+Traceback (most recent call last):
+  File "../elasticsearchmanage/elastictool.py", line 107, in inserttableinfo_byparams
+    res=instanceitem.save()
+  File "../elasticsearchmanage/mapping.py", line 92, in save
+    return super(ip_maindata, self).save(** kwargs)
+  File "/usr/local/lib/python2.7/dist-packages/elasticsearch_dsl/document.py", line 405, in save
+    return meta['result'] == 'created'
+KeyError: 'result'
+root    : ERROR    Error: None

@@ -1,6 +1,6 @@
-
 #!/usr/bin/python
-#coding:utf-8
+# -*- coding:utf-8 -*-
+
 import time
 import re
 
@@ -18,16 +18,17 @@ class Portscantool:
         self.socketclient = None
 
     def do_scan(self,head=None,context=None,ip=None,port=None,name=None,productname=None,nmapscript=None):
-        keywords={}
-        hackinfo=''
+        keywords = {}
+        hackinfo = ''
         ans = None
         reply=''
-        self.socketclient=None
+        self.socketclient = None
         try:
             from detection import port_identify
+            # port_identify中的函数需要自己补充
             head,ans,keywords,hackinfo = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
             if ans == None:
-                self.socketclient=  socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                self.socketclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self.socketclient.connect((ip,int(port)))
 #             message = "GET / HTTP/1.1\r\nHost: oschina.net\r\n\r\n"
                 message =portway.get(name,"GET  world \r\n\r\n")

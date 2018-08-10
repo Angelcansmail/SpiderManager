@@ -11,7 +11,6 @@ class Job_Item(object):
     classdocs
     '''
 
-
     def __init__(self,jobname='',jobaddress=[],jobport=[],priority=1,result=[],status=0,arguments=''):
         '''
         Constructor
@@ -39,6 +38,3 @@ class Job_Item(object):
         return self.jobport
     def getArguments(self):
         return self.arguments
-    
-        
-        

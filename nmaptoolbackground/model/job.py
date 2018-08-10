@@ -3,6 +3,7 @@
 import uuid
 from spidertool import webtool
 
+#zmap中调用
 class Job(object):
     def __init__(self,jobname = '',jobaddress = '',priority = '1',starttime = '',username = '',jobport = '',jobstatus = '1',jobid = '',result = '',endtime = '',createtime = '',argument = '',forcesearch = '',isjob = '1',groupsid = ''):
         '''
@@ -39,11 +40,11 @@ class Job(object):
         self.result = result
         self.endtime = endtime
         self.argument = argument
+
     def setPriority(self,priority):
         self.priority = priority
     def setArgument(self,argument):
         self.argument = argument
-        
     def setResult(self,result):
         self.result = result
     def setJobstatus(self,jobstatus):

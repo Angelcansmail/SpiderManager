@@ -54,7 +54,7 @@ def addschedule(event, day_of_week='0-6', hour='11',minute='57' ,second='0',id='
 def scheduleinit():
     from spidertool import scapytool 
     import taskitem
-#     scapyitem=scapytask.ScapyTask()#被动嗅探
+#    scapyitem = scapytask.ScapyTask()#被动嗅探
     global mainschedule
     mainschedule = schedule.schedulecontrol()
     # mainschedule.addschedule(event=taskitem.recovertask,type='date')  # 异常宕机恢复

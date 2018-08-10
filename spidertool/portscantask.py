@@ -27,25 +27,25 @@ class PortscanTask(TaskTool):
         self.connectpool = connectpool.getObject()
         # timeout:8, config:xxx, socketclient:None
         self.portscan = portscantool.Portscantool()
-        self.config=config.Config
+        self.config = config.Config
         self.set_deal_num(15)
 
     def task(self,req,threadname):
         self.logger and self.logger.info('%s 端口扫描　执行任务中%s', threadname,str(datetime.datetime.now()))
-#         print req[0],req[1],req[2],req[3]
+        print ("\n======================portscantask::task() req:%s======================\n"%str(req))
         if req[3]!='open':
             return ''
-        ip=req[1]
-        port=req[2]
-        productname=req[4]
-        nmapscript=req[5]
-        head=None
-        ans=None
-        hackinfo=''
-        keywords=''
-        webkey=''
-        webtitle=''
-        if (req[0]=='http' or req[0]=='https') or (req[0] in ['tcpwrapped','None'] and port in ['80','8080','7001']):
+        ip = req[1]
+        port = req[2]
+        productname = req[4]
+        nmapscript = req[5]
+        head = None
+        page = None
+        hackinfo = ''
+        keywords = ''
+        webkey = ''
+        webtitle = ''
+        if (req[0] == 'http' or req[0] == 'https') or (req[0] in ['tcpwrapped','None'] and port in ['80','8080','7001']):
             if ip[0:4]=='http':
                 address=ip+':'+port
             else:
@@ -54,52 +54,55 @@ class PortscanTask(TaskTool):
                 else:
                     if req[0]=='tcpwrapped' and port in ['80','8080','7001']:
                         address = 'http://' + ip + ':' + port
-                    else:
-                        address=req[0]+'://'+ip+':'+port
-            head,ans = self.connectpool.getConnect(address)
+                    else: # None, 不合法?
+                        address = req[0]+'://'+ip+':'+port
+            head, page = self.connectpool.getConnect(address)
             import webutil
-            webinfo=webutil.getwebinfo(ans)
-            webkey=webinfo['keywords']
-            webtitle=webinfo['title']
+            webinfo = webutil.getwebinfo(page)
+            webkey = webinfo['keywords']
+            webtitle = webinfo['title']
+            self.logger and self.logger.info('webutil.getwebinfo() method_1 keywords:\n%s\ntitle:\n%s\n', webkey, webtitle)
+            
             try:
+                # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
+                # httpdect(headdect) 可以获得keywords和hackinfo信息, 后续要探究下这部分怎么解析, 所以目前返回的结果为空
+                # pocsearch 后续也要加入
                 from detection import page_identify
-                keywords,hackinfo = page_identify.identify_main(head=head,context=ans,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
+                keywords, hackinfo = page_identify.identify_main(head=head,context=page,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
             except:
                 pass
         else:
-            head,ans,keywords,hackinfo=self.portscan.do_scan(head=head,context=ans,ip=ip,port=port,name=req[0],productname=productname,nmapscript=nmapscript)
+            head, page, keywords, hackinfo = self.portscan.do_scan(head=head,context=page,ip=ip,port=port,name=req[0],productname=productname,nmapscript=nmapscript)
+            import webutil
+            webinfo = webutil.getwebinfo(page)
+            webkey = webinfo['keywords']
+            webtitle = webinfo['title']
+            self.logger and self.logger.info('webutil.getwebinfo() method_2 keywords:\n%s\ntitle:\n%s\n', webkey, webtitle)
             pass
-#         print ans
+#         print page
 #         self.sqlTool.connectdb()
         localtime=str(time.strftime("%Y-%m-%d %X", time.localtime()))
         insertdata=[]
-        temp=str(ans)
+        temp = str(page)
 
-        head=SQLTool.escapewordby('{'+head+'}')
-        msg=SQLTool.escapewordby('{'+temp+'}')
-        hackinfomsg=SQLTool.escapewordby(hackinfo)
-        keywords=SQLTool.escapewordby(str(keywords))
+        head = SQLTool.escapewordby('{'+head+'}')
+        msg = SQLTool.escapewordby('{'+temp+'}')
+        hackinfomsg = SQLTool.escapewordby(hackinfo)
+        keywords = SQLTool.escapewordby(str(keywords))
         import Sqldata
         insertdata.append((ip,port,localtime,msg,str(head),str(port),hackinfomsg,keywords,webkey,webtitle))
                                          
-        extra=' on duplicate key update  detail=\''+msg+'\' ,head=\''+str(head)+'\', timesearch=\''+localtime+'\',hackinfo=\''+hackinfomsg+'\',keywords=\''+str(keywords)+'\',webkeywords=\''+webkey+'\',webtitle=\''+webtitle+'\''
-        sqldatawprk=[]
-        dic={"table":self.config.porttable,"select_params":['ip','port','timesearch','detail','head','portnumber','hackinfo','keywords','webkeywords','webtitle'],"insert_values":insertdata,"extra":extra}
-        tempwprk=Sqldata.SqlData('inserttableinfo_byparams',dic)
+        extra = ' on duplicate key update  detail=\''+msg+'\' ,head=\''+str(head)+'\', timesearch=\''+localtime+'\',hackinfo=\''+hackinfomsg+'\',keywords=\''+str(keywords)+'\',webkeywords=\''+webkey+'\',webtitle=\''+webtitle+'\''
+        sqldatawprk = []
+        dic = {"table":self.config.porttable,"select_params":['ip','port','timesearch','detail','head','portnumber','hackinfo','keywords','webkeywords','webtitle'],"insert_values":insertdata,"extra":extra}
+        tempwprk = Sqldata.SqlData('inserttableinfo_byparams',dic)
         sqldatawprk.append(tempwprk)
         self.sqlTool.add_work(sqldatawprk)
 #         inserttableinfo_byparams(table=self.config.porttable,select_params=['ip','port','timesearch','detail'],insert_values=insertdata,extra=extra)
 
-
 #         self.sqlTool.closedb()
-       
-        
         self.logger and self.logger.info('%s 端口扫描　任务结束%s', threadname,str(datetime.datetime.now()))
-
-        
-        
-        
-        return ans
+        return page
 
 if __name__ == "__main__":
     links = [('http','www.ytu.edu.cn','80','open','weblogic','weblogic')]

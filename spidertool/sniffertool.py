@@ -50,26 +50,21 @@ class SniffrtTool(object):
         self.getlocationtool = getLocationTool.getObject()
 
     def scaninfo(self,hosts='localhost', port='', arguments='',hignpersmission='0',callback=''):
-        if callback=='': 
-            callback=self.callback_result
-        orders=''
-        if port!='':
-            orders+=port
+        if callback == '': 
+            callback = self.callback_result
+        orders = ''
+        if port != '':
+            orders += port
         else :
-            orders=None
+            orders = None
         try:
-           
-            if hignpersmission=='0':
-#                 print '我在这里49'
-                print hosts,orders,self.params+arguments
-#                 
-                acsn_result=self.nma.scan(hosts=hosts,ports= orders,arguments=self.params+arguments)
+            if hignpersmission == '0':
+                print "sniffertool::scaninfo() ", hosts, orders, self.params + arguments
+                acsn_result = self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments)
                 #acsn_result=self.nma.scan(hosts=hosts,ports= orders,arguments=arguments)
-#                 print acsn_result
-#                 print '我在这里51'
+                print ("扫描结束\n%s\n"%(acsn_result))
                 return callback(acsn_result) 
             else:
-#                 print '我在这里52'
                 return callback(self.nma.scan(hosts=hosts,ports= orders,arguments=arguments) )
 
         except nmap.PortScannerError,e:
@@ -79,17 +74,13 @@ class SniffrtTool(object):
         except:
             print('Unexpected error', sys.exc_info()[0])
             self.logger and self.logger.info('Unexpected error:%s',sys.exc_info()[0])
-
             return ''
-    def callback_result(self,scan_result):
 
-
-
-        tmp=scan_result
-
+    def callback_result(self, scan_result):
+        print "\n\n======================sniffertool::callback_result()======================\n\n"
+        tmp = scan_result
         for i in tmp['scan'].keys():
-
-            host=i
+            host = i
             result=''
             try:
 #                 result =  u"ip地址:%s 主机名:%s  ......  %s\n" %(host,tmp['scan'][host].get('hostnames','null'),tmp['scan'][host]['status'].get('state','null'))
@@ -98,56 +89,48 @@ class SniffrtTool(object):
 #                 if 'osclass' in tmp['scan'][host].keys():
 #                     result +=u"系统信息 ： %s %s %s   准确度:%s  \n" % (str(tmp['scan'][host]['osclass'].get('vendor','null')),str(tmp['scan'][host]['osclass'].get('osfamily','null')),str(tmp['scan'][host]['osclass'].get('osgen','null')),str(tmp['scan'][host]['osclass'].get('accuracy','null')))
 #                 print result
-                temphosts=str(host)
-                localtime=str(time.strftime("%Y-%m-%d %X", time.localtime()))
+                temphosts = str(host)
+                localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
                 self.getlocationtool.add_work([temphosts])
                 try :
-
                     tempvendor='null'
                     temposfamily='null'
                     temposgen='null'
                     tempaccuracy='null'
-                    if len(tmp['scan'][host]['osmatch'])>0 and len(tmp['scan'][host]['osmatch'][0]['osclass'])>0:
-                        tempvendor=str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('vendor','null'))
-
-                        temposfamily=str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('osfamily','null'))
-              
-                        temposgen=str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('osgen','null'))
-                  
-                        tempaccuracy=str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('accuracy','null'))
-
-                    temphostname=''
-                    tempdecide=tmp['scan'][host].get('hostnames',[])
-                    if len(tempdecide)>0:
+                    if len(tmp['scan'][host]['osmatch']) > 0 and len(tmp['scan'][host]['osmatch'][0]['osclass'])>0:
+                        tempvendor = str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('vendor','null'))
+                        temposfamily = str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('osfamily','null'))
+                        temposgen = str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('osgen','null'))
+                        tempaccuracy = str(tmp['scan'][host]['osmatch'][0]['osclass'][0].get('accuracy','null'))
+                    temphostname = ''
+                    tempdecide = tmp['scan'][host].get('hostnames',[])
+                    if len(tempdecide) > 0:
                         for y in tmp['scan'][host]['hostnames']:
-                            temphostname+=str(y.get('name','unknow'))+' '
-                
-                    tempstate=str(tmp['scan'][host]['status'].get('state','null'))
-#                 print temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime
+                            temphostname += str(y.get('name','unknow'))+' '
 
+                    tempstate = str(tmp['scan'][host]['status'].get('state','null'))
+                # print ("\n======================osmatch information======================\nhosts:%s\nvendor:%s\nosfamily:%s\nosgen:%s\naccuracy:%s\nlocaltime:%s"%(temphosts, tempvendor, temposfamily, temposgen, tempaccuracy, str(localtime)))
 #                 self.sqlTool.replaceinserttableinfo_byparams(table=self.config.iptable,select_params= ['ip','vendor','osfamily','osgen','accurate','updatetime','hostname','state'],insert_values= [(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)])         
                     sqldatawprk=[]
                     dic={"table":self.config.iptable,"select_params": ['ip','vendor','osfamily','osgen','accurate','updatetime','hostname','state'],"insert_values": [(temphosts,tempvendor,temposfamily,temposgen,tempaccuracy,localtime,temphostname,tempstate)]}
 
                     tempwprk=Sqldata.SqlData('replaceinserttableinfo_byparams',dic)
-
                     sqldatawprk.append(tempwprk)
                     self.sqlTool.add_work(sqldatawprk)               
                 except Exception,e:
                     print 'nmap system error d '+str(e)
-                
+
                 if 'tcp' in  tmp['scan'][host].keys():
                     ports = tmp['scan'][host]['tcp'].keys()
 
                     for port in ports:
 #                     portinfo = " port : %s  name:%s  state : %s  product : %s version :%s  script:%s \n" %(port,tmp['scan'][host]['tcp'][port].get('name',''),tmp['scan'][host]['tcp'][port].get('state',''),   tmp['scan'][host]['tcp'][port].get('product',''),tmp['scan'][host]['tcp'][port].get('version',''),tmp['scan'][host]['tcp'][port].get('script',''))
-                        tempport=str(port)
-                        tempportname=str(tmp['scan'][host]['tcp'][port].get('name',''))
-                        tempportstate=str(tmp['scan'][host]['tcp'][port].get('state',''))
-                        tempproduct=str(tmp['scan'][host]['tcp'][port].get('product',''))
-                        tempportversion=str(tmp['scan'][host]['tcp'][port].get('version',''))
+                        tempport = str(port)
+                        tempportname = str(tmp['scan'][host]['tcp'][port].get('name',''))
+                        tempportstate = str(tmp['scan'][host]['tcp'][port].get('state',''))
+                        tempproduct = str(tmp['scan'][host]['tcp'][port].get('product',''))
+                        tempportversion = str(tmp['scan'][host]['tcp'][port].get('version',''))
                         tempscript=SQLTool.decodestr(str(tmp['scan'][host]['tcp'][port].get('script',{})))
-
 
 #                         self.sqlTool.replaceinserttableinfo_byparams(table=self.config.porttable,select_params= ['ip','port','timesearch','state','name','product','version','script'],insert_values= [(temphosts,tempport,localtime,tempportstate,tempportname,tempproduct,tempportversion,tempscript)])         
                         sqldatawprk=[]
@@ -157,28 +140,22 @@ class SniffrtTool(object):
                         sqldatawprk.append(tempwprk)
                         self.sqlTool.add_work(sqldatawprk)
                         self.portscan.add_work([(tempportname,temphosts,tempport,tempportstate,tempproduct,tempscript)])
-
-
-
-
-
                 elif 'udp' in  tmp['scan'][host].keys():
                     ports = tmp['scan'][host]['udp'].keys()
                     for port in ports:
 #                         portinfo = " port : %s  name:%s  state : %s  product : %s version :%s  script:%s \n" %(port,tmp['scan'][host]['udp'][port].get('name',''),tmp['scan'][host]['udp'][port].get('state',''),   tmp['scan'][host]['udp'][port].get('product',''),tmp['scan'][host]['udp'][port].get('version',''),tmp['scan'][host]['udp'][port].get('script',''))
 #                         result = result + portinfo
-                        tempport=str(port)
-                        tempportname=str(tmp['scan'][host]['udp'][port].get('name',''))
-                        tempportstate=str(tmp['scan'][host]['udp'][port].get('state',''))
-                        tempproduct=str(tmp['scan'][host]['udp'][port].get('product',''))
-                        tempportversion=str(tmp['scan'][host]['udp'][port].get('version',''))
-                        tempscript=str(tmp['scan'][host]['udp'][port].get('script',''))
+                        tempport = str(port)
+                        tempportname = str(tmp['scan'][host]['udp'][port].get('name',''))
+                        tempportstate = str(tmp['scan'][host]['udp'][port].get('state',''))
+                        tempproduct = str(tmp['scan'][host]['udp'][port].get('product',''))
+                        tempportversion = str(tmp['scan'][host]['udp'][port].get('version',''))
+                        tempscript = str(tmp['scan'][host]['udp'][port].get('script',''))
                         
 #                         self.sqlTool.replaceinserttableinfo_byparams(table=self.config.porttable,select_params= ['ip','port','timesearch','state','name','product','version','script'],insert_values= [(temphosts,tempport,localtime,tempportstate,tempportname,tempproduct,tempportversion,tempscript)])         
                         sqldatawprk=[]
                         dic={"table":self.config.porttable,"select_params": ['ip','port','timesearch','state','name','product','version','script','portnumber'],"insert_values": [(temphosts,tempport,localtime,tempportstate,tempportname,tempproduct,tempportversion,tempscript,str(tempport))]}
                         tempwprk=Sqldata.SqlData('replaceinserttableinfo_byparams',dic)
-
                         sqldatawprk.append(tempwprk)
                         self.sqlTool.add_work(sqldatawprk)
             except Exception,e:
@@ -190,6 +167,7 @@ class SniffrtTool(object):
             finally:
 #                 print result
                 return str(scan_result)
+
     def scanaddress(self,hosts=[], ports=[],arguments=''):
         temp=''
         for i in range(len(hosts)):
@@ -206,10 +184,11 @@ class SniffrtTool(object):
                 else:
                     temp+=result
         return temp
+
     def isrunning(self):
         return self.nma.has_host(self.host)
-def callback_resultl(host, scan_result):
 
+def callback_resultl(host, scan_result):
     print '———不触发这个函数———'
     tmp=scan_result
     result=''
@@ -253,12 +232,19 @@ order=' -P0 -sV -sC  -sU  -O -v  -R -sT  '
 orderq='-A -P0   -Pn  -sC  -p '
 
 
-if __name__ == "__main__":   
-
+if __name__  ==  "__main__":   
+    hosts = []
+    host_file = open(sys.argv[1]).readlines()
+    for fi in host_file:
+        hosts.append(fi.strip())
+#    print hosts
+#    hosts=['www.ykgs.gov.cn', 'zhengxie.bjtzh.gov.cn','hbj.bjmtg.gov.cn', 'www.bjchp.gov.cn']
+#    hosts=['localhost']
     temp = SniffrtTool()
-#     hosts=['www.cctv.com','localhost','www.baidu.com']'www.cctv.com' www.vip.com
-    hosts=['localhost']
-    temp.scanaddress(hosts,ports=['80'],arguments='')
+    localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
+    temp.scanaddress(hosts, ports=['443'],arguments='')
     print time.strftime('%Y-%m-%d %H:%M:%S',time.localtime(time.time()))
+
+
 
 

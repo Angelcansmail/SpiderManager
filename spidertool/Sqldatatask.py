@@ -27,7 +27,7 @@ class SqlDataTask(TaskTool):
         # 获取存入的数据库操作方法，如getLocationIpInfo中的func:inserttableinfo_params;Dic:对应该操作函数的对应参数字典
 		func = req.getFunc()
 		Dic = req.getDic()
- 		print ("======================func:%s, Dic:%s======================"%(func,Dic))
+ 		print ("\n======================func:%s, Dic:%s======================\n"%(func,Dic))
         # ans 获取存储的功能，getattr(object, name[, default])
 		ans = getattr(self.sqlhelp, func, 'default')(**Dic)
 

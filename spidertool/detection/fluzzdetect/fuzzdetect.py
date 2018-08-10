@@ -51,7 +51,7 @@ class InfoDisScanner(InfoDisScannerBase):
                         content_type_no = _.group(1) if _ else ''
                         url = url.split()[0]
                         self.url_dict.append((url, severity, tag, status, content_type, content_type_no))
-                        print (url, severity, tag, status, content_type, content_type_no)
+                        # print (url, severity, tag, status, content_type, content_type_no)
                 infile.close()
         except Exception, e:
             self.logger.error('[Exception in InfoDisScanner._load_dict] %s' % e)
@@ -86,6 +86,7 @@ class InfoDisScanner(InfoDisScannerBase):
         for _ in self.url_dict:
             full_url = url.rstrip('/') + _[0]
             url_description = {'prefix': url.rstrip('/'), 'full_url': full_url}
+            # url_description:{'prefix': 'qcpj.bnuz.edu.cn:80', 'full_url': 'qcpj.bnuz.edu.cn:80/backend/'}, severity:2, tag:, p_status:0, content_type:, content_type_no: path:/backend/
             item = (url_description, _[1], _[2], _[3], _[4], _[5], _[0])
             url_queue.put(item)
 
@@ -118,7 +119,7 @@ class InfoDisScanner(InfoDisScannerBase):
         resultarray=[]
         results={}
 
-        print ("fuzzdetect::_scan_worker() url:%s, status:%d"%(url, _status))
+        print ("fuzzdetect::_scan_worker() url:%s, status:%d"%(str(url_queue), _status))
         while url_queue.qsize() > 0:
             try:
                 item = url_queue.get(timeout=1.0)
@@ -140,22 +141,21 @@ class InfoDisScanner(InfoDisScannerBase):
                 break
             try:
                 c_status, headers, html_doc = self._http_request(url=prefix,protocal=protocal,path=path)
-
+                print ('======================fuzzdetect::_scan_worker()======================\n[c_status:%d]\n[headers:]\n%s\n[has_404:%d]\n[p_status:%d]\n[_status:%d]\n[html_doc type:%s]=================================================================================' % (c_status, headers, has_404, p_status, _status, type(html_doc)))
+                # print ('======================fuzzdetect::_scan_worker() [c_status:%s]\n[headers:%s]\n[html_doc:%s]======================' % (c_status, headers, html_doc))
                 # self.logger.info(str(status)+url)
                 if (c_status in [200, 301, 302, 303]) and (has_404 or c_status!=_status):
                     if p_status and c_status != p_status:
                         continue
-                    if not p_status or html_doc.find(p_status) >= 0:
+                    if not p_status or html_doc.find(str(p_status)) >= 0:
                         if content_type and headers.get('content-type', '').find(content_type) < 0 or \
                             content_type_no and headers.get('content-type', '').find(content_type_no) >=0:
                             continue
-
-                        print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
+                        # print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
                         if results.get(prefix,None) is None:
-                            results[prefix]= []
+                            results[prefix] = []
                         results[prefix].append({'status':status, 'url': '%s' % (url)} )
                         self._update_severity(severity)
-
 
                 if len(results) >= 30:
                     print 'More than 30 vulnerabilities found for [%s], could be false positive.' % url

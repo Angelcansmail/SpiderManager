@@ -35,36 +35,38 @@ class dealTask(TaskTool):
 	##处理任务类，通过将爬虫爬回来的网页信息进行进一步的处理
 	def __init__(self,isThread=0):
 		TaskTool.__init__(self,isThread)
-
 		self.connectpool=connectpool.ConnectPool()
 
 	def task(self,req,threadname):
-		print threadname+'执行任务中'+str(datetime.datetime.now())
+		print threadname+' 执行dealTask任务中'+str(datetime.datetime.now())
 		ans = self.makesqlit(req)
 
-		print threadname+'任务结束'+str(datetime.datetime.now())
+		print threadname+' dealTask任务结束'+str(datetime.datetime.now())
 		return ans
 
 	def makesqlit(self,content):
-		
 		try:
 			dom = lxml.html.fromstring(decode_html(content))
 			ignore = lxml.html.tostring(dom, encoding='unicode')
 		except UnicodeDecodeError:
 			dom = lxml.html.soupparser.fromstring(content)
-	#	page = etree.HTML(content)
+		page = etree.HTML(content)
+		print page
 	
-#		for item in dom[1]:
-#			print item.tag
-#			print item.getparent().tag
-	#	hrefs = dom.xpath(u"//@href")
+		'''
+		for index in range(len(dom)):
+			for item in dom[index]:
+				print ("index[%d]\ttag:%s\tparent_tag:%s"%(index, item.tag, item.getparent().tag))
+		'''
+		# hrefs = dom.xpath(u"//@href")
 		hrefs = dom.xpath(u"//a")#xpath的路径可以采用xpath checker火狐插件自动生成
 		result=[]
+		print "hrefs length:", len(hrefs)
 		for href in hrefs:
-	#		print href.attrib['href']
-	#		print href.attrib
-	#		print href.text
-			result.append(href.attrib['href'])
+			print href.attrib
+			if 'href' in href.attrib.keys():
+				# print ("href:%s\ttext:%s "%(href.attrib['href'], href.text))
+				result.append(href.attrib['href'])
 		return result
 
 if __name__ == "__main__":
@@ -93,21 +95,22 @@ if __name__ == "__main__":
 	"""
 
 	try:
-		file_object = open('test.dat')
+		file_object = open('20155273')
 		content = file_object.read( )
 		file_object.close( )
 	except Exception,e:
 		print e
-	TOOL=dealTask()
+	TOOL = dealTask()
 	TOOL.set_deal_num(1)
 	TOOL.add_work([content])
 
 # 	TOOL.start_task()
 	while TOOL.has_work_left():
-		res,ans=TOOL.get_finish_work()
-		print ans
+		res, ans = TOOL.get_finish_work()
+		print ("ans_len%d\n----------------ans----------------\n%s"%(len(ans), ans))
+# res is content, ans save the content's url
+#		print ("----------------res----------------\n%s\n----------------ans----------------\n%s"%(res, ans))
 	#array=TOOL.makesqlit(content)
 	#print array
-
 
 
