@@ -55,11 +55,11 @@ def decode_base64(data):
 
     """
     import base64
-    print "redistool::decode_base64() before_data", data
+#    print "redistool::decode_base64() before_data", data
     missing_padding = len(data) % 4
     if missing_padding != 0:
         data += b'='* (4 - missing_padding) # bytes格式,=填充
-    print "redistool::decode_base64() after_data", data   #MA==
+#    print "redistool::decode_base64() after_data", data   #MA==
     return base64.decodestring(data)
 
 def enbase64(dic):
@@ -67,7 +67,7 @@ def enbase64(dic):
     return iterobj(dic,base64.b64encode)
 
 def iterobj(dic, func):
-    print ("iterobj() dic:%s, func:%s"%(str(dic), str(func)))
+#    print ("redistool::iterobj() dic:%s, func:%s"%(str(dic), str(func)))
     if dic == None:
         return None
     elif type(dic) == int:

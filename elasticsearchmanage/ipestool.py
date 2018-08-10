@@ -54,7 +54,7 @@ def ipsearch(page='0',dic=None,content=None):
     s = s[int(page)*limitpage:int(page)*limitpage+limitpage]
 
     response = s.execute()
-    print ("======================elasticsearch results:%s, response::%s======================"%(str(s), str(response)))
+    print ("======================elasticsearch results:%s\nresponse::%s======================"%(str(s), str(response)))
 
     if response.success():
         portarray=[]
@@ -74,9 +74,9 @@ def ipsearch(page='0',dic=None,content=None):
         if count > 0:
             for temp in response :
                 dicc = temp.to_dict()
-                print dicc
+                print ("\n======================ipestool::showIP======================\n%s"%str(dicc))
                 aip = ipmain.Ip(ip=getproperty(dicc,'ip'),vendor=getproperty(dicc,'vendor'),osfamily=getproperty(dicc,'osfamily'),osgen=getproperty(dicc,'osgen'),accurate=getproperty(dicc,'accurate'),state=getproperty(dicc,'state'),hostname=getproperty(dicc,'hostname'),updatetime=getproperty(dicc,'updatetime'),city=getproperty(dicc,'city'),isp=getproperty(dicc,'isp'),county=getproperty(dicc,'county'),country=getproperty(dicc,'country'),region=getproperty(dicc,'region'))
-                print ('======================ipestool get ip\"s response:======================\n%s' % str(aip))
+                print ('\n======================ipestool get ip\"s response:======================\n%s\n' % str(aip))
                 portarray.append(aip)
         else:
             pass

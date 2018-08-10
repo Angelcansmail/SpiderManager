@@ -32,15 +32,17 @@ class snifferTask(TaskTool):
     def task(self,req,threadname):
         self.logger and self.logger.info('%sNMAP 扫描执行任务中%s', threadname,str(datetime.datetime.now()))
 
-        jobid=req.getJobid()
-        jobid=str(jobid)
-        hosts=req.getJobaddress();
-        ports=req.getPort()
-        arguments=req.getArgument()
-        isjob=req.getisJob()
+        # zmaptool.py中needdetail != 0 --> 初始化Job(jobaddress=str(i),jobport='',forcesearch='0',isjob='0')
+        print "sniffertask::task() req->", req
+        jobid = req.getJobid()
+        jobid = str(jobid)
+        hosts = req.getJobaddress();
+        ports = req.getPort()
+        arguments = req.getArgument()
+        isjob = req.getisJob()  # default=1
 
         if isjob=='1':
-            tempresult=jobcontrol.jobupdate(jobstatus='3',taskid=str(jobid),starttime=webtool.getlocaltime())
+            tempresult = jobcontrol.jobupdate(jobstatus='3',taskid=str(jobid),starttime=webtool.getlocaltime())
         ans = self.sniffer.scanaddress([hosts], [str(ports)], arguments)
         self.logger and self.logger.info('%sNMAP 扫描任务结束%s', threadname,str(datetime.datetime.now()))
 
@@ -73,14 +75,14 @@ class snifferTask(TaskTool):
     
 if __name__ == "__main__":   
     links = []
-    temp= job.Job(jobaddress='www.bnuz.edu.cn',jobport='400-402',jobname='task1')
-    temp1=  job.Job(jobaddress='localhost',jobport='400-402',jobname='task2')
-    temp2=  job.Job(jobaddress='www.cctv.com',jobport='400-402',jobname='task3')
-    temp3=  job.Job(jobaddress='www.vip.com',jobport='400-402',jobname='task4')
+    temp = job.Job(jobaddress='www.bnuz.edu.cn',jobport='400-402',jobname='task1')
+#    temp1 = job.Job(jobaddress='localhost',jobport='400-402',jobname='task2')
+    temp2 = job.Job(jobaddress='www.ykgs.gov.cn',jobport='400-402',jobname='task3')
+#    temp3 = job.Job(jobaddress='www.vip.com',jobport='400-402',jobname='task4')
     links.append(temp)
-    links.append(temp1)
+#    links.append(temp1)
     links.append(temp2)
-    links.append(temp3)
+#    links.append(temp3)
 
     S_produce= snifferTask(1) #表示创建的是线程
     S_produce.set_deal_num(10) #进程数?
@@ -93,5 +95,3 @@ if __name__ == "__main__":
 
     print (endtime - starttime).seconds
 #   print b
-
-

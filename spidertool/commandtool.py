@@ -13,6 +13,7 @@ def command(cmd, timeout=60):
     timeout - max seconds to wait for 
     """  
     is_linux = platform.system() == 'Linux'  
+    print ("command_tool::command() cmd:%s, is_linux:%d"%(cmd, is_linux))
       
     p = subprocess.Popen(cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, close_fds=True,shell=True, preexec_fn=os.setsid if is_linux else None)
     if timeout==0:
@@ -57,6 +58,7 @@ def timeout_command(command, timeout=60):
     except OSError:
         pass
     return out
+
 if __name__ == '__main__':  
     try:  
         result = timeout_command('ping www.site-digger.com', timeout=10)

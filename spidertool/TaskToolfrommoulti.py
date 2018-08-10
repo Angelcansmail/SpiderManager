@@ -15,7 +15,7 @@ class TaskTool:
 		self.threadtool=ThreadTool(isThread)
 		self.isThread=isThread
 #		self.threadtool.add_task(self.task)
-		if isThread==1:
+		if isThread == 1:
 
 			self.lock = Lock() #线程锁
 			self.q_request =Queue. Queue() #任务所处理的对象队列
@@ -29,7 +29,7 @@ class TaskTool:
 		self.running = 0
 	#def __del__(self): #解构时需等待两个队列完成
 
-	#	if self.isThread==1:
+	#	if self.isThread == 1:
 
 	#		self.q_request.join()
 		#	self.q_finish.join()
@@ -44,10 +44,10 @@ class TaskTool:
 	###
 	def push(self,req):
 		self.q_request.put(req)
-	def add_work(self,work):
-		temptask=[]
-		if self.isThread==1:
 
+    def add_work(self,work):
+		temptask=[]
+		if self.isThread == 1:
 			for url in work:
 				self.push(url)
 				temptask.append(self.getTask)
@@ -56,9 +56,10 @@ class TaskTool:
 				self.push(url)
 				temptask.append(self.getTaskProcess)
 		self.threadtool.add_Work(temptask, work)
+
 	def append_work(self,work):
 		temptask=[]
-		if self.isThread==1:
+		if self.isThread == 1:
 
 			for url in work:
 				self.push(url)
@@ -68,6 +69,7 @@ class TaskTool:
 				self.push(url)
 				temptask.append(self.getTaskProcess)
 		self.threadtool.append_Work(temptask, work)		
+
 	def task(self,req,threadname,args):
 		print threadname+'执行任务中'+str(datetime.datetime.now())+'         '+args+'    '+req
 		
@@ -153,7 +155,7 @@ class TaskTool:
 			print '线程'+threadname+'完成请求'
 		 	self.q_request.task_done()
 #			self.lock.release()
-if __name__ == "__main__":
+if __name__  ==  "__main__":
 	work_manager =  TaskTool(0)#或者work_manager =  WorkManager(10000, 20)
 	work_manager.set_deal_num(5)
 	#work_manager.set_Work_size(6)
@@ -164,12 +166,12 @@ if __name__ == "__main__":
 #	work_manager.append_work(['k','l','m','n','o','p','q','r','s','t'])
 
 	while work_manager.has_work_left():
-		a,b=work_manager.pop()
+		a,b = work_manager.pop()
 		print a
 	work_manager.append_work(['u','v','w','x','y','z','aa','bb','cc','dd'])
 #	work_manager.append_work(['u','v','w','x','y','z','aa','bb','cc','dd'])
 	while work_manager.has_work_left():
-		a,b=work_manager.pop()
+		a,b = work_manager.pop()
 		print a
 	while True:
 		pass
