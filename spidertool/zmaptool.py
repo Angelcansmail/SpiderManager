@@ -35,7 +35,7 @@ class Zmaptool:
         path = os.getcwd()
         locate = os.path.split(os.path.realpath(__file__))[0]
 #         p= Popen(" ./zmap -B  4M -p "+port+" -N "+num+"   -q -O json", stdout=PIPE, shell=True,cwd=path+'/zmap-2.1.0/src')
-        cmd = "zmap -w "+locate+"/iparea.json -S 10.0.0.1-10.0.0.9 -B  1M -p "+port+" -o results.csv -N "+num+"   -q -O json"
+        cmd = "zmap -w "+locate+"/iparea.json -B 1M -p "+port+" -o results.csv -N "+num+"   -q -O json"
         # p= Popen(" zmap -w /root/github/Scan-T/spidermanage/spidertool/iparea.json -B  1M -p "+port+" -N "+num+"   -q -O json", stdout=PIPE, shell=True)
 
         import commandtool
@@ -60,8 +60,7 @@ class Zmaptool:
             jobs = []
             for i in ip_list:
                 insertdata.append((str(i), port, localtime, 'open', str(port)))
-            print ("zmaptool has %d results"%len(insertdata))
-'''
+                print ("zmaptool scan ip:%s"%i)
                 self.getlocationtool.add_work([str(i)]) # save ip info(get from ip.taobao.com) to snifferdata
                 if needdetail=='0':
                     global portname
@@ -80,7 +79,6 @@ class Zmaptool:
             tempwprk = Sqldata.SqlData('inserttableinfo_byparams',dic)
             sqldatawprk.append(tempwprk)
             self.sqlTool.add_work(sqldatawprk)
-'''
         # try:
         #
         #     p.terminate()
@@ -94,6 +92,6 @@ class Zmaptool:
 
 if __name__ == "__main__":
     temp = Zmaptool()
-    temp.do_scan()
+    temp.do_scan(needdetail='1')
 
 

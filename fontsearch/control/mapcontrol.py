@@ -6,7 +6,7 @@ from spidertool import SQLTool ,config
 limitpage=15
 DBhelp=None
 
-#searchroute.py 中调用，只传入了content
+#searchroute.py 中调用，只传入了content和isdic=0
 def mapshow(ip='',port='',state='',name='',product='',version='',searchcontent='',isdic=1):
     localconfig = config.Config()
     table = localconfig.porttable   # snifferdata
@@ -57,7 +57,7 @@ def mapshow(ip='',port='',state='',name='',product='',version='',searchcontent='
         sql = sql + request_params[request_params_length - 1] + ' = ' + values_params[request_params_length - 1] + '  '
 
         sql = sql + """ GROUP BY ip) AS iptable LEFT JOIN ip_maindata ON ipitem = ip_maindata.ip GROUP BY city """
-    print ("mapcontrol::showmap() table:%s, sql:%s"%(table, sql))
+    print ("\n\nmapcontrol::showmap() table:%s, sql:%s\n\n"%(table, sql))
     try:
          result, content, count, col = DBhelp.searchtableinfo_byparams(table=sql, usesql=1)
     except Exception,e:

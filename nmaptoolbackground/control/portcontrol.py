@@ -87,7 +87,6 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
                 DBhelp.closedb()
                 DBhelp=None
             
-
         portarray=[]
         if count > 0:
             validresult=True

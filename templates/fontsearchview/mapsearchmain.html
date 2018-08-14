@@ -94,23 +94,23 @@
 <script type="text/javascript" src="/static/fontsearch/js/bmap.min.js"></script>
 
 <script type="text/javascript">
-        function sendsearch(issearch, num) {
+    function sendsearch(issearch, num) {
         content = document.getElementById('searchcontent').value;
-        alert(["sendsearch", issearch, content]);
         if (issearch == '2' || content == "") {
             document.getElementById('searchcontent').value = "";
         }
         else {
             loaddata();
         }
-
     }
 
+    var xmlhttp;
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
-    var xmlhttp;
-    var app = {};
-    option = null;
+    var data = [
+        {name: '海门市', value: 9},
+        {name: '大庆市', value: 279}
+    ];
 
     //创建XMLHttpRequest对象
     function GetXmlHttp(xmlhttp) {
@@ -138,9 +138,8 @@
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         content = document.getElementById("searchcontent").value;
-        content = 'mysql'
+        content = 'apache'
         str = 'content=' + content ;
-        alert(str);
 
         xmlhttp.open("POST", "/fontsearch/mapsearch", true);
         xmlhttp.onreadystatechange = callback;
@@ -167,24 +166,195 @@
     }
 
     function getdata(data, size) {
-        alert([data[0].name, data[0].value, size]);
-        i=size/40;
+        i = size/40;
+        options = createoption(data, i, size/2);
+        myChart.setOption(options);   
+    }
 
-        option = {  
-        }
-    }  
+    function createoption(data, i, size) {
+        var option = {  
+            backgroundColor: '#BBFFFF',  
+            title : {  
+                text: '异常分布',  
+                x:'center'
+            },
+            // 浮层设置
+            tooltip: {  
+                trigger: 'item',        //触发类型,'item'数据项图形触发
+                formatter: function(params) {
+                    var res = params.name+'<br/>';    
+                    var myseries = option.series;    
+                    if (convertData) {  
+                        for (var i = 0; i < myseries.length-1; i++) {  
+                            for (var j=0;j<myseries[i].data.length;j++) {
+                                if(myseries[i].data[j].name==params.name){
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';   
+                                }  
+                            }  
+                        }  
+                    }  
+                    else {  
+                        for (var i = 0; i < myseries.length; i++) {    
+                            for(var j=0;j<myseries[i].data.length;j++){    
+                                if(myseries[i].data[j].name==params.name){    
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';    
+                                }    
+                            }    
+                        }   
+                    }    
+                    return res;    
+                }    
+            }, 
+            legend: {  
+                orient: 'vertical',
+                y: 'bottom',
+                x:'90%',  
+                data:['超时','失败','计划单列市']
+            }, 
+            geo: {  
+                map: 'china',  
+                label: {  
+                    emphasis: {  
+                        show: false
+                    }  
+                },
+                roam: true,
+                itemStyle: {  
+                    normal: {  
+                        areaColor: '#FFE4CA',  
+                        borderColor: '#84C1FF',  
+                        borderWidth: 0.8  
+                    },  
+                    emphasis: {  
+                        areaColor: '#FFC78E'  
+                    }  
+                }  
+            },  
+            dataRange: {
+                min: 0,
+                max: 30,
+                x: 'left',
+                y: 'bottom',
+                text:['高','低'],
+                calculable : true,
+                color:['red','orange','yellow','green'],  
+            },  
+            toolbox: {  
+                show: true,  
+                orient : 'vertical',  
+                x: 'right',  
+                y: 'center',  
+                feature : {  
+                    mark : {show: true},  
+                    dataView : {show: true, readOnly: false},  
+                    restore : {show: true},  
+                    saveAsImage : {show: true}  
+                }  
+            },  
+            roamController: {  
+                show: true,  
+                x: 'right',  
+                mapTypeControl: {  
+                    'china': true  
+                }  
+            },  
+            series : [  
+                {  
+                    name: '超时',  
+                    type: 'map',  
+                    mapType: 'china',  
+                    roam: false,  
+                    itemStyle:{  
+                        normal:{label:{show:false}},  
+                        emphasis:{label:{show:true}}  
+                    },  
+                    data:[  
+                         {name: '黑龙江',value: 1},  
+                         {name: '湖南',value: 3}  
+                    ]  
+                },
+                {  
+                    name: '失败',  
+                    type: 'scatter', 
+                    coordinateSystem: 'geo',  
+                    itemStyle:{  
+                        normal:{label: {show: false}},
+                        emphasis:{label:{show:true}}  
+                    },  
+                    data: convertData([  
+                        {name: '大连',value: 13},  
+                        {name: '宁波',value: 24},
+                        {name: '青岛',value: 18}  
+                    ]),
+                    // symbolSize: 15,
+                    symbolSize: function (val) {
+                        return val[2] * size;
+                    },
+                    label: {
+                        normal: {
+                            formatter: '{b}',
+                            position: 'right',
+                            show: false
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    // 图形样式，normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时
+                    itemStyle: {
+                        normal: {
+                            color: '#ddb926'
+                        }
+                    }
+                },
+                {  
+                    name: '计划单列市',
+                    type: 'effectScatter',//影响散点  
+                    coordinateSystem: 'geo',  
+                    data: convertData([
+                        {name: "厦门"},  
+                        {name: "深圳"}
+                    ]),
+                    /*data: convertData(data.sort(function (a, b) {
+                        return b.value - a.value;
+                    }).slice(0, 3)),*/
+                    symbolSize: 12,
+                    /*symbolSize: function (val) {
+                        return val[2]/size;
+                    },*/
+                    showEffectOn: 'render', 
+                    //波纹的绘制方式，可选 'stroke' 和 'fill'。
+                    rippleEffect: {  
+                        brushType: 'stroke'  
+                    },  
+                    hoverAnimation: true,  
+                    label: {  
+                        normal: {  
+                            formatter: '{b}',
+                            position: 'right',
+                            show: true
+                        },
+                        emphasis: {
+                            show: true
+                        }
+                    },
+                    itemStyle: {
+                        normal: {
+                            color: '#f4e925',
+                            shadowBlur: 10,  
+                            shadowColor: '#333' 
+                        }
+                    },
+                    zlevel: 1
+                }
+            ]  
+        };  
+        return option;
+    }
 
-myChart.setOption(option);   
-myChart.on('mouseover', function (params) {  
-    var dataIndex = params.dataIndex;
-    console.log(params);  
-});  
-
-window.addEventListener("resize",function(){  
-    myChart.resize();  
-});  
-
-var geoCoordMap = {//自定义城市坐标  
+    var geoCoordMap = {//自定义城市坐标  
+        '海门市': [121.15, 31.89],
+        '大庆市': [125.03, 46.58],
         "青岛":[120.33,36.07],  
         "厦门":[118.1,24.46],  
         "宁波":[121.56,29.86],  
@@ -192,83 +362,41 @@ var geoCoordMap = {//自定义城市坐标
         "大连":[121.62,38.92]  
     };  
 
-var convertData = function (data) {  
-    var res = [];  
-    for (var i = 0; i < data.length; i++) {  
-        var geoCoord = geoCoordMap[data[i].name];  
-        if (geoCoord) {  
-            res.push({  
-                name: data[i].name,  
-                value: geoCoord.concat(data[i].value)  
-            });  
-        }  
-    }  
-    return res;  
-}; 
+    // 获取城市对应的经纬度
+    var convertData = function (data) {
+        var res = [];
+        for (var i = 0; i < data.length; i++) {
+            var geoCoord = geoCoordMap[data[i].name];
+            if (geoCoord) {
+                res.push({
+                    name: data[i].name,
+                    value: geoCoord.concat(data[i].value)
+                });
+            }
+        }
+        return res;
+    };
 
+    // 调用显示
+    // options = createoption();
+    // myChart.setOption(options);   
+    myChart.on('mouseover', function (params) {  
+        var dataIndex = params.dataIndex;  
+        console.log(params);  
+    });  
 
-document.onkeydown = function (e) {
-//捕捉回车事件
-var ev = (typeof event != 'undefined') ? window.event : e;
-if (ev.keyCode == 13 && document.activeElement.id == "searchcontent") {
-    loaddata(0);
-}
-}
+    window.addEventListener("resize",function(){  
+        myChart.resize();  
+    });  
 
-function add(a, b) {
-    var c, d, e;
-    try {
-        c = a.toString().split(".")[1].length;
-    } catch (f) {
-        c = 0;
+    document.onkeydown = function (e) {
+        //捕捉回车事件
+        var ev = (typeof event != 'undefined') ? window.event : e;
+        if (ev.keyCode == 13 && document.activeElement.id == "searchcontent") {
+            loaddata(0);
+        }
     }
-    try {
-        d = b.toString().split(".")[1].length;
-    } catch (f) {
-        d = 0;
-    }
-    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) + mul(b, e)) / e;
-}
 
-function sub(a, b) {
-    var c, d, e;
-    try {
-        c = a.toString().split(".")[1].length;
-    } catch (f) {
-        c = 0;
-    }
-    try {
-        d = b.toString().split(".")[1].length;
-    } catch (f) {
-        d = 0;
-    }
-    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) - mul(b, e)) / e;
-}
-
-function mul(a, b) {
-    var c = 0,
-        d = a.toString(),
-        e = b.toString();
-    try {
-        c += d.split(".")[1].length;
-    } catch (f) {}
-    try {
-        c += e.split(".")[1].length;
-    } catch (f) {}
-    return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
-}
-
-function div(a, b) {
-    var c, d, e = 0,
-        f = 0;
-    try {
-        e = a.toString().split(".")[1].length;
-    } catch (g) {}
-    try {
-        f = b.toString().split(".")[1].length;
-    } catch (g) {}
-    return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), mul(c / d, Math.pow(10, f - e));
-}
 </script>
 
 <script src="/static/fontsearch/js/jquery.min.js"></script>

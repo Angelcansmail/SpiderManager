@@ -94,8 +94,7 @@
 <script type="text/javascript" src="/static/fontsearch/js/bmap.min.js"></script>
 
 <script type="text/javascript">
-        function sendsearch(issearch, num) {
-
+    function sendsearch(issearch, num) {
         content = document.getElementById('searchcontent').value;
         if (issearch == '2' || content == "") {
             document.getElementById('searchcontent').value = "";
@@ -103,11 +102,279 @@
         else {
             loaddata();
         }
-
     }
 
+    var xmlhttp;
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
+
+    //创建XMLHttpRequest对象
+    function GetXmlHttp(xmlhttp) {
+        if (window.XMLHttpRequest) //非IE浏览器，用xmlhttprequest对象创建
+        {
+            xmlhttp = new XMLHttpRequest();
+        }
+        else if (window.ActiveXObject) //IE浏览器用activexobject对象创建
+        {
+
+            try {
+                xmlhttp = new ActiveXObject("Msxml2.XMLHTTP.3.0");
+            } catch (e) {
+                try {
+                    xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                } catch (e) {
+
+
+                }
+            }
+        }
+        return xmlhttp;
+    }
+    function loaddata() {
+        xmlhttp = GetXmlHttp(xmlhttp);
+        var str = '';
+        content = document.getElementById("searchcontent").value;
+        content = 'mysql'
+        str = 'content=' + content ;
+        alert(str);
+
+        xmlhttp.open("POST", "/fontsearch/mapsearch", true);
+        xmlhttp.onreadystatechange = callback;
+        xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xmlhttp.send(str);
+        Pace.track();
+    }
+
+    function callback() {
+        if (xmlhttp.readyState != 4) {
+
+        }
+        else {
+            if (xmlhttp.status == 200) {
+                var a = xmlhttp.responseText;
+                var result=JSON.parse(a);
+
+                data = result.ports;
+                var resultsize = result.resultsize
+                myChart = echarts.init(dom);
+                getdata(data, resultsize);
+            }
+        }
+    }
+
+    function getdata(data, size) {
+        alert([data[0].name, data[0].value, size]);
+        i=size/40;
+        options = createoption();
+        myChart.setOption(options);   
+    }
+
+    function createoption() {
+        var option = {  
+            backgroundColor: '#BBFFFF',  
+            title : {  
+                text: '异常分布',  
+                x:'center'
+            },  
+            tooltip: {  
+                trigger: 'item',    
+                formatter: function(params) {    
+                    var res = params.name+'<br/>';    
+                    var myseries = option.series;    
+                    if (convertData) {  
+                        for (var i = 0; i < myseries.length-1; i++) {  
+                            for (var j=0;j<myseries[i].data.length;j++) {
+                                if(myseries[i].data[j].name==params.name){
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';   
+                                }  
+                            }  
+                        }  
+                    }  
+                    else {  
+                        for (var i = 0; i < myseries.length; i++) {    
+                            for(var j=0;j<myseries[i].data.length;j++){    
+                                if(myseries[i].data[j].name==params.name){    
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';    
+                                }    
+                            }    
+                        }   
+                    }    
+                    return res;    
+                }    
+            },  
+            legend: {  
+                orient: 'vertical',
+                y: 'bottom',
+                x:'90%',  
+                data:['超时','失败','运行中']
+            }, 
+            geo: {  
+                map: 'china',  
+                label: {  
+                    emphasis: {  
+                        show: false
+                    }  
+                },
+                roam: true,
+                itemStyle: {  
+                    normal: {  
+                        areaColor: '#FFE4CA',  
+                        borderColor: '#84C1FF',  
+                        borderWidth: 0.8  
+                    },  
+                    emphasis: {  
+                        areaColor: '#FFC78E'  
+                    }  
+                }  
+            },  
+            dataRange: {
+                min: 0,
+                max: 30,
+                x: 'left',
+                y: 'bottom',
+                text:['高','低'],
+                calculable : true,
+                color:['red','orange','yellow','green'],  
+            },  
+            toolbox: {  
+                show: true,  
+                orient : 'vertical',  
+                x: 'right',  
+                y: 'center',  
+                feature : {  
+                    mark : {show: true},  
+                    dataView : {show: true, readOnly: false},  
+                    restore : {show: true},  
+                    saveAsImage : {show: true}  
+                }  
+            },  
+            roamController: {  
+                show: true,  
+                x: 'right',  
+                mapTypeControl: {  
+                    'china': true  
+                }  
+            },  
+            series : [  
+                {  
+                    name: '超时',  
+                    type: 'map',  
+                    mapType: 'china',  
+                    roam: false,  
+                    itemStyle:{  
+                        normal:{label:{show:false}},  
+                        emphasis:{label:{show:true}}  
+                    },  
+                    data:[  
+                         {name: '广东',value: 4},  
+                         {name: '黑龙江',value: 1},  
+                         {name: '湖南',value: 3}  
+                    ]  
+                },  
+                {  
+                    name: '失败',  
+                    type: 'map',  
+                    mapType: 'china',  
+                    itemStyle:{  
+                        normal:{label: {show: false}},
+                        emphasis:{label:{show:true}}  
+                    },  
+                    data:[  
+                        {name: '安徽',value: 11},  
+                        {name: '北京',value: 1},  
+                        {name: '大连',value: 13},  
+                        {name: '福建',value: 6},  
+                        {name: '甘肃',value: 1},  
+                        {name: '广东',value: 4},  
+                        {name: '广西',value: 10},  
+                        {name: '贵州',value: 9},  
+                        {name: '海南',value: 4},  
+                        {name: '河北',value: 1},  
+                        {name: '河南',value: 18},  
+                        {name: '黑龙江',value: 1},  
+                        {name: '湖北',value: 3},  
+                        {name: '湖南',value: 18},  
+                        {name: '吉林',value: 16},  
+                        {name: '江苏',value: 16},  
+                        {name: '江西',value: 24},  
+                        {name: '辽宁',value: 1},  
+                        {name: '内蒙古',value: 18},  
+                        {name: '宁波',value: 12},  
+                        {name: '宁夏',value: 1},  
+                        {name: '青岛',value: 2},  
+                        {name: '青海',value: 23},  
+                        {name: '山东',value: 14},  
+                        {name: '山西',value: 8},  
+                        {name: '陕西',value: 13},  
+                        {name: '上海',value: 10},  
+                        {name: '深圳',value: 4},  
+                        {name: '四川',value: 8},  
+                        {name: '天津',value: 28},  
+                        {name: '西藏',value: 2},  
+                        {name: '厦门',value: 5},  
+                        {name: '新疆',value: 4},  
+                        {name: '云南',value: 10},  
+                        {name: '浙江',value: 13},  
+                        {name: '重庆',value: 18}  
+                    ],  
+                },  
+                {  
+                    name: '运行中',  
+                    type: 'map',  
+                    mapType: 'china',  
+                    itemStyle:{  
+                        normal:{label:{show:false}},  
+                        emphasis:{label:{show:true}}  
+                    },  
+                    data:[  
+                         {name: "青岛", value: 1},  
+                         {name: "厦门", value: 23},  
+                         {name: "宁波", value: 12},  
+                         {name: "深圳", value: 4},  
+                         {name: "大连", value: 13},  
+                    ]  
+                },  
+                {  
+                    name: '计划单列市',  
+                    type: 'effectScatter',//影响散点  
+                    coordinateSystem: 'geo',  
+                    symbolSize: 12,  
+                    showEffectOn: 'render',  
+                    rippleEffect: {  
+                        brushType: 'stroke'  
+                    },  
+                    hoverAnimation: true,  
+                    label: {  
+                        normal: {  
+                            color: '#c60fff',  
+                            formatter: '{b}',  
+                            position: 'right',  
+                            show: false  
+                        },  
+                        emphasis: {  
+                            show: true  
+                        }  
+                    },  
+                    itemStyle: {  
+                        normal: {  
+                            color: '',  
+                            shadowBlur: 10,  
+                            shadowColor: '#333'  
+                        },  
+                    },  
+                    data: convertData([  
+                        {name: "青岛"},  
+                        {name: "厦门"},  
+                        {name: "宁波"},  
+                        {name: "深圳"},  
+                        {name: "大连"},  
+                    ]),  
+                }  
+            ]  
+        };  
+        return option;
+    }
+
     var geoCoordMap = {//自定义城市坐标  
         "青岛":[120.33,36.07],  
         "厦门":[118.1,24.46],  
@@ -115,232 +382,6 @@
         "深圳":[114.07,22.62],  
         "大连":[121.62,38.92]  
     };  
-
-var convertData = function (data) {  
-    var res = [];  
-    for (var i = 0; i < data.length; i++) {  
-        var geoCoord = geoCoordMap[data[i].name];  
-        if (geoCoord) {  
-            res.push({  
-                name: data[i].name,  
-                value: geoCoord.concat(data[i].value)  
-            });  
-        }  
-    }  
-    return res;  
-}; 
-
-option = {  
-backgroundColor: '#BBFFFF',  
-                 title : {  
-text: '异常分布',  
-      x:'center'  
-                 },  
-tooltip: {  
-trigger: 'item',    
-         formatter: function(params) {    
-             var res = params.name+'<br/>';    
-             var myseries = option.series;    
-             if (convertData) {  
-                 for (var i = 0; i < myseries.length-1; i++) {  
-                     for(var j=0;j<myseries[i].data.length;j++) {    
-                         if(myseries[i].data[j].name==params.name){  
-                             res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';   
-                         }  
-                     }  
-                 }  
-             }  
-             else {  
-                 for (var i = 0; i < myseries.length; i++) {    
-                     for(var j=0;j<myseries[i].data.length;j++){    
-                         if(myseries[i].data[j].name==params.name){    
-                             res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';    
-                         }    
-                     }    
-                 }   
-             }    
-             return res;    
-         }    
-         },  
-legend: {  
-orient: 'vertical',  
-        x:'left',  
-        data:['超时','失败','运行中']  
-        },  
-dataRange: {  
-min: 0,  
-     max: 30,  
-     x: 'left',  
-     y: 'bottom',  
-     color:['red','orange','yellow','green'],  
-     text:['高','低'],  
-     calculable : true  
-           },  
-toolbox: {  
-show: true,  
-      orient : 'vertical',  
-      x: 'right',  
-      y: 'center',  
-      feature : {  
-mark : {show: true},  
-       dataView : {show: true, readOnly: false},  
-       restore : {show: true},  
-       saveAsImage : {show: true}  
-      }  
-         },  
-roamController: {  
-show: true,  
-      x: 'right',  
-      mapTypeControl: {  
-          'china': true  
-      }  
-                },  
-geo: {  
-map: 'china',  
-     label: {  
-emphasis: {  
-show: true  
-          }  
-     },  
-itemStyle: {  
-normal: {  
-areaColor: '#FFE4CA',  
-           borderColor: '#84C1FF',  
-           borderWidth: 0.8  
-        },  
-emphasis: {  
-areaColor: '#FFC78E'  
-          }  
-           }  
-     },  
-series : [  
-         {  
-name: '超时',  
-      type: 'map',  
-      mapType: 'china',  
-      roam: false,  
-      itemStyle:{  
-normal:{label:{show:false}},  
-       emphasis:{label:{show:true}}  
-      },  
-data:[  
-     {name: '广东',value: 4},  
-     {name: '黑龙江',value: 1},  
-     {name: '湖南',value: 3}  
-]  
-         },  
-         {  
-      name: '失败',  
-      type: 'map',  
-      mapType: 'china',  
-      itemStyle:{  
-        normal:{label: {show: false}},
-        emphasis:{label:{show:true}}  
-      },  
-
-data:[  
-     {name: '安徽',value: 11},  
-     {name: '北京',value: 1},  
-     {name: '大连',value: 13},  
-     {name: '福建',value: 6},  
-     {name: '甘肃',value: 1},  
-     {name: '广东',value: 4},  
-     {name: '广西',value: 10},  
-     {name: '贵州',value: 9},  
-     {name: '海南',value: 4},  
-     {name: '河北',value: 1},  
-     {name: '河南',value: 18},  
-     {name: '黑龙江',value: 1},  
-     {name: '湖北',value: 3},  
-     {name: '湖南',value: 18},  
-     {name: '吉林',value: 16},  
-     {name: '江苏',value: 16},  
-     {name: '江西',value: 24},  
-     {name: '辽宁',value: 1},  
-     {name: '内蒙古',value: 18},  
-     {name: '宁波',value: 12},  
-     {name: '宁夏',value: 1},  
-     {name: '青岛',value: 2},  
-     {name: '青海',value: 23},  
-     {name: '山东',value: 14},  
-     {name: '山西',value: 8},  
-     {name: '陕西',value: 13},  
-     {name: '上海',value: 10},  
-     {name: '深圳',value: 4},  
-     {name: '四川',value: 8},  
-     {name: '天津',value: 28},  
-     {name: '西藏',value: 2},  
-     {name: '厦门',value: 5},  
-     {name: '新疆',value: 4},  
-     {name: '云南',value: 10},  
-     {name: '浙江',value: 13},  
-     {name: '重庆',value: 18}  
-      ],  
-         },  
-         {  
-name: '运行中',  
-      type: 'map',  
-      mapType: 'china',  
-      itemStyle:{  
-normal:{label:{show:false}},  
-       emphasis:{label:{show:true}}  
-      },  
-data:[  
-     {name: "青岛", value: 1},  
-     {name: "厦门", value: 23},  
-     {name: "宁波", value: 12},  
-     {name: "深圳", value: 4},  
-     {name: "大连", value: 13},  
-    ]  
-},  
-{  
-    name: '计划单列市',  
-    type: 'effectScatter',//影响散点  
-    coordinateSystem: 'geo',  
-    symbolSize: 12,  
-    showEffectOn: 'render',  
-    rippleEffect: {  
-        brushType: 'stroke'  
-    },  
-    hoverAnimation: true,  
-    label: {  
-        normal: {  
-        color: '#c60fff',  
-        formatter: '{b}',  
-        position: 'right',  
-        show: false  
-        },  
-        emphasis: {  
-            show: true  
-        }  
-    },  
-    itemStyle: {  
-        normal: {  
-        color: '',  
-        shadowBlur: 10,  
-        shadowColor: '#333'  
-        },  
-    },  
-    data: convertData([  
-              {name: "青岛"},  
-              {name: "厦门"},  
-              {name: "宁波"},  
-              {name: "深圳"},  
-              {name: "大连"},  
-        ]),  
-}  
-]  
-};  
-
-myChart.setOption(option);   
-myChart.on('mouseover', function (params) {  
-        var dataIndex = params.dataIndex;  
-        console.log(params);  
-        });  
-
-window.addEventListener("resize",function(){  
-        myChart.resize();  
-        });  
 
     var convertData = function (data) {
         var res = [];
@@ -356,6 +397,18 @@ window.addEventListener("resize",function(){
         return res;
     };
 
+    // 调用显示
+    // options = createoption();
+    // myChart.setOption(options);   
+    myChart.on('mouseover', function (params) {  
+        var dataIndex = params.dataIndex;  
+        console.log(params);  
+    });  
+
+    window.addEventListener("resize",function(){  
+        myChart.resize();  
+    });  
+
     document.onkeydown = function (e) {
         //捕捉回车事件
         var ev = (typeof event != 'undefined') ? window.event : e;
@@ -364,60 +417,6 @@ window.addEventListener("resize",function(){
         }
     }
 
-    function add(a, b) {
-    var c, d, e;
-    try {
-        c = a.toString().split(".")[1].length;
-    } catch (f) {
-        c = 0;
-    }
-    try {
-        d = b.toString().split(".")[1].length;
-    } catch (f) {
-        d = 0;
-    }
-    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) + mul(b, e)) / e;
-}
-
-function sub(a, b) {
-    var c, d, e;
-    try {
-        c = a.toString().split(".")[1].length;
-    } catch (f) {
-        c = 0;
-    }
-    try {
-        d = b.toString().split(".")[1].length;
-    } catch (f) {
-        d = 0;
-    }
-    return e = Math.pow(10, Math.max(c, d)), (mul(a, e) - mul(b, e)) / e;
-}
-
-function mul(a, b) {
-    var c = 0,
-        d = a.toString(),
-        e = b.toString();
-    try {
-        c += d.split(".")[1].length;
-    } catch (f) {}
-    try {
-        c += e.split(".")[1].length;
-    } catch (f) {}
-    return Number(d.replace(".", "")) * Number(e.replace(".", "")) / Math.pow(10, c);
-}
-
-function div(a, b) {
-    var c, d, e = 0,
-        f = 0;
-    try {
-        e = a.toString().split(".")[1].length;
-    } catch (g) {}
-    try {
-        f = b.toString().split(".")[1].length;
-    } catch (g) {}
-    return c = Number(a.toString().replace(".", "")), d = Number(b.toString().replace(".", "")), mul(c / d, Math.pow(10, f - e));
-}
 </script>
 
 <script src="/static/fontsearch/js/jquery.min.js"></script>
