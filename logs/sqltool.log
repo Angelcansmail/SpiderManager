@@ -161,3 +161,9 @@ select username, taskid, taskname, taskprior, taskstatus, starttime, taskaddress
 [2018-08-10 Fri 12:57:19]SQLTool.py-15485-140027451148032-176-    INFO-"
 ======================查询表['ip_maindata']======================
 select count(*) from ip_maindata where ip = '110.110.110.116';"
+[2018-08-14 Tue 14:22:24]SQLTool.py-8098-140524373280512-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select count(*) from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode) ;"
+[2018-08-14 Tue 14:22:24]SQLTool.py-8098-140524373280512-176-    INFO-"
+======================查询表['snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip']======================
+select snifferdata.ip, port, timesearch, snifferdata.state, name, product, version, script, detail, head, city, hackinfo, disclosure from snifferdata left join ip_maindata on snifferdata.ip=ip_maindata.ip where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against('mysql' in Boolean mode)  order by snifferdata.port limit 0,15;"

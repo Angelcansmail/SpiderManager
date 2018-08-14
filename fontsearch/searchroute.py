@@ -274,7 +274,6 @@ def mapsearch(request):
     if jsoncontent is None or jsoncontent =={}:
         redisresult = redistool.get(content)
 
-        """
         if redisresult:
             print 'searchroute::mapsearch() 从redis取的数据'
             response_data['result'] = '1'
@@ -283,8 +282,6 @@ def mapsearch(request):
             response_data['portslength'] = redisresult['portslength']
             response_data['resultsize'] = redisresult['resultsize']
         else:
-        """
-        if True:
             print "mapsearch() redis无结果"
             # ports has name and value
             ports, portcount, resultsize = mapcontrol.mapshow(searchcontent=content, isdic=0)

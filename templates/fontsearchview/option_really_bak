@@ -1,0 +1,130 @@
+var option = {
+    backgroundColor: '#404a59',
+    title: {
+        text: '主机结果分布图',
+        subtext: 'data from Scan-T',
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    tooltip: {
+        trigger: 'item'
+    },
+    legend: {
+        orient: 'vertical',
+        y: 'bottom',
+        x: '90%',
+        data: ['主机'],
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    geo: {
+        map: 'china',
+        label: {
+            emphasis: {
+                show: false
+            }
+        },
+        roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#111',
+                borderWidth: 0.8
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    visualMap: {
+    type: 'continuous',
+    min: 0,
+    // max: size,
+    text:['高','低'],
+        textStyle: {
+            color: '#fff'
+        },
+        realtime: false,
+        calculable : true,
+        color: ['orangered','yellow','lightskyblue']
+    },
+    //series就是要绘制的地图的主体。是一个数组，也就是说可以有多个数据进行绘制。这里有两个，一个是主机散点图，一个是top6城市进行高亮显示。其中的type是很重要的参数，主要有饼图、条形图、线、地图等等
+    series: [
+        {
+            name: '主机',
+            type: 'scatter',    //散点图
+            coordinateSystem: 'geo',    //'cartesian2d'使用二维的直角坐标系。'geo'使用地理坐标系
+            // data: convertData(data),
+            data:[
+                {name: '海门市', value: 9},
+                {name: '大庆市', value: 279}
+            ]
+            // 标记的大小，可以设置成诸如 10 这样单一的数字，也可以用数组分开表示宽和高，例如 [20, 10] 表示标记宽为20，高为10
+            symbolSize: function (val) {
+                var item=val[2]/size;
+                var number=(Math.exp(item-1))*i;
+                console.log(item,number,val[2],val[2]/number);
+                return val[2]/number+1;
+//                        return val[2]/i;
+            },
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: false
+                },
+                emphasis: {
+                    show: true
+                }
+            },
+            // 图形样式，normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时
+            itemStyle: {
+                normal: {
+                    normal:{label:{show:false}},
+                    emphasis:{label:{show:true}},
+                    color: '#ddb926'
+                }
+            }
+        },
+        {
+            name: 'Top 6',
+            type: 'effectScatter',  //影响散点
+            coordinateSystem: 'geo',
+            symbolSize: function (val) {
+                var item=val[2]/size;
+                var number=(Math.exp(item-1))*i;
+                console.log(item,number,val[2],val[2]/number);
+                return val[2]/number+1;
+            },
+            showEffectOn: 'render',
+            rippleEffect: {
+                brushType: 'stroke'
+            },
+            hoverAnimation: true,
+            label: {
+                normal: {
+                    formatter: '{b}',
+                    position: 'right',
+                    show: true
+                },
+                emphasis:{
+                    show: true
+                }
+            },
+            itemStyle: {
+                normal: {
+                    color: '#f4e925',
+                    shadowBlur: 10,
+                    shadowColor: '#333'
+                }
+            },
+            zlevel: 1,
+            data: convertData(data.sort(function (a, b) {
+                return b.value - a.value;
+            }).slice(0, 6)),
+        }
+    ]
+};

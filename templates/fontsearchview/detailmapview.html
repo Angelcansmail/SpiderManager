@@ -123,6 +123,7 @@
 
     // 主机位置对应的ip, searchdetail.html传入的
     function getinfo(){
+        // 获取端口信息，页面右下方
         getport();
         var ip="{{ip}}";
         xmlhttp = GetXmlHttp(xmlhttp);
@@ -131,7 +132,7 @@
 
         // get result, ips, iplength, ippagecount
         xmlhttp.open("POST", "/fontsearch/ipinfo", true);
-        xmlhttp.onreadystatechange = callback;
+        xmlhttp.onreadystatechange = callback;  //ips(Ip object array), iplength, ippagecount
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
     }
@@ -148,6 +149,7 @@
         }
     }
 
+    // 页面左下方
     function showipinfo(result) {
         var data2 = JSON.parse(result);
         if (data2.result == '0') {
@@ -163,7 +165,7 @@
             var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
             var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
             var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
-            alert(["ip:", ports[0].ip, "country:", ports[0].country, "location:", ports[0].location, "city", ports[0].city, "isp", ports[0].isp, "region", ports[0].region]);
+            // alert(["ip:", ports[0].ip, "country:", ports[0].country, "location:", ports[0].location, "city", ports[0].city, "isp", ports[0].isp, "region", ports[0].region]);
 
             var bodyhtml = "";
 
@@ -178,9 +180,10 @@
                 "<tr> <td>Hostnames</td><th>"+ports[0].hostname+"</th></tr>"+
                 "</tbody></table>"
 
-            alert(["showipinfo::bodyhtml()", bodyhtml]);
+            // alert(["showipinfo::bodyhtml()", bodyhtml]);
             document.getElementById("ipinfo").innerHTML = bodyhtml;
 
+            // 调研下location的值怎么出来的?
             var latitude = ports[0].location['geoip']['location']['latitude'];
             var longitude = ports[0].location['geoip']['location']['longitude'];
             window.frames["detailmap"].src = '/fontsearch/map?latitude='+latitude+'&longitude='+longitude;
