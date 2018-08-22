@@ -173,6 +173,7 @@
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         str = 'taskid=' + localjobid;
+
         xmlhttp.open("POST", "/nmaptool/tasks/starttask/", false);
         xmlhttp.onreadystatechange = jobcallback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");

@@ -128,9 +128,9 @@ class InfoDisScanner(InfoDisScannerBase):
             url=None
             try:
                 url_description, severity, tag, p_status, content_type, content_type_no, path = item
-                print ("======================fuzzdetect::_scan_worker()::url_queue======================\n" \
-                        "url_description:%s, severity:%s, tag:%s, p_status:%d, content_type:%s, content_type_no:%s path:%s\n"%(
-                        url_description, severity, tag, p_status, content_type, content_type_no, path))
+                # print ("======================fuzzdetect::_scan_worker()::url_queue======================\n" \
+                #         "url_description:%s, severity:%s, tag:%s, p_status:%d, content_type:%s, content_type_no:%s path:%s\n"%(
+                #         url_description, severity, tag, p_status, content_type, content_type_no, path))
 
                 url = url_description['full_url']
                 prefix = url_description['prefix']
@@ -141,7 +141,7 @@ class InfoDisScanner(InfoDisScannerBase):
                 break
             try:
                 c_status, headers, html_doc = self._http_request(url=prefix,protocal=protocal,path=path)
-                print ('======================fuzzdetect::_scan_worker()======================\n[c_status:%d]\n[headers:]\n%s\n[has_404:%d]\n[p_status:%d]\n[_status:%d]\n[html_doc type:%s]=================================================================================' % (c_status, headers, has_404, p_status, _status, type(html_doc)))
+                # print ('======================fuzzdetect::_scan_worker()======================\n[c_status:%d]\n[headers:]\n%s\n[has_404:%d]\n[p_status:%d]\n[_status:%d]\n[html_doc type:%s]=================================================================================\n' % (c_status, headers, has_404, p_status, _status, type(html_doc)))
                 # print ('======================fuzzdetect::_scan_worker() [c_status:%s]\n[headers:%s]\n[html_doc:%s]======================' % (c_status, headers, html_doc))
                 # self.logger.info(str(status)+url)
                 if (c_status in [200, 301, 302, 303]) and (has_404 or c_status!=_status):
@@ -154,7 +154,7 @@ class InfoDisScanner(InfoDisScannerBase):
                         # print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
                         if results.get(prefix,None) is None:
                             results[prefix] = []
-                        results[prefix].append({'status':status, 'url': '%s' % (url)} )
+                        results[prefix].append({'status':c_status, 'url': '%s' % (url)} )
                         self._update_severity(severity)
 
                 if len(results) >= 30:

@@ -12,11 +12,7 @@
 
 content=$1
 
-rm *.pyc
-rm */*.pyc
-rm */*/*.pyc
-rm */*/*/*.pyc
-rm */*/*/*/*.pyc
+rm `find -name "*.pyc"`
 git add *
 git commit -m "$content"
 git push origin master

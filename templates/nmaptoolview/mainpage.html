@@ -339,8 +339,8 @@
         var str = '';
         str = 'page=' + number + '&username=' + message+'&groupid=' +groupid;
         nowpage = currpage;
-        alert(str);
-        xmlhttp.open("POST", "/nmaptool/jobshow", false);
+
+	xmlhttp.open("POST", "/nmaptool/jobshow", false);
         xmlhttp.onreadystatechange = callback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);

@@ -31,7 +31,7 @@ class PortscanTask(TaskTool):
         self.set_deal_num(15)
 
     def task(self,req,threadname):
-        self.logger and self.logger.info('%s 端口扫描　执行任务中%s', threadname,str(datetime.datetime.now()))
+        self.logger.info('%s 端口扫描　执行任务中%s', threadname,str(datetime.datetime.now()))
         print ("\n======================portscantask::task() req:%s======================\n"%str(req))
         if req[3]!='open':
             return ''
@@ -61,7 +61,7 @@ class PortscanTask(TaskTool):
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
-            self.logger and self.logger.info('webutil.getwebinfo() method_1 keywords:\n%s\ntitle:\n%s\n', webkey, webtitle)
+            self.logger.info('webutil.getwebinfo() method_1 \nkeywords:%s\ntitle:%s\n', webkey, webtitle)
             
             try:
                 # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
@@ -77,7 +77,7 @@ class PortscanTask(TaskTool):
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
-            self.logger and self.logger.info('webutil.getwebinfo() method_2 keywords:\n%s\ntitle:\n%s\n', webkey, webtitle)
+            self.logger.info('webutil.getwebinfo() method_2 \nkeywords:%s\ntitle:%s\n', webkey, webtitle)
             pass
 #         print page
 #         self.sqlTool.connectdb()
@@ -101,7 +101,7 @@ class PortscanTask(TaskTool):
 #         inserttableinfo_byparams(table=self.config.porttable,select_params=['ip','port','timesearch','detail'],insert_values=insertdata,extra=extra)
 
 #         self.sqlTool.closedb()
-        self.logger and self.logger.info('%s 端口扫描　任务结束%s', threadname,str(datetime.datetime.now()))
+        self.logger.info('%s 端口扫描　任务结束%s', threadname,str(datetime.datetime.now()))
         return page
 
 if __name__ == "__main__":

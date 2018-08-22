@@ -40,7 +40,7 @@ class FuzzTask(TaskTool):
         keywords='' if req[5] is None else req[5]
         nmapscript='' if req[6] is None else req[6]
         protocol='' if req[7] is None else req[7]
-        print "fuzztask::task() req:", req
+        # print "fuzztask::task() req:", req
         print 'poc   未启动内存增长状况'
         gc.collect()
         objgraph.show_growth()
