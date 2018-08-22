@@ -32,8 +32,8 @@ class SniffrtTool(object):
         self.logger = logger
         try:
             self.nma = nmap.PortScanner()     # instantiate nmap.PortScanner object
-#             self.params='-A -Pn -sC -R -v -O -T5'
-            self.params='-sV -T4 -O '         #快捷扫描加强版
+            self.params='-A -Pn -sC -R -v -O -T5'
+#             self.params='-sV -T4 -Pn -O '         #快捷扫描加强版
 #             self.params='-sS -sU -T4 -A -v'   #深入扫描
         except nmap.PortScannerError:
 #             print('Nmap not found', sys.exc_info()[0])

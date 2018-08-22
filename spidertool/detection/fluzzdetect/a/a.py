@@ -1,2 +1,0 @@
-def funa():
-    print "a"
