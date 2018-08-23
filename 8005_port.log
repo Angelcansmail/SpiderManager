@@ -1,0 +1,91 @@
+nohup: 忽略输入
+[23/Aug/2018 09:08:04] "GET /fontsearch/searchmain?page=0&searchcontent=structs HTTP/1.1" 200 19952
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/css/bootstrap.min.css HTTP/1.1" 200 122540
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/css/site.min.css HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/css/paceblue/pace-theme-flash.css HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/jquery.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/pace.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/jbase64.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/base64.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/bootstrap.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/highlight.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/geopattern.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/ZeroClipboard.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/localforage.nopromises.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/jquery.scrollTo.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/site.min.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:04] "GET /static/fontsearch/js/h.js HTTP/1.1" 304 0
+[23/Aug/2018 09:08:10] "GET /static/fontsearch/img/bgs/landscape.jpg HTTP/1.1" 304 0
+[23/Aug/2018 09:08:10] "GET /static/img/bgs/landscape.jpg HTTP/1.1" 404 1676
+[23/Aug/2018 09:08:10] "POST /fontsearch/searchdetail HTTP/1.1" 200 126
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have unapplied migrations; your app may not work properly until they are applied.
+Run 'python manage.py migrate' to apply them.
+August 23, 2018 - 09:07:54
+Django version 1.9, using settings 'SpiderManager.settings'
+Starting development server at http://localhost:8005/
+Quit the server with CONTROL-C.
+Error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+内容非空，进入elasticsearch检索
+======================redistool::get(4a96056791f3371d9422f954a26f9461)======================
+======================elastictool::search() dic:<type 'dict'>, content:structs======================
+======================elasticsearch Q:
+MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'structs')
+
+======================elasticsearch results:<elasticsearch_dsl.search.Search object at 0x7fb5fce1a210>, response::<Response: {}>======================
+返回的集中率为0
+返回的实际数量为0
+======================redistool::set(4a96056791f3371d9422f954a26f9461)======================
+======================redistool::expire(4a96056791f3371d9422f954a26f9461)======================
+检索完毕
+Error: Expecting property name enclosed in double quotes: line 1 column 2 (char 1)
+内容非空，进入elasticsearch检索
+======================redistool::get(2e4247330d5cee35550418bac4e91e4f)======================
+======================elastictool::search() dic:<type 'dict'>, content:microsoft======================
+======================elasticsearch Q:
+MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'microsoft')
+
+======================elasticsearch results:<elasticsearch_dsl.search.Search object at 0x7fb5fce3b250>, response::<Response: [<Hit(datap/snifferdata/122.114.49.149:21): {u'disclosure': None, u'product': u'Microsoft ftpd', u'name'...}>, <Hit(datap/snifferdata/122.114.49.241:21): {u'disclosure': None, u'product': u'Microsoft ftpd', u'name'...}>, <Hit(datap/snifferdata/122.114.49.241:1033): {u'disclosure': None, u'product': u'Microsoft Windows RPC', ...}>, <Hit(datap/snifferdata/43.254.24.99:80): {u'disclosure': None, u'product': u'Microsoft IIS httpd', u'...}>, <Hit(datap/snifferdata/111.206.218.215:80): {u'disclosure': None, u'product': u'Microsoft IIS httpd', u'...}>, <Hit(datap/snifferdata/210.73.76.33:8080): {u'disclosure': None, u'product': u'Microsoft IIS httpd', u'...}>, <Hit(datap/snifferdata/121.30.192.133:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/218.58.209.152:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/112.84.133.215:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/103.236.254.63:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/43.254.24.109:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/112.84.133.226:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/106.38.57.106:80): {u'disclosure': None, u'product': u'Microsoft IIS httpd', u'...}>, <Hit(datap/snifferdata/121.30.192.69:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>, <Hit(datap/snifferdata/61.180.227.164:445): {u'disclosure': None, u'product': u'', u'name': u'microsoft-...}>]>======================
+返回的集中率为93
+返回的实际数量为15
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(122.114.49.149)======================
+======================redistool::set(122.114.49.149)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(122.114.49.241)======================
+======================redistool::set(122.114.49.241)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(122.114.49.241)======================
+======================redistool::set(122.114.49.241)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(43.254.24.99)======================
+======================redistool::set(43.254.24.99)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(111.206.218.215)======================
+======================redistool::set(111.206.218.215)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(210.73.76.33)======================
+======================redistool::set(210.73.76.33)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(121.30.192.133)======================
+======================redistool::set(121.30.192.133)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(218.58.209.152)======================
+======================redistool::set(218.58.209.152)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(112.84.133.215)======================
+======================redistool::set(112.84.133.215)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(103.236.254.63)======================
+======================redistool::set(103.236.254.63)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(43.254.24.109)======================
+======================redistool::set(43.254.24.109)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hackinfo', u'ip', u'webkeywords', u'timesearch', u'detail', u'keywords', u'state', u'version', u'id', u'webtitle', u'head', u'port']")
+======================redistool::get(112.84.133.226)======================
+======================redistool::set(112.84.133.226)======================
+("index:count[%d]'s dic keys:%s", 15, "[u'disclosure', u'product', u'name', u'script', u'hack[23/Aug/2018 09:08:34] "POST /fontsearch/searchdetail HTTP/1.1" 200 10133
+[23/Aug/2018 09:08:34] "GET /static/fontsearch/flag/CN@2x.png HTTP/1.1" 200 1924

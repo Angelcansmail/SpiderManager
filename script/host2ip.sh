@@ -9,4 +9,4 @@ do
 done < $1
 
 cat ${1}_ip
-#awk -F'\t ' '{print $2}' | tr ' ' '\n' | awk '{print $0"/24"}'> iparea.json
+#cat ${1}_ip | awk -F'\t ' '{print $2}' | tr ' ' '\n' | awk '{print $0"/24"}'> iparea.json

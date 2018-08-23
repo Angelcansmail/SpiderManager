@@ -11,7 +11,7 @@
             "enabled" : true
         },
         "elasticsearch" : {
-             "cluster" : "elasticsearch",
+             "cluster" : "spiderManage",
              "host" : "localhost",
              "port" : 9300 
         }   

@@ -10,7 +10,7 @@ try:
     if redisinstance is None:
         import redis
         pool = redis.ConnectionPool(host='127.0.0.1', port=6379)
-#host是redis主机，需要redis服务端和客户端都起着 redis默认端口是6379
+	# host是redis主机，需要redis服务端和客户端都起着 redis默认端口是6379
         redisinstance = redis.Redis(connection_pool=pool)
 except Exception,e:
     print e
@@ -19,17 +19,20 @@ def getObject():
     return redisinstance
 
 def expire(key,expiration):
+    print "======================redistool::expire(%s)======================"%key
     if redisinstance is None:
         return None
     redisinstance.expire(key, expiration)
 
 def get(key):
+    print "======================redistool::get(%s)======================"%key
     if redisinstance is None:
         return None
     prev_topicList=None
     try:
         prev_topicList_redis = redisinstance.get(key)
         prev_topicList = prev_topicList_redis
+	# print ("redistool::get(%s) prev_topicList_redis:%s "%(key, prev_topicList_redis))
         if prev_topicList_redis is None:
             return prev_topicList_redis
         # import pickle
@@ -55,11 +58,11 @@ def decode_base64(data):
 
     """
     import base64
-#    print "redistool::decode_base64() before_data", data
+    # print "redistool::decode_base64() before_data", data
     missing_padding = len(data) % 4
     if missing_padding != 0:
         data += b'='* (4 - missing_padding) # bytes格式,=填充
-#    print "redistool::decode_base64() after_data", data   #MA==
+    # print "redistool::decode_base64() after_data", data   #MA==
     return base64.decodestring(data)
 
 def enbase64(dic):
@@ -67,7 +70,7 @@ def enbase64(dic):
     return iterobj(dic,base64.b64encode)
 
 def iterobj(dic, func):
-#    print ("redistool::iterobj() dic:%s, func:%s"%(str(dic), str(func)))
+    # print ("redistool::iterobj() dic:%s, func:%s"%(str(dic), str(func)))
     if dic == None:
         return None
     elif type(dic) == int:
@@ -99,6 +102,7 @@ def iterobj(dic, func):
         return dic
 
 def set(key,value):
+    print "======================redistool::set(%s)======================"%key
     if redisinstance is None:
         return
     import copy

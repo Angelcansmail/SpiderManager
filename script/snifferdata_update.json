@@ -5,15 +5,18 @@
         "user" : "root",
         "password" : "gzh123",
         "statefile" : "snifferdata_statefile.json",
-        "schedule" : "0 0-59 0-23 ? * *",
-        "sql": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackinfo,\")\") as hackinfo,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch>\"2018-08-20 00:00:00\"",
+        "schedule" : "0 0/15 0-23 ? * *",
+        "sql" : [{
+        	"statement": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackinfo,\")\") as hackinfo,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch > ?",
+                "parameter" : [ "$metrics.lastexecutionstart" ]
+	}],
         "index" : "datap",
         "type" : "snifferdata",
         "metrics": {
             "enabled" : true
         },
         "elasticsearch" : {
-             "cluster" : "elasticsearch",
+             "cluster" : "spiderManage",
              "host" : "localhost",
              "port" : 9300 
         }   

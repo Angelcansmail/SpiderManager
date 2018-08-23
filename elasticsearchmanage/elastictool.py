@@ -4,9 +4,9 @@ import sys;
 reload(sys);
 
 sys.setdefaultencoding('utf8');
-from elasticsearch_dsl.query import MultiMatch, Match
 from datetime import datetime
 from elasticsearch_dsl import DocType, Date, Integer, MultiSearch, Search, Q
+from elasticsearch_dsl.query import MultiMatch, Match
 from elasticsearch_dsl.connections import connections
 import mapping
 from logger import initLog
@@ -83,31 +83,31 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         else:
             eachitem=item
         # 表对象
-        logger and logger.info('get_table_obj%s', table)
+        logger.info('get_table_obj%s', table)
         instanceins = get_table_obj(table)
-        logger and logger.info('get each insert: %s', eachitem)
+        logger.info('get each insert: %s', eachitem)
         # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
         if extra or updatevalue:
-            logger and logger.info('更新数据')
+            logger.info('更新数据')
             instanceitem = instanceins.getdata(id=':'.join(eachitem[:primarykey]))
             print "inserttableinfo_byparasm::instanceitem::", instanceitem
-            logger and logger.info(str(instanceitem))
+            logger.info(str(instanceitem))
             if instanceitem is None:
-                logger and logger.info('找不到该数据，创建数据')
+                logger.info('找不到该数据，创建数据')
                 instanceins = get_table_obj(table)
                 instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
         else:
             instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
 
         for i in xrange(0,len(select_params)):
-            logger and logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
+            logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
             setvalue(instanceitem, select_params[i], decodestr(str(eachitem[i])))
         try:
             res=instanceitem.save()
         except Exception,e:
-            logger and logger.error('Error: %s', str(traceback.print_exc()))
+            logger.error('Error: %s', str(traceback.print_exc()))
         else:
-            logger and logger.info('insert success')
+            logger.info('insert success')
 
 def replaceinserttableinfo_byparams(table,select_params,insert_values,primarykey=1):
     inserttableinfo_byparams(table,select_params,insert_values,primarykey=primarykey)
