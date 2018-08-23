@@ -10,6 +10,7 @@ from fontsearch.control import mapcontrol
 
 import json
 import datetime
+import traceback
 
 timeout=60*20
 
@@ -57,7 +58,6 @@ def detailpage(request):
             try:
                 item = webtool.md5('sch_'+str(content)+'page'+str(page))
                 redisresult = redistool.get(str(item))
-                print "searchdroute::detailpage() redisresult?", redisresult
 
                 if redisresult:
                     print '从redids取的数据'
@@ -103,7 +103,7 @@ def detailpage(request):
                     response_data['portspage'] = page
             except Exception,e:
                 # 连接失败/
-                print "search Error! in 模糊检索", e
+                print "search Error! in 模糊检索", traceback.print_exc()
                 try:
                     # 模糊检索 match against
                     extra = ' where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '

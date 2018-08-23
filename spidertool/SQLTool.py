@@ -139,7 +139,7 @@ class DBmanager:
 				col = None
 				if content is not None:
 					col = len(content)
-				print ("======================debug::searchtableinfo_byparams()======================\n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n"%(result,  content,  count,  col))
+#				print ("======================debug::searchtableinfo_byparams()======================\n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n"%(result,  content,  count,  col))
 				return result,  content,  count,  col
 			else:
 				print table, '没有相关信息'
