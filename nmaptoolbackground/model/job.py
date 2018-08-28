@@ -21,6 +21,11 @@ class Job(object):
         self.groupsid = groupsid
         self.starttime = starttime
         self.username = username
+        self.jobport = jobport
+        self.jobstatus = jobstatus
+        self.result = result
+        self.endtime = endtime
+        self.argument = argument
         self.isjob = isjob
 
         if forcesearch != '':
@@ -35,11 +40,6 @@ class Job(object):
             self.jobid = jobid
         else:
             self.jobid = uuid.uuid1()
-        self.jobport = jobport
-        self.jobstatus = jobstatus
-        self.result = result
-        self.endtime = endtime
-        self.argument = argument
 
     def setPriority(self,priority):
         self.priority = priority

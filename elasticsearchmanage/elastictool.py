@@ -83,7 +83,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         else:
             eachitem=item
         # 表对象
-        logger.info('get_table_obj%s', table)
+        logger.info('get_table_obj->%s', table)
         instanceins = get_table_obj(table)
         logger.info('get each insert: %s', eachitem)
         # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...

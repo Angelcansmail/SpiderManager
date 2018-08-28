@@ -16,24 +16,28 @@ pocscantaskinstance=None
 def getObject():
     global pocscantaskinstance
     if pocscantaskinstance is None:
-        pocscantaskinstance=PocsearchTask(1)
+        pocscantaskinstance = PocsearchTask(1)
     return pocscantaskinstance
+
 POClog=None
+
 def getloghandle():
     global POClog
     if POClog is None:
         POClog=initLog('logs/POCDect.log', 2, True)
     return POClog
+
 class PocsearchTask(TaskTool):
     def __init__(self,isThread=1,deamon=False):
         TaskTool.__init__(self,isThread,deamon=deamon)
         logger = getloghandle()
         self.set_deal_num(20)
-        self.pocscan=default.PocController(logger=logger)
+        self.pocscan = default.PocController(logger=logger)
 
     def task(self,req,threadname):
         print threadname+'POC检测任务启动'+str(datetime.datetime.now())
-        
+	print ("**********************pocsearchtask::req-->%s**********************"%req)
+
         head='' if req[0] is None else req[0]
         context='' if req[1] is None else req[1]
         ip='' if req[2] is None else req[2]
@@ -45,27 +49,24 @@ class PocsearchTask(TaskTool):
         productinfo={}
         productinfo['productname']=productname
         productinfo['protocol']=protocol
-#         print 'poc   未启动内存增长状况'
-#         gc.collect()
-#         objgraph.show_growth()
-#         temp=default.PocController(logger=logger)
+        print 'poc   未启动内存增长状况'
+        gc.collect()
+        objgraph.show_growth()
+        temp = default.PocController(logger=logger)
         self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productinfo, keywords=keywords, hackinfo=nmapscript)
 
-#         self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords, hackinfo=nmapscript)
-        
         print threadname+'POC检测任务结束'+str(datetime.datetime.now())
-#         print 'poc   内存增长状况'
-#         gc.collect()
-#         objgraph.show_growth()
-#         print 'objgraph.by_type:',objgraph.by_type('dict')
-#         chain =objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
+        print 'poc   内存增长状况'
+        gc.collect()
+        objgraph.show_growth()
+        print 'objgraph.by_type:',objgraph.by_type('dict')
+#         chain = objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
 #         objgraph.show_chain(chain,filename='chain.png')
         ans=''
         
         return ans
 
 if __name__ == "__main__":
-
     pass
 
 

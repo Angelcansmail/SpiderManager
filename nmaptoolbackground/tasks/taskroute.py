@@ -50,7 +50,7 @@ def addtask(request):
         print '未登录'
         return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
                             content_type="application/json")
-    #当job的name和address不为空的时候则通过post形式获取job信息，初始化job对象
+    #当task的name和address不为空的时候则通过post形式获取tasks信息，初始化tasks对象
     job, result = taskscontrol.loadtask(request, username=username)
 
     if result == False:
@@ -63,7 +63,7 @@ def addtask(request):
     temp = taskscontrol.createjob(job)
 
     if result:
-        print '==========================addtask()==添加job操作成功, set response_data["result"]=1'
+        print '==========================addtask()添加tasks操作成功, set response_data["result"]=1'
         response_data['result'] = '1'
     return HttpResponse(json.dumps(response_data, skipkeys=True, default=webtool.object2dict),
                         content_type="application/json")
@@ -120,11 +120,10 @@ def updatejob(request, state=''):
         # elif  state=='4':
         #     pass
         else:
-            if role=='1':
-                tempresult=taskscontrol.jobupdate(jobstatus=state,username=username,taskid=jobid)
-#             print 'this is user'
+            if role=='1':	# normal user
+                tempresult = taskscontrol.jobupdate(jobstatus=state,username=username,taskid=jobid)
             else:
-                tempresult=taskscontrol.jobupdate(jobstatus=state,taskid=jobid)
+                tempresult = taskscontrol.jobupdate(jobstatus=state,taskid=jobid)
         if tempresult == True:
             tasks, count, pagecount = taskscontrol.taskshow(username=username, page='0',taskid=jobid)
             table = localconfig.taskstable
@@ -136,8 +135,8 @@ def updatejob(request, state=''):
                 # 更新job(taskdata表)
                 if state == '3':
                     jobcontrol.jobupdate(jobstatus='2', groupid=jobid)
-                    taskscontrol.startjob(task) # 和createjob中的用法一致, 区别在哪？巍峨和不直接用createjob
-                    # tasktotally.add_work(jobs)
+                    taskscontrol.startjob(task) # 和createjob中的用法一致, 区别在于command是create还是work
+                    # tasktotally.add_work(tasks)
                 else:
                     jobcontrol.jobupdate(jobstatus=state, groupid=jobid)
                 # page=page+1

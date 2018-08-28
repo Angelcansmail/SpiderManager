@@ -72,11 +72,11 @@ def loadtask(request,username=''):
     forcesearch = request.POST.get('forcesearch','0')
     tempjob = None
 
-    if taskaddress=='' or tasksname=='':
+    if taskaddress == '' or tasksname == '':
         return tempjob, False
-    tempjob = tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,forcesearch=forcesearch)
+    tempjob = tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,argument=abstract,forcesearch=forcesearch)
 
-    return tempjob,True
+    return tempjob, True
 
 def addtask(job):
     jobname = job.getTasksname()    #NOT NULL
@@ -88,6 +88,7 @@ def addtask(job):
     starttime = job.getStarttime()
     createtime = job.getCreatetime()
     taskid = job.getTasksid()
+    jobargument = job.getArgument()
 
     request_params = []
     values_params = []
@@ -113,6 +114,9 @@ def addtask(job):
     if taskid != '':
         request_params.append('tasksid')
         values_params.append(taskid)
+    if jobargument != '':
+    	request_params.append('tasksargument')
+	values_params.append(jobargument)
 
     # 一定有这个字段，无需判断?
     request_params.append('taskport')
@@ -136,7 +140,8 @@ def createjob(job):
     status=job.getStatus()
     createtime = job.getCreatetime()
     taskid = job.getTasksid()
-    mode=job.getMode()
+    jobargument = job.getArgument()
+    mode = job.getMode()
 
     info={}
     info['taskid'] = taskid
@@ -145,6 +150,7 @@ def createjob(job):
     info['username'] = username
     info['command'] = 'create'
     info['status'] = status
+    info['taskargument'] = jobargument
     info['mode'] = mode
 
     identifyip(jobaddress, info)

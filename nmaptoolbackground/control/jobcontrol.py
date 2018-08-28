@@ -8,11 +8,11 @@ limitpage=15
 
 
 localconfig=config.Config()
-def jobshow(jobname = '',jobstatus = '',username = '',taskid = '',jobport = '',result = '',page='0',groupid = '',jobaddress = ''):
+def jobshow(jobname = '',jobstatus = '',username = '',taskid = '',jobport = '',result = '',page='0',groupid = '',jobaddress = '',jobargument = ''):
     validresult=False
     request_params=[]
     values_params=[]
-	# formatstring: return '\''+str+'\''
+    # formatstring: return '\''+str+'\''
     tmp = ""
     if groupid != '':
         tmp += ' groupid ' + groupid
@@ -38,10 +38,14 @@ def jobshow(jobname = '',jobstatus = '',username = '',taskid = '',jobport = '',r
         tmp += ' taskport ' + taskport
         request_params.append('taskport')
         values_params.append(SQLTool.formatstring(jobport))
-    if jobaddress  !=  '':
+    if jobaddress != '':
         tmp += ' taskaddress ' + jobaddress
         request_params.append('taskaddress')
         values_params.append(SQLTool.formatstring(jobaddress))
+    if jobargument != '':
+    	tmp += ' taskargument ' + jobargument
+	request_params.append('taskargument')
+	values_params.append(SQLTool.formatstring(jobargument))
 
     print ("======================jobshow: %s======================"%tmp)
     DBhelp = SQLTool.DBmanager()
@@ -64,14 +68,14 @@ def jobshow(jobname = '',jobstatus = '',username = '',taskid = '',jobport = '',r
     if pagecount > 0:
         limit = ' limit ' + str(int(page)*limitpage) + ',' + str(limitpage)
         # 数据库查询结果，内容，多少个结果，多少列（这里定义的第二个参数个数）
-        result, content, count, col = DBhelp.searchtableinfo_byparams([table], ['username','taskid','taskname','taskprior','taskstatus','starttime','taskaddress','taskport','result','endtime','createtime','forcesearch','groupsid'], request_params, values_params, limit, order='createtime desc')
+        result, content, count, col = DBhelp.searchtableinfo_byparams([table], ['username','taskid','taskname','taskprior','taskstatus','starttime','taskaddress','taskport','result','endtime','createtime','taskargument','forcesearch','groupsid'], request_params, values_params, limit, order='createtime desc')
 
         DBhelp.closedb()
         jobs=[]
         if count > 0:
             validresult=True
             for temp in result :
-                ajob = job.Job(username=temp['username'],jobid=temp['taskid'],jobname=temp['taskname'],priority=temp['taskprior'],jobstatus=temp['taskstatus'],starttime=temp['starttime'],jobaddress=temp['taskaddress'],jobport=temp['taskport'],result=temp['result'],endtime=temp['endtime'],createtime=temp['createtime'],forcesearch=temp['forcesearch'],groupsid=temp['groupsid'])
+                ajob = job.Job(username=temp['username'],jobid=temp['taskid'],jobname=temp['taskname'],priority=temp['taskprior'],jobstatus=temp['taskstatus'],starttime=temp['starttime'],jobaddress=temp['taskaddress'],jobport=temp['taskport'],result=temp['result'],endtime=temp['endtime'],createtime=temp['createtime'],argument=temp['taskargument'],forcesearch=temp['forcesearch'],groupsid=temp['groupsid'])
 
 #                 ajob = job.Job(username=temp[0],jobid=temp[1],jobname=temp[2],priority=temp[3],jobstatus=temp[4],starttime=temp[5],jobaddress=temp[6],jobport=temp[7],result=temp[8],endtime=temp[9],createtime=temp[10],forcesearch=temp[11])
                 jobs.append(ajob)
@@ -91,7 +95,7 @@ def loadjob(request, username = ''):
 
     if jobaddress == '' or jobname == '':
         return tempjob, False
-    tempjob = job.Job(jobname = jobname,jobaddress = jobaddress,priority=priority, username=username,jobport = jobport,forcesearch=forcesearch)
+    tempjob = job.Job(jobname = jobname, jobaddress = jobaddress, priority=priority, username=username, jobport = jobport, argument=abstract, forcesearch=forcesearch)
     return tempjob, True
 
 def jobadd(job):
@@ -106,46 +110,50 @@ def jobadd(job):
     taskid = job.getJobid()
     result = job.getResult()
     groupsid = job.getGroupsid()
+    jobargument = job.getArgument()
     forcesearch = job.getForcesearch()
 
-    print ('======================jobadd forcesearch is %s======================'%forcesearch)
+    print ('======================jobadd argument:%s\tforcesearch:%s======================'%(argument, forcesearch))
 
     request_params = []
     values_params = []
-    if groupsid  !=  '':
+    if groupsid != '':
         request_params.append('groupsid')
         values_params.append(groupsid)
-    if createtime  !=  '':
+    if createtime != '':
         request_params.append('createtime')
         values_params.append(createtime)
-    if starttime  !=  '':
+    if starttime != '':
         request_params.append('starttime')
         values_params.append(starttime)
-    if jobaddress  !=  '':
+    if jobaddress != '':
         request_params.append('taskaddress')
         values_params.append(jobaddress)
-    if priority  !=  '':
+    if priority != '':
         request_params.append('taskprior')
         values_params.append(priority)
-    if jobname  !=  '':
+    if jobname != '':
         request_params.append('taskname')
         values_params.append(jobname)
-    if jobstatus  !=  '':
+    if jobstatus != '':
         request_params.append('taskstatus')
         values_params.append(jobstatus)
-    if username  !=  '':
+    if username != '':
         request_params.append('username')
         values_params.append(username)
-    if taskid  !=  '':
+    if taskid != '':
         request_params.append('taskid')
         values_params.append(taskid)
-    if jobport  !=  '':
+    if jobport != '':
         request_params.append('taskport')
         values_params.append(jobport)
-    if result  !=  '':
+    if result != '':
         request_params.append('result')
         values_params.append(result)
-    if forcesearch  !=  '':
+    if jobargument != '':
+    	request_params.append('taskargument')
+	values_params.append(jobargument)
+    if forcesearch != '':
         request_params.append('forcesearch')
         values_params.append(forcesearch)        
 
@@ -154,7 +162,6 @@ def jobadd(job):
     DBhelp.connectdb()
 
     tempresult = DBhelp.inserttableinfo_byparams(table=table, select_params=request_params, insert_values = [tuple(values_params)])
-
     DBhelp.closedb()
 
     return tempresult
@@ -208,9 +215,8 @@ def jobupdate(taskid = '',jobport = '',jobaddress = '',jobname = '',priority = '
     DBhelp = SQLTool.DBmanager()
     DBhelp.connectdb()
 
-    tempresult=DBhelp.updatetableinfo_byparams([table],request_params,values_params,wset_params,wand_params)
+    tempresult = DBhelp.updatetableinfo_byparams([table],request_params,values_params,wset_params,wand_params)
     DBhelp.closedb()
 
     return tempresult
 
-    

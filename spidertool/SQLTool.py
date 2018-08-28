@@ -173,7 +173,7 @@ class DBmanager:
 				sql += limit
 				sql += ';'
 
-				self.logger and self.logger.info('\n======================查询表%s======================\n%s', str(table), str(sql))
+				self.logger.info('\n======================查询表%s======================\n%s', str(table), str(sql))
 				count = None
 				try:
 					if self.__cur is not None:
@@ -187,7 +187,7 @@ class DBmanager:
 							self.connectdb()
 							count = self.__cur.execute(sql)
 						else:
-							self.logger and self.logger.error('数据库错误%s', str(e))
+							self.logger.error('数据库错误%s', str(e))
 							return (0, 0, 0, 0)
 					except Exception, e:
 						return (0, 0, 0, 0)
@@ -247,8 +247,8 @@ class DBmanager:
 					sql = sql + '%s' + ')'			
 				else:
 					return False
-				self.logger and self.logger.info('替换插入表%s操作\n%s', table, str(sql))
-				self.logger and self.logger.info('插入表%s内容为:\n%s', str(table), str(insert_values))
+				self.logger.info('替换插入表%s操作\n%s', table, str(sql))
+				self.logger.info('插入表%s内容为:\n%s', str(table), str(insert_values))
 
 				returnmeg = None
 				try:
@@ -274,7 +274,7 @@ class DBmanager:
 							self.__conn.commit()
 							return True
 						else:
-							self.logger and self.logger.error('数据库错误%s', str(e))
+							self.logger.error('数据库错误%s', str(e))
 							return False
 					except Exception, e:
 						return False
@@ -327,7 +327,7 @@ class DBmanager:
 							count = self.__cur.execute(sql)
 							self.__conn.commit()
 						else:
-							self.logger and self.logger.error('数据库错误%s', str(e))
+							self.logger.error('数据库错误%s', str(e))
 							return False
 					except Exception, e:
 						return False
@@ -339,7 +339,7 @@ class DBmanager:
 					return False
 
 			except MySQLdb.Error, e:
-				self.logger and self.logger.error('数据库操作的过程中出现异常 %s', str(e))
+				self.logger.error('数据库操作的过程中出现异常 %s', str(e))
 				return False
 		else:
 			print '''has not connet'''  
@@ -372,8 +372,8 @@ class DBmanager:
 						sql = sql+updatevalue[o]+' =  values('+updatevalue[o]+')  , '
 					sql = sql+updatevalue[ulen-1]+'   = values('+updatevalue[ulen-1]+') '
 				sql += extra
-				self.logger and self.logger.info('插入数据库操作\n%s',  str(sql))
-				self.logger and self.logger.info('插入数据库内容为:\n%s',  str(insert_values))
+				self.logger.info('插入数据库操作\n%s',  str(sql))
+				self.logger.info('插入数据库内容为:\n%s',  str(insert_values))
 
 				returnmeg = None
 				try:
@@ -384,7 +384,7 @@ class DBmanager:
 							self.connectdb()
 							returnmeg = self.__cur.executemany(sql, insert_values)
 						else:
-							self.logger and self.logger.error('数据库错误%s', str(e))
+							self.logger.error('数据库错误%s', str(e))
 							return False
 					except Exception, e:
 						return False
