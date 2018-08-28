@@ -31,57 +31,54 @@ class IPTool(TaskTool, IPTool):
         if len(req)>2:
             startip=str(req[0])
             stopip=str(req[1])
+            username=req[2].get('username','')
             taskid = req[2].get('taskid','')
             taskport = req[2].get('taskport','')
             isjob = req[2].get('isjob','0')
-            username=req[2].get('username','')
             command=req[2].get('command','')
             status = req[2].get('status','')
+            argument = req[2].get('taskargument', '')
             mode=req[2].get('mode','2')
 
             if command == 'create':
                 if mode == 1:
-                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
+                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status, argument)
                 else:
-                    jobs, count, pagecount=jobcontrol.jobshow(groupid=taskid)
+                    jobs, count, pagecount = jobcontrol.jobshow(groupid=taskid)
                     if count > 0:
                         ip=jobs[0].getJobaddress()
 
                         print '当前数据库读到最后一次的任务是:'+ip
                         if self.iprange(ip, stopip)<0 or ip==stopip :#or self.iprange(ip, startip)>0 or ip==startip
                             print '该任务之前已经创建无需重复创建'
-
                         else:
                             startipnum = self.ip2num(ip)
                             startipnum = startipnum + 1
                             ip = self.num2ip(startipnum)
-                            self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status)
+                            self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status, argument)
                     else:
-                        self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
+                        self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status, argument)
                 pass
             elif command=='work':
                 if mode == 1:
-                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
+                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status, argument)
                 elif mode ==0:
                     jobs, count, pagecount = jobcontrol.jobshow(groupid=taskid,jobstatus='5')
                     if count > 0:
                         ip = jobs[0].getJobaddress()
-
                         print '当前数据库读到最后一次已完成的任务是:' + ip
                         if self.iprange(ip,
                                         stopip) < 0 or ip == stopip:  # or self.iprange(ip, startip)>0 or ip==startip
                             print '该任务之前已经创建无需重复创建'
-
                         else:
                             print '恢复启动任务'
                             startipnum = self.ip2num(ip)
                             startipnum = startipnum + 1
                             ip = self.num2ip(startipnum)
-                            print ip,stopip
-                            self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status)
-
+                            # print ip,stopip
+                            self.getIplist(ip, stopip, taskid, taskport, isjob, username, command, status, argument)
                     else:
-                        self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
+                        self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status, argument)
                 else:
                     portarray, count, pagecount=portcontrol.portshow(order='timesearch desc')
                     if count>0:
@@ -89,14 +86,12 @@ class IPTool(TaskTool, IPTool):
                         print '当前数据库读到最后一次ip:' + ip
                         startip=ip
                     print 'start task from %s to %s' %(startip,stopip)
-                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status)
-
-
+                    self.getIplist(startip, stopip, taskid, taskport, isjob, username, command, status, argument)
         ans=''
         print threadname+'执行任务中'+str(datetime.datetime.now())
         return ans
 
-    def getIplist(self,startip,endip,taskid,taskport,isjob,username,command,status):
+    def getIplist(self,startip,endip,taskid,taskport,isjob,username,command,status,argument):
         ip_list = []
         isdomain=0
         res = ()
@@ -125,17 +120,16 @@ class IPTool(TaskTool, IPTool):
                 else:
                     if command=='create':
                         ajob = job.Job(jobname=taskid, jobaddress=str(ip), username=username, groupsid=taskid,
-                                   jobport=taskport, isjob='1')
+                                   jobport=taskport, isjob='1',argument=argument)
                     else:
                         jobitems, count, pagecount= jobcontrol.jobshow(jobname=taskid,username=username,groupid=taskid,jobaddress=str(ip))
                         ajob = jobitems[0]
-                        print ajob.getJobid()
+                        # print ajob.getJobid()
 
                 if command=='create':
                     insertdata.append((username, ajob.getJobid(), ajob.getJobname(), ajob.getPriority(), ajob.getStatus(),
-                            ajob.getJobaddress(),ajob.getPort(),ajob.getCreatetime(),ajob.getForcesearch(),ajob.getGroupsid()
-                            ))
-
+                            ajob.getJobaddress(),ajob.getPort(),ajob.getCreatetime(),ajob.getArgument(), ajob.getForcesearch(),
+                            ajob.getGroupsid()))
                     while True:
                         if self.sqlTool.get_length()>500:
                             time.sleep(30)
@@ -145,7 +139,8 @@ class IPTool(TaskTool, IPTool):
                         sqldatawprk = []
                         dic = {"table": self.config.tasktable,
                                "select_params": ['username', 'taskid', 'taskname', 'taskprior', 'taskstatus',
-                                                 'taskaddress', 'taskport', 'createtime', 'forcesearch', 'groupsid'],
+                                                 'taskaddress', 'taskport', 'createtime', 'taskargument', 
+						 'forcesearch', 'groupsid'],
                                "insert_values": insertdata}
                         print "spidertool::iptask::getIplist() command==create"
                         tempwprk = Sqldata.SqlData('inserttableinfo_byparams', dic)

@@ -19,6 +19,9 @@ import Sqldata
 import connectpool
 import portscantask
 import getLocationTool
+
+import traceback
+
 reload(sys) # Python2.5 初始化后会删除 sys.setdefaultencoding 这个方法，我们需要重新载入   
 
 class SniffrtTool(object):
@@ -32,15 +35,15 @@ class SniffrtTool(object):
         self.logger = logger
         try:
             self.nma = nmap.PortScanner()     # instantiate nmap.PortScanner object
-            self.params='-A -Pn -sC -R -v -O -T5'
-#             self.params='-sV -T4 -Pn -O '         #快捷扫描加强版
-#             self.params='-sS -sU -T4 -A -v'   #深入扫描
+#             self.params='-A -Pn -sC -R -v -O -T5 '
+            self.params='-sV -T4 -Pn -O '         #快捷扫描加强版
+#             self.params='-sS -sU -T4 -A -v '   #深入扫描
         except nmap.PortScannerError:
 #             print('Nmap not found', sys.exc_info()[0])
-            self.logger and self.logger.info('Nmap not found:%s',sys.exc_info()[0])
+            self.logger.info('Nmap not found:%s',sys.exc_info()[0])
         except:
 #             print('Unexpected error:', sys.exc_info()[0])
-            self.logger and self.logger.info('Unexpected error:%s',sys.exc_info()[0])
+            self.logger.info('Unexpected error:%s',sys.exc_info()[0])
 
         self.config = config.Config
         self.sqlTool = Sqldatatask.getObject()  # init DBmanager, and connect database and thread number
@@ -59,21 +62,18 @@ class SniffrtTool(object):
             orders = None
         try:
             if hignpersmission == '0':
-                print "sniffertool::scaninfo() ", hosts, orders, self.params + arguments
                 acsn_result = self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments)
-                #acsn_result=self.nma.scan(hosts=hosts,ports= orders,arguments=arguments)
                 print ("扫描结束\n%s\n"%(acsn_result))
                 return callback(acsn_result) 
             else:
-                return callback(self.nma.scan(hosts=hosts,ports= orders,arguments=arguments) )
-
+                return callback(self.nma.scan(hosts=hosts,ports= orders,arguments=arguments))
         except nmap.PortScannerError,e:
-            print e
+            print "spidertool::scaninfo()", traceback.print_exc()
             return ''
 
         except:
-            print('Unexpected error', sys.exc_info()[0])
-            self.logger and self.logger.info('Unexpected error:%s',sys.exc_info()[0])
+            print('Unexpected error', traceback.print_exc())
+            self.logger.info('Unexpected error:%s',sys.exc_info()[0])
             return ''
 
     def callback_result(self, scan_result):
@@ -171,7 +171,7 @@ class SniffrtTool(object):
     def scanaddress(self,hosts=[], ports=[],arguments=''):
         temp=''
         for i in range(len(hosts)):
-            if len(ports)<=i:
+            if len(ports) <= i:
                 result = self.scaninfo(hosts=hosts[i],arguments=arguments)
                 if result is None:
                     pass
@@ -179,7 +179,7 @@ class SniffrtTool(object):
                     temp += result
             else:
                 result = self.scaninfo(hosts=hosts[i], port=ports[i],arguments=arguments)
-                if result is   None:
+                if result is None:
                     pass
                 else:
                     temp+=result

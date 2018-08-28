@@ -202,9 +202,8 @@ def updatejob(request,state=''):
         ctx['state'] = state
         # return render(request, 'nmaptoolview/post.html', ctx)
 
-        if role == '1':
+        if role == '1':	# normal user
             tempresult = jobcontrol.jobupdate(jobstatus=state, username=username, taskid=jobid)
-            print 'this is user'
         else:
             tempresult = jobcontrol.jobupdate(jobstatus=state, taskid=jobid)
 
@@ -213,14 +212,14 @@ def updatejob(request,state=''):
                 jobs, count, pagecount = jobcontrol.jobshow(taskid=jobid)
 
                 if count > 0:
-                    tasktotally = taskcontrol.getObject()
+                    tasktotally = taskcontrol.getObject()	# return nmaptask(sniffertask.snifferTask(1))
                     if jobs[0].getForcesearch == 1:
                         tasktotally.add_work(jobs)
                     else:
                         tasktotally.add_work(jobs)
             response_data['result'] = '1'
         return response_data
-    
+
 # jobcontrol.getIP(jobs)
 # a function to get the job of user
 def ipmain(request):   

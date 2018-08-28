@@ -52,9 +52,6 @@ class P(T):
             if wafs[waf][0] in head and re.search(wafs[waf][1],head,re.IGNORECASE):
                 output(waf,result,'note')
                 break
-    
-    
-
         del curl
         return result
 

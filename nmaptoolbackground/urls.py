@@ -22,8 +22,8 @@ urlpatterns  =  [
     url(r'^jobshow$',route.jobshow, name = 'jobshow'),
     url(r'^addjob$',route.addjob, name = 'addjob'),
     url(r'^startjob$',route.startjob, name = 'startjob'),
-    url(r'^jobpause$',route.pausejob,name = 'pausejob'),
-    url(r'^jobdestroy$',route.destroyjob,name = 'destroyjob'),
+    url(r'^pausejob$',route.pausejob,name = 'pausejob'),
+    url(r'^destroyjob$',route.destroyjob,name = 'destroyjob'),
 
     url(r'^chartshow$',route.chartshow,name='chartshow'),      
     url(r'^chartdata$',route.chartdata,name='chartdata'),

