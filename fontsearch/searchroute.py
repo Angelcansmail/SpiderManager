@@ -1,5 +1,6 @@
 #!/usr/bin/python
-#coding:utf-8
+# -*- coding:utf-8 -*-
+
 from django.shortcuts import render
 from django.shortcuts import render_to_response
 from django.http import HttpResponse
@@ -247,8 +248,8 @@ def ipinfo(request):
 
 def map(request):
     username = request.COOKIES.get('username', '')
-    latitude = request.GET.get('latitude', 0)
-    longitude = request.GET.get('longitude', 0)
+    latitude = request.GET.get('latitude', '39.904989')
+    longitude = request.GET.get('longitude', '116.405285')
     return render_to_response('fontsearchview/map.html', {'data': '', 'username': username,'latitude':latitude,'longitude':longitude})
 
 def mapsearchmain(request):

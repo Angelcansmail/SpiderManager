@@ -235,7 +235,7 @@
                                         <input type="label" style="border:0px;" class="form-control" value="优先级"/>
                                         <input type="text" class="form-control" id="priority" value="1"/>
                                         <input type="label" style="border:0px;" class="form-control" value="扫描概要"/>
-                                        <input type="text" class="form-control" id="abstract" value="无"/>
+                                        <input type="text" class="form-control" id="abstract" value="-Pn"/>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
@@ -527,7 +527,6 @@
         var str = 'jobname=' + jobname + '&jobaddress=' + jobaddress + '&jobport=' + jobport + '&priority=' + priority + '&abstract=' + abstract;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
-
     }
 
     function createcallback() {

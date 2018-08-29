@@ -15,9 +15,9 @@ urlpatterns  =  [
     url(r'^userinfo$', route.userinfo, name = 'userinfo'),
 
     url(r'^mainpage$', route.indexpage, name = 'index'),
-	url(r'^groupitem$', route.groupitem, name = "groupitem"),
-	url(r'^taskdetail$',route.taskdetail,name = 'taskdetail'),
-	url(r'^taskdetail/eachtask$', route.ipmain, name = 'ipmain'),
+    url(r'^groupitem$', route.groupitem, name = "groupitem"),
+    url(r'^taskdetail$',route.taskdetail,name = 'taskdetail'),
+    url(r'^taskdetail/eachtask$', route.ipmain, name = 'ipmain'),
 
     url(r'^jobshow$',route.jobshow, name = 'jobshow'),
     url(r'^addjob$',route.addjob, name = 'addjob'),

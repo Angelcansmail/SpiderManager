@@ -20,6 +20,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
     # port:3306:mysql 873:rsync 22:ssh2 21:ftpdeal有内容
     port_function = getFunc(name,port,productname)
     if port_function != None:
+    	# head=''/ans=None/keywords=func's name/hackinfo='xx password' or 'Exception info'
         head, ans, keywords, hackinfo = port_function(ip=ip,port=port,name=name,productname=productname)
     else:
         temp = pocsearchtask.getObject()
@@ -27,6 +28,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
 
     keyword={}
     keyword['ip'] = [ip]
+
     from spidertool import redistool
     redisresult = redistool.get(ip)
     if redisresult:
@@ -37,7 +39,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
         redistool.set(ip, keyword)
         print '从redids写入位置信息'
     keyword['keywords'] = keywords
-    return head,ans,keyword,hackinfo
+    return head, ans, keyword, hackinfo
 
 
 def getFunc(name,port,productname):

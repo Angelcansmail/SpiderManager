@@ -18,7 +18,7 @@ def ftp_anon(host,port='21'):
         return False
 
 
-def ftp_crack(host, user, pwd,port='21'):
+def ftp_crack(host, user, pwd, port='21'):
     try:
         ftp = ftplib.FTP()
         ftp.connect(host, int(port), 10)
@@ -35,6 +35,7 @@ def ftpdeal(ip='',port='21',name='',productname=''):
     head=''
     hackinfo=''
     keywords='ftp'
+
     if ftp_anon(ip,port):
         hackinfo='allow annoymous ftp'
         return head,ans,'ftp',hackinfo
@@ -45,13 +46,12 @@ def ftpdeal(ip='',port='21',name='',productname=''):
 #         passlist=['root','123456','admin','','12345','111111','password','123123','1234','12345678','123456789','sa','ftp',
 #             'abc123','qwerty','test','','123']
         userlist=['admin','test']
-
-
         passlist=['admin','test']
+
         for user in userlist:
             for pwd in passlist:
                 print 'ftp尝试'+user+':'+pwd
-                result,hackinfo=ftp_crack(ip, user, pwd,port)
+                result, hackinfo = ftp_crack(ip, user, pwd,port)
                 if result:
                     return head,ans,keywords,hackinfo
         return head,ans,keywords,hackinfo

@@ -65,6 +65,9 @@ _utils {status=200}
 # Tomcat Examples
 /examples/jsp/       {tag="Examples"} {status=200}
 /examples           {severity=2}
+/examples/servlets    {severity=2} {status=200}
+/examples/servlets/index.html    {severity=2} {status=200}
+/examples/servlets/sessions.html    {severity=2} {status=200}
 /examples/servlets/servlet/SessionExample    {severity=2}
 /manager/html       {severity=2}
 /ibm/console {severity=2}

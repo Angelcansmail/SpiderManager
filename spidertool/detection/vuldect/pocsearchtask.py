@@ -13,6 +13,7 @@ import gc
 from plugins import default 
 
 pocscantaskinstance=None
+
 def getObject():
     global pocscantaskinstance
     if pocscantaskinstance is None:
@@ -36,7 +37,6 @@ class PocsearchTask(TaskTool):
 
     def task(self,req,threadname):
         print threadname+'POC检测任务启动'+str(datetime.datetime.now())
-	print ("**********************pocsearchtask::req-->%s**********************"%req)
 
         head='' if req[0] is None else req[0]
         context='' if req[1] is None else req[1]
@@ -46,9 +46,11 @@ class PocsearchTask(TaskTool):
         keywords='' if req[5] is None else req[5]
         nmapscript='' if req[6] is None else req[6]
         protocol='' if req[7] is None else req[7]
+
         productinfo={}
-        productinfo['productname']=productname
-        productinfo['protocol']=protocol
+        productinfo['productname'] = productname
+        productinfo['protocol'] = protocol
+
         print 'poc   未启动内存增长状况'
         gc.collect()
         objgraph.show_growth()
@@ -63,7 +65,7 @@ class PocsearchTask(TaskTool):
 #         chain = objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
 #         objgraph.show_chain(chain,filename='chain.png')
         ans=''
-        
+
         return ans
 
 if __name__ == "__main__":

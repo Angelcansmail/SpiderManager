@@ -258,6 +258,5 @@ class PocController(object):
         return
 
 if __name__ == "__main__":
-
     a=PocController()
     a.detect(ip='202.121.168.201',port='9000',context='zabbix')

@@ -12,15 +12,16 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
 #     objgraph.show_growth()
     print "detection::page_identify::identify_main()", ip + ":" + port,'正在纳入检测的队列'
     try:
-	# from httpdect import headdect
+        # from httpdect import headdect	#webdetection缺失
         from fluzzdetect import fuzztask    # 只给了这部分代码
         from vuldect import pocsearchtask
-	# keywords, hackinfo = headdect.dect(head=head, context=context, ip=ip, port=port, protocol=protocol)
-        # fuz = fuzztask.getObject()
-        # fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
+        # 通过webdetection获取webinfo，hackinfo为空
+        # keywords, hackinfo = headdect.dect(head=head, context=context, ip=ip, port=port, protocol=protocol)
+        fuz = fuzztask.getObject()
+        fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
 
         print "\n\ndetection::vuldetect::pocsearchtask begin...."
-	print head,context,ip,port,productname,keywords,nmapscript,protocol
+        print ("head[%s]ip[%s]port[%s]productname[%s]keywords[%s]nmapscript[%s]protocol[%s]"%(head,context,ip,port,productname,keywords,nmapscript,protocol))
         temp = pocsearchtask.getObject()
         temp.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
     except Exception ,e:

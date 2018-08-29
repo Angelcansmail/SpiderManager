@@ -35,6 +35,7 @@ def storedata(ip='',port='',hackinfo=None):
     print 'fuzz 转poc检测'
     from ..vuldect import pocsearchtask
     temp = pocsearchtask.getObject()
+    # head,context,ip,port,productname,keywords,nmapscript,protocol
     temp.add_work([(None,None,ip,port,None,None,hackinfo,None)])
     print 'fuzz 数据存储调用'
     '''
