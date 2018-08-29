@@ -43,8 +43,9 @@ class snifferTask(TaskTool):
 
         if isjob=='1':
             tempresult = jobcontrol.jobupdate(jobstatus='3',taskid=str(jobid),starttime=webtool.getlocaltime())
+
         ans = self.sniffer.scanaddress([hosts], [str(ports)], arguments)
-        self.logger.info('%sNMAP 扫描任务结束%s', threadname,str(datetime.datetime.now()))
+        self.logger.info('%sNMAP 扫描任务结束%s\n', threadname, str(datetime.datetime.now()))
 
         if isjob=='1':
             tempresult=jobcontrol.jobupdate(jobstatus='5',taskid=str(jobid),finishtime=webtool.getlocaltime())

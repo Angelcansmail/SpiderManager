@@ -1,5 +1,7 @@
 #-*- coding: utf-8 -*-
-#!/usr/bin/python 
+#!/usr/bin/python
+
+# 基于SSH用于连接远程服务器并执行相关操作。
 import paramiko
 
 def ssh2(ip='',port='22',name='',productname=''):
@@ -20,7 +22,7 @@ def ssh2(ip='',port='22',name='',productname=''):
                 ssh = paramiko.SSHClient()
     		# 允许连接不在know_hosts文件中的主机
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                print ("username:%s password:%s"%(username, i))
+                print ("try ssh username:%s password:%s"%(username, i))
 		# 连接服务器
                 ssh.connect(ip,int(port),username,i,timeout=10)
 

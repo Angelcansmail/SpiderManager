@@ -83,7 +83,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         else:
             eachitem=item
         # 表对象
-        logger.info('get_table_obj->%s', table)
+        logger.info('elastictool::inserttableinfo_byparams::get_table_obj->%s', table)
         instanceins = get_table_obj(table)
         logger.info('get each insert: %s', eachitem)
         # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
@@ -212,9 +212,8 @@ def search(page='0',dic=None, content=None):
             for temp in response :
                 dic=temp.to_dict()
                 # 只获取snifferdata中的数据，没有位置信息，这里将city赋为空作用和在，后面用了city判断，直接用
-                print ("index:count[%d]'s dic keys:%s", count, str(dic.keys()))
+                print ("index:count[%s]'s dic keys:%s"%(str(count), str(dic.keys())))
                 aport=ports.Port(ip=getproperty(dic,'ip'),port=getproperty(dic,'port'),timesearch=getproperty(dic,'timesearch'),state=getproperty(dic,'state'),name=getproperty(dic,'name'),product=getproperty(dic,'product'),version=getproperty(dic,'version'),script=base64.b64encode(str(getproperty(dic,'script'))),detail=getproperty(dic,'detail'),head=getproperty(dic,'head'),city='',hackinfo=getproperty(dic,'hackinfo'),disclosure=getproperty(dic,'disclosure'),keywords=getproperty(dic,'keywords'),webtitle=base64.b64encode(str(getproperty(dic,'webtitle'))),webkeywords=getproperty(dic,'webkeywords'))
-
                 # ip=getproperty(dic,'ip')
                 # port=getproperty(dic,'port')
                 # timesearch=getproperty(dic,'timesearch')

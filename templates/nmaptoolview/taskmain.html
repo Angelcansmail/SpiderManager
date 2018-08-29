@@ -63,7 +63,7 @@
                                 </br>
                                 <label style="border:0px;" class="form-label">扫描概要</label>
                                 </br>
-                                <input type="text" class="form-control" id="abstract" value="无"/>
+                                <input type="text" class="form-control" id="abstract" value="-A"/>
                             </div>
                         </div>
 
@@ -352,7 +352,6 @@
         xmlhttp.open("POST", "/nmaptool/tasks/addtask/", true);
         xmlhttp.onreadystatechange = createcallback;
         var str = 'jobname=' + jobname + '&jobaddress=' + jobaddress + '&jobport=' + jobport + '&priority=' + priority + '&abstract=' + abstract;
-        alert(str);
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
         xmlhttp.send(str);
     }

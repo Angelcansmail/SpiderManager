@@ -15,9 +15,11 @@
 
 <div id='map'></div>
 <script>
-    var latitude='{{latitude}}';
-    var longitude='{{longitude}}';
-    alert([longitude, latitude]);
+//    var latitude=Number("{{latitude}}");
+//    var longitude=Number("{{longitude}}");
+    var longitude='121.5495';
+    var latitude='29.8782';
+    alert([latitude, latitude]);
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW5nZWxjYW5mbHkxMjMiLCJhIjoiY2prZ2p4cjNsMGtxbzNwcWgxMHpodGE5byJ9.vQyQjFnXY0Llayi8zLsmoA';
 
     var map = new mapboxgl.Map({

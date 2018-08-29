@@ -84,10 +84,10 @@ def groupitem(request):
 #a function to get the port information of IP
 def taskdetail(request):
     if request.method == 'GET':
-        islogin = request.COOKIES.get('islogin',False)
+        islogin = request.COOKIES.get('islogin', False)
         # jobid应该自动获取，不是手动赋值，仅为测试！！
-        jobid = request.GET.get('jobid','1410a6d6-90ac-11e8-af6f-74e50ba386da')
-        # jobid = request.GET.get('jobid','')
+        # jobid = request.GET.get('jobid','1410a6d6-90ac-11e8-af6f-74e50ba386da')
+        jobid = request.GET.get('jobid','')
         username = request.COOKIES.get('username','')
         role = request.COOKIES.get('role','1')
 

@@ -138,8 +138,7 @@
         xmlhttp = GetXmlHttp(xmlhttp);
         var str = '';
         content = document.getElementById("searchcontent").value;
-        content = 'apache'
-        str = 'content=' + content ;
+        str = 'content=' + content;
 
         xmlhttp.open("POST", "/fontsearch/mapsearch", true);
         xmlhttp.onreadystatechange = callback;
@@ -167,8 +166,12 @@
 
     function getdata(data, size) {
         i = size/40;
-        options = createoption(data, i, size/2);
-        myChart.setOption(options);   
+        alert(["getdata size=", size]);
+	options = createoption(data, i, size/2);
+	if (options && options == "object") {
+	    myChart.hideLoading();
+	    myChart.setOption(options);   
+	}
     }
 
     function createoption(data, i, size) {
@@ -232,13 +235,13 @@
             },  
             dataRange: {
                 min: 0,
-                max: 30,
+                max: 2*size,
                 x: 'left',
                 y: 'bottom',
                 text:['高','低'],
                 calculable : true,
                 color:['red','orange','yellow','green'],  
-            },  
+            }, 
             toolbox: {  
                 show: true,  
                 orient : 'vertical',  
@@ -288,7 +291,7 @@
                     ]),
                     // symbolSize: 15,
                     symbolSize: function (val) {
-                        return val[2] * size;
+                        return val[2];
                     },
                     label: {
                         normal: {
@@ -396,6 +399,14 @@
             loaddata(0);
         }
     }
+
+    myChart.showLoading({
+        text: "图表数据正在努力加载...",
+        effect: 'whirling',//'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'
+        textStyle: {
+            fontSize: 20
+        }
+    });
 
 </script>
 

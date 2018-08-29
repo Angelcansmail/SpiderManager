@@ -1,9 +1,7 @@
 from plugins import default
 
-
-
-
 from lib.logger import initLog
+
 if __name__ == '__main__':
     logger = initLog('WebDect.log', 3, True)
     a=default.PocController(logger=logger)

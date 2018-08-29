@@ -113,7 +113,7 @@ def jobadd(job):
     jobargument = job.getArgument()
     forcesearch = job.getForcesearch()
 
-    print ('======================jobadd argument:%s\tforcesearch:%s======================'%(argument, forcesearch))
+    print ('======================jobadd argument:%s\tforcesearch:%s======================'%(jobargument, forcesearch))
 
     request_params = []
     values_params = []

@@ -193,7 +193,7 @@ class InfoDisScanner(InfoDisScannerBase):
             self._enqueue(url, tempqueue)
             dataresult = self._scan_worker(url_queue=tempqueue,protocal=protocal,_status=status,has_404=has404,ip=ip,port=port)
             if dataresult is not None:
-                callbackfuzz.storedata(ip=ip,port=port,hackinfo=dataresult)
+                callbackfuzz.storedata(ip=ip, port=port, hackinfo=dataresult)
                 pass
         else:
             pass

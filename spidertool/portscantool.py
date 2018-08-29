@@ -17,6 +17,7 @@ class Portscantool:
         self.config = config.Config
         self.socketclient = None
 
+    # portscantask.py中，非正常协议
     def do_scan(self,head=None,context=None,ip=None,port=None,name=None,productname=None,nmapscript=None):
         keywords = {}
         hackinfo = ''
@@ -26,6 +27,7 @@ class Portscantool:
         try:
             from detection import port_identify
             # port_identify中的函数需要自己补充
+            print ("\nportscaltool::do_scan(%s:%s)\n"%(ip, port))
             head,ans,keywords,hackinfo = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
             if ans == None:
                 self.socketclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -50,13 +52,10 @@ class Portscantool:
                 self.socketclient.close()
    
 if __name__ == "__main__":
-    temp=Portscantool()
-    temp.do_scan(ip='122.114.49.116', port='3306')
+    temp = Portscantool()
+    temp.do_scan(ip='118.25.43.205', port='3306')
 #     temp.do_scan('218.106.87.35', '110')
     
 
 
 
-
-
- 

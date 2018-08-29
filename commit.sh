@@ -12,7 +12,7 @@
 
 content=$1
 
-rm `rm "*.log"`
+rm "*.log"
 rm `find -name "*.pyc"`
 git add *
 git commit -m "$content"

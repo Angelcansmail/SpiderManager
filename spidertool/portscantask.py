@@ -31,8 +31,7 @@ class PortscanTask(TaskTool):
         self.set_deal_num(15)
 
     def task(self,req,threadname):
-        self.logger.info('%s 端口扫描　执行任务中%s', threadname,str(datetime.datetime.now()))
-        print ("\n======================portscantask::task() req:%s======================\n"%str(req))
+	# print ("\n======================portscantask::task() req:%s======================\n"%str(req))
         if req[3]!='open':
             return ''
         ip = req[1]
@@ -45,6 +44,8 @@ class PortscanTask(TaskTool):
         keywords = ''
         webkey = ''
         webtitle = ''
+        self.logger.info('端口%s扫描%s执行任务中%s', port, threadname, str(datetime.datetime.now()))
+        # 7001端口是Freak88, Weblogic默认端口
         if (req[0] == 'http' or req[0] == 'https') or (req[0] in ['tcpwrapped','None'] and port in ['80','8080','7001']):
             if ip[0:4]=='http':
                 address=ip+':'+port
@@ -54,10 +55,12 @@ class PortscanTask(TaskTool):
                 else:
                     if req[0]=='tcpwrapped' and port in ['80','8080','7001']:
                         address = 'http://' + ip + ':' + port
-                    else: # None, 不合法?
+                    else: # None, 不合法?ftp/smtp...
                         address = req[0]+'://'+ip+':'+port
+            # 获取网页反馈的头部和整个网页信息(urllib2, requests)
             head, page = self.connectpool.getConnect(address)
             import webutil
+            # 获取网页的关键词和网站标题
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
