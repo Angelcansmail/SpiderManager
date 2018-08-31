@@ -35,8 +35,8 @@ class SniffrtTool(object):
         self.logger = logger
         try:
             self.nma = nmap.PortScanner()     # instantiate nmap.PortScanner object
-#            self.params='-A -sC -R -v -O -T5 '
-            self.params='-sV -T4 -Pn -O '         #快捷扫描加强版
+            self.params='-A -sC -R -v -O -T5 -Pn '
+#            self.params='-sV -T4 -Pn -O '         #快捷扫描加强版
 #             self.params='-sS -sU -T4 -A -v '   #深入扫描
         except nmap.PortScannerError:
             self.logger.info('Nmap not found:%s',sys.exc_info()[0])
@@ -49,7 +49,7 @@ class SniffrtTool(object):
         # init DBmanager and thread number
         self.getlocationtool = getLocationTool.getObject()
 
-    def scaninfo(self,hosts='localhost', port='', arguments='',hignpersmission='0',callback=''):
+    def scaninfo(self,hosts='localhost', port='', arguments='', hignpersmission='0', callback=''):
         if callback == '': 
             callback = self.callback_result
         orders = ''
@@ -60,10 +60,10 @@ class SniffrtTool(object):
         try:
             if hignpersmission == '0':
                 acsn_result = self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments)
-                self.logger.info("扫描结束%s:%s\n%s\n"%(hosts, orders, acsn_result))
+                self.logger.info("%s:%s扫描结束\n%s\n"%(hosts, orders, acsn_result))
                 return callback(acsn_result) 
             else:
-                return callback(self.nma.scan(hosts=hosts,ports= orders,arguments=arguments))
+                return callback(self.nma.scan(hosts=hosts,ports=orders,arguments=arguments))
         except nmap.PortScannerError,e:
             print "spidertool::scaninfo()", traceback.print_exc()
             return ''
@@ -120,6 +120,10 @@ class SniffrtTool(object):
                         tempportversion = str(tmp['scan'][host]['tcp'][port].get('version',''))
                         tempscript=SQLTool.decodestr(str(tmp['scan'][host]['tcp'][port].get('script','')))
 
+                        if tempportstate.find('open') == -1:
+                            self.logger.warning("[%s] not open! passing...%s\t%s\t%s\t%s\t%s\t%s\t%s\t%s", temphosts,tempport,localtime,tempportstate,tempportname,tempproduct,tempportversion,tempscript,str(tempport))
+                            continue
+
                         sqldatawprk=[]
                         dic={"table":self.config.porttable,"select_params": ['ip','port','timesearch','state','name','product','version','script','portnumber'],"insert_values": [(temphosts,tempport,localtime,tempportstate,tempportname,tempproduct,tempportversion,tempscript,str(tempport))]}
                         tempwprk=Sqldata.SqlData('replaceinserttableinfo_byparams',dic)
@@ -154,7 +158,10 @@ class SniffrtTool(object):
 
     def scanaddress(self,hosts=[], ports=[],arguments=''):
         temp=''
+	self.logger.info("begin scanaddress->%s:%s", str(hosts), str(ports))
+
         for i in range(len(hosts)):
+            # 不指定端口，则扫描全部端口
             if len(ports) <= i:
                 result = self.scaninfo(hosts=hosts[i],arguments=arguments)
                 if result is None:
@@ -167,7 +174,8 @@ class SniffrtTool(object):
                     pass
                 else:
                     temp+=result
-        return temp
+
+	return temp
 
     def isrunning(self):
         return self.nma.has_host(self.host)

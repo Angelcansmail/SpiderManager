@@ -276,15 +276,14 @@
                 }
             }
         }
-                var myChart = echarts.init(document.getElementById('charts'));
-
-                myChart.showLoading({
-                    text : "图表数据正在努力加载...",
-                    effect :'whirling',//'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'
-                    textStyle : {
-                        fontSize : 20
-                    }
-                });
+	var myChart = echarts.init(document.getElementById('charts'));
+	myChart.showLoading({
+		text : "图表数据正在努力加载...",
+		effect :'whirling',//'spin' | 'bar' | 'ring' | 'whirling' | 'dynamicLine' | 'bubble'
+		textStyle : {
+			fontSize : 20
+                }
+        });
   
             
 var option = {
@@ -369,6 +368,10 @@ function getGeoCoord (name) {
     var coord = geoCoord[city];
     return coord;
 }
+//topCityOut:{"name": "广东_深圳","num": 284635,"singleNum": 18362,"per": 0.0879,"floatFlag": 0}
+//topCityIn:{"name": "广西_玉林","num": 48635,"singleNum": 3158,"per": 0.0145,"floatFlag": 0}
+//topLine:{"start": "上海_上海","end": "安徽_六安","num": 11481,"singleNum": 833,"per": 0.0078,"floatFlag": 0}
+//allLine:{"start": "北京_北京","end": "河北_保定",\"num": 1919,"singleNum": 1919}
 $.ajax({
     url: '/nmaptool/chartdata',
     dataType: 'json',
@@ -376,12 +379,12 @@ $.ajax({
       var  temp=[];
       var data=JSON.parse(data);
       temp=data.allLine;
-        option.series[0].markLine.data = temp.sort(
-            function (a, b) {
-            return b.num - a.num;
-        }
-        ).slice(0, 3000).map(function (line) {
-            return [{
+      option.series[0].markLine.data = temp.sort(
+	  function (a, b) {
+	  	return b.num - a.num;
+	  }
+	  ).slice(0, 3000).map(function (line) {
+	      return [{
                 geoCoord: getGeoCoord(line.start)   
             }, {
                 geoCoord: getGeoCoord(line.end)
@@ -399,43 +402,29 @@ $.ajax({
     }
 });
                     
-                // myChart.setOption(option);
-                // function datarefresh(){
-                //     timearray.reverse();
-                //     numarray.reverse();
-                //     piedata.reverse();
-                //     option.xAxis[0].data=timearray;
-                //     option.series[0].data=numarray;
-                //     option.series[1].data=numarray;
+// myChart.setOption(option);
+// function datarefresh(){
+//     timearray.reverse();
+//     numarray.reverse();
+//     piedata.reverse();
+//     option.xAxis[0].data=timearray;
+//     option.series[0].data=numarray;
+//     option.series[1].data=numarray;
 
-
-
-
-
-                //     myChart.hideLoading();
-
-                //     myChart.setOption(option);
-
-
-                // }
-
-
+//     myChart.hideLoading();
+//     myChart.setOption(option);
+// }
 
 
 </script>
 
 
-
- <script type="text/javascript">
-        $(function () {
-
-            // jQuery Knobs
-            $(".knob").knob();
-
-
-
-            // jQuery UI Sliders
-            $(".slider-sample1").slider({
+<script type="text/javascript">
+$(function () {
+	// jQuery Knobs
+	$(".knob").knob();
+	// jQuery UI Sliders
+	$(".slider-sample1").slider({
                 value: 100,
                 min: 1,
                 max: 500

@@ -15,8 +15,9 @@
 
 <div id='map'></div>
 <script>
-    var latitude='{{latitude}}';
-    var longitude='{{longitude}}';
+    //用接收django传过来的值.在后面加上safe过滤器，表示这个字符串不用进行HTML转义
+    var latitude=eval('{{latitude|safe}}');
+    var longitude=eval('{{longitude|safe}}');
     alert([longitude, latitude]);
     mapboxgl.accessToken = 'pk.eyJ1IjoiYW5nZWxjYW5mbHkxMjMiLCJhIjoiY2prZ2p4cjNsMGtxbzNwcWgxMHpodGE5byJ9.vQyQjFnXY0Llayi8zLsmoA';
 

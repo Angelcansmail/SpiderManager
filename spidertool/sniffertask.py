@@ -49,7 +49,6 @@ class snifferTask(TaskTool):
 
         if isjob=='1':
             tempresult=jobcontrol.jobupdate(jobstatus='5',taskid=str(jobid),finishtime=webtool.getlocaltime())
-
             setvalue = " (select count(*) from taskdata where  taskstatus=5 and groupsid= (select groupsid from taskdata where taskid='"+jobid+"'))"
             dic = {
                 "table": [self.config.taskstable],

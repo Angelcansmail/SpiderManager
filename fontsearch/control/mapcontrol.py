@@ -81,6 +81,7 @@ def mapshow(ip='',port='',state='',name='',product='',version='',searchcontent='
                 aport['value'] = temp['COUNT(*)']
                 if int(temp['COUNT(*)']) > size:
                     size = int(temp['COUNT(*)'])
+		print ("mapcontrol::mapshow() %s:%s"%(aport['name'],str(aport['value'])))
                 portarray.append(aport)
 
     return portarray, count, size
