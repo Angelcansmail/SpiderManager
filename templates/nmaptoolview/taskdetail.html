@@ -189,17 +189,11 @@
                 <h5 class="modal-title">脚本信息</h5>
             </div>
             <div class="modal-body">
-
                 <div class="form-group">
-
-
                     <input type="label" style="border:0px;" class="form-control" value="详细内容"/>
-                                <textarea class="form-control" rows="10" id="scriptdetail">
-                                     </textarea>
-
+		    	<textarea class="form-control" rows="10" id="scriptdetail">
+			</textarea>
                 </div>
-
-
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -437,11 +431,10 @@
                             });
         };
         function changtext(k, i) {
-
             clinckitem = i;
             var tempstr = '';
-            //var json = eval('(' + clinckdata.ports[clinckitem].script + ')');
-            //alert((json['http-title']));
+            var json = eval('(' + clinckdata.ports[clinckitem].script + ')');
+            alert((json['http-title']));
             if (k == 1) {
                 tempstr = clinckdata.ports[clinckitem].script;
                 document.getElementById("scriptdetail").innerHTML = tempstr;

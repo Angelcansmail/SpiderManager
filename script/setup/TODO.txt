@@ -1,1 +1,0 @@
-//add script to install the project

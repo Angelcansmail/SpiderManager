@@ -103,9 +103,9 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
             logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
             setvalue(instanceitem, select_params[i], decodestr(str(eachitem[i])))
         try:
-            res=instanceitem.save()
+            res = instanceitem.save()
         except Exception,e:
-            logger.error('Error: %s', str(traceback.print_exc()))
+            logger.error("%s", str(e))
         else:
             logger.info('insert success')
 

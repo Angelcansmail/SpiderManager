@@ -161,10 +161,15 @@
             var datalength = data2.ipcount;
             var pagesize = data2.ippagecount;
             // location什么时候赋值的, getLocation.py?
-            var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
-            var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
-            var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
-            var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
+	    alert(["country:", ports[0].country, "city", ports[0].city, "isp:",ports[0].isp, "region:",ports[0].region, "osfamily",ports[0].osfamily, "osgen:",ports[0].osgen, "hostname:", ports[0].hostname]);
+            var country=(ports[0].country==0?'':ports[0].country);
+            var city=(ports[0].city==0?'':ports[0].city);
+            var isp=(ports[0].isp==0?'':ports[0].isp);
+            var region=(ports[0].region==0?'':ports[0].region)
+            // var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
+            // var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
+            // var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
+            // var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
             // alert(["ip:", ports[0].ip, "country:", ports[0].country, "location:", ports[0].location, "city", ports[0].city, "isp", ports[0].isp, "region", ports[0].region]);
 
             var bodyhtml = "";
@@ -174,16 +179,16 @@
                 "</h2> </div> <table class=\"table\"> <tbody>"+
                 "<tr><td>国家</td>  <th>"+country+"</th></tr>"+
                 "<tr> <td>城市 区域</td> <th>"+city+' '+region+"</th></tr>"+
-                "<tr><td>系统</td> <th>"+(ports[0].osfamily == null ? '' :ports[0].osfamily)+' '+(ports[0].osgen == null ? '' :ports[0].osgen)+"</th></tr>"+
+                "<tr><td>系统</td> <th>"+(ports[0].osfamily == 'None' ? '' :ports[0].osfamily)+' '+(ports[0].osgen == 'None' ? '' :ports[0].osgen)+"</th></tr>"+
                 "<tr><td>网络服务提供商</td> <th>"+isp+"</th></tr>"+
                 "<tr><td>更新时间</td><th>"+ports[0].updatetime+"</th></tr>"+
-                "<tr> <td>主机名</td><th>"+ports[0].hostname+"</th></tr>"+
+                "<tr> <td>主机名</td><th>"+(ports[0].hostname == 'None' ? '':ports[0].hostname)+"</th></tr>"+
                 "</tbody></table>"
 
             // alert(["showipinfo::bodyhtml()", bodyhtml]);
             document.getElementById("ipinfo").innerHTML = bodyhtml;
 
-            // 调研下location的值怎么出来的?
+            // 调研下location的值获取有待补充
             // var latitude = ports[0].location['geoip']['location']['latitude'];
             // var longitude = ports[0].location['geoip']['location']['longitude'];
 	    var latitude='39.904989';
@@ -232,7 +237,7 @@
             var datalength = data2.portslength;
             var pagesize = data2.portspagecount;
             var ports = data2.ports;
-            alert(["showportinfo datalength:", datalength, "pagesize:", pagesize, "port_name:", ports[0].name, "ports:", ports[0].port]);
+            // alert(["showportinfo datalength:", datalength, "pagesize:", pagesize, "port_name:", ports[0].name, "ports:", ports[0].port]);
 
             var bodyhtml = "";
             for (var i = 0; i < datalength; i++) {

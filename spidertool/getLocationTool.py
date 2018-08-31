@@ -37,7 +37,7 @@ def getlocationjsondata(jsondata):
         if city_id == '':
             city_id='0'
         if county_id == '':
-            county_id='0'          
+            county_id='0'
         if isp_id == '':
             isp_id='0'
 

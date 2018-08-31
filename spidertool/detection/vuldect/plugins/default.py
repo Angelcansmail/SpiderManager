@@ -81,9 +81,9 @@ class PocController(object):
         module_name = componentname+'.%s' % (module_name)
         module = __import__(module_name,globals=globals(), fromlist=['rules'])
         return module.rules,componentname    
+
     def __load_component_detail_info(self,module_name='',componentname='',func=None,params=None,text=''):
         try:
-
             params[module_name] = func(componentname,module_name)
             self.logger.info('Module '+text+': %s -> %s', module_name, self.keywords[module_name])
         except Exception,e:
@@ -103,6 +103,7 @@ class PocController(object):
                 self.components[componentname][module_name].append(P)
                 self.__load_component_detail_info(module_name=module_name,componentname=componentname,func=self.__load_keywords,params=self.keywords,text='keywords')
                 self.__load_component_detail_info(module_name=module_name,componentname=componentname,func=self.__load_rules,params=self.rules,text='rules')
+
     def __load_component_plugins(self, modules_list):
         for module_name in modules_list:
             self.components[module_name] = {}

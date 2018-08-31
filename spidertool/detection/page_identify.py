@@ -21,7 +21,7 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
         fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
 
         print "\n\ndetection::vuldetect::pocsearchtask begin...."
-        print ("head[%s]ip[%s]port[%s]productname[%s]keywords[%s]nmapscript[%s]protocol[%s]"%(head,context,ip,port,productname,keywords,nmapscript,protocol))
+        print ("head[%s]ip[%s]port[%s]productname[%s]keywords[%s]nmapscript[%s]protocol[%s]"%(str(head),str(ip),str(port),str(productname),str(keywords),str(nmapscript),str(protocol)))
         temp = pocsearchtask.getObject()
         temp.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
     except Exception ,e:

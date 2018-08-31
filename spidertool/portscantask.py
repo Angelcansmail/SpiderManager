@@ -64,7 +64,7 @@ class PortscanTask(TaskTool):
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
-            self.logger.info('webutil.getwebinfo() method_1 \nkeywords:%s\ntitle:%s\n', webkey, webtitle)
+            self.logger.info('webutil.getwebinfo(%s) method_1 \nkeywords:%s\ntitle:%s\n', address, webkey, webtitle)
             
             try:
                 # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
@@ -80,7 +80,7 @@ class PortscanTask(TaskTool):
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
-            self.logger.info('webutil.getwebinfo() method_2 \nkeywords:%s\ntitle:%s\n', webkey, webtitle)
+            self.logger.info('webutil.getwebinfo(%s) method_2 \nkeywords:%s\ntitle:%s\n', address, webkey, webtitle)
             pass
 #         print page
 #         self.sqlTool.connectdb()

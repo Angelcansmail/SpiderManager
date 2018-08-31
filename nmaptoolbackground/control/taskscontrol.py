@@ -72,7 +72,8 @@ def loadtask(request,username=''):
     forcesearch = request.POST.get('forcesearch','0')
     tempjob = None
 
-    if taskaddress == '' or tasksname == '':
+    # if taskaddress == '' or taskname == '':
+    if taskaddress == '' or tasksport == '':
         return tempjob, False
     tempjob = tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,argument=abstract,forcesearch=forcesearch)
 

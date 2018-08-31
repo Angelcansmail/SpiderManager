@@ -338,7 +338,7 @@ def chartdata(request):
 #         httpClient.request('GET', '/doc/example/data/migration.json')
         connectpool_t = connectpool.getObject()
         address = 'http://echarts.baidu.com/echarts2/doc/example/data/migration.json'
-        head,ans = connectpool_t.getConnect(address)
+        head, ans = connectpool_t.getConnect(address)
     #response是HTTPResponse对象
 #         response = httpClient.getresponse()
 #         print response.status

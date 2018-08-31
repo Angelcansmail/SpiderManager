@@ -29,7 +29,7 @@ class Zmaptool:
         self.config = config.Config
         self.portscan = portscantask.getObject()    #init logs/portScantask.log; init DBmanager; get connect; build socketClient
         self.getlocationtool = getLocationTool.getObject()
-# returnmsg =subprocess.call(["ls", "-l"],shell=True)
+        # returnmsg =subprocess.call(["ls", "-l"],shell=True)
 
     def do_scan(self, port='8080', num='10', needdetail='0'):
         path = os.getcwd()
@@ -68,6 +68,7 @@ class Zmaptool:
                     nowportname=portname.get(port,'')
                     self.portscan.add_work([(nowportname,str(i), port,'open','','')])
                 else:
+		    # 执行zmap的时候开放后，默认nmap扫描全部端口；但是通过页面添加任务的时候如果指定了端口，不会扫描全部端口
                     ajob = job.Job(jobaddress=str(i),jobport='',forcesearch='0',isjob='0')
                     jobs.append(ajob)
             if needdetail != '0':
