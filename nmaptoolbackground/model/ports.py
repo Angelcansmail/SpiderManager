@@ -30,12 +30,12 @@ class Port(object):
         self.webtitle = webtitle
 
         if self.keywords is None:
-            self.keywords=Location(ip=str(self.ip)).getData()
+            self.keywords = Location(ip=str(self.ip)).getData()
         else:
             try:
 
-                data=eval(keywords)
-                self.keywords=data
+                data = eval(keywords)
+                self.keywords = data
                 if self.keywords.get('geoip',None) is None:
                     self.keywords = Location(ip=str(self.ip)).getData()
             except Exception,e:
@@ -43,6 +43,7 @@ class Port(object):
                 self.keywords = Location(ip=str(self.ip)).getData()
             # print self.keywords
             # print self.keywords['geoip']['country']
+
     def getIP(self):
         return self.ip
     def getPort(self):

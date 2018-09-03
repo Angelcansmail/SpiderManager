@@ -1,10 +1,11 @@
 #!/usr/bin/python
 #coding:utf-8
+
 from spidertool import webtool
 from location import Location
 
 class Ip(object):
-    def __init__(self,ip='',vendor='',osfamily='',osgen='',accurate='',state='',hostname='unknow',updatetime='',city='',isp='',county='',country='',region='',location=None):
+    def __init__(self,ip='',vendor='',osfamily='',osgen='',accurate='',state='',hostname='unknow',updatetime='',city='',isp='',county='',country='',area='',region='',location=None):
         '''
         Constructor
         '''
@@ -25,9 +26,11 @@ class Ip(object):
         self.isp = isp
         self.county = county
         self.country = country
+        self.area = area
         self.region = region
         self.location = location
 
+	print "before init location...", location
         if self.location is None:
             self.location = Location(ip=str(self.ip)).getData()
         else:
@@ -38,13 +41,12 @@ class Ip(object):
                     self.location = Location(ip=str(self.ip)).getData()
             except Exception, e:
                 self.location = Location(ip=str(self.ip)).getData()
+	print "after init location...", self.location
 
     def setIP(self,ip):
         self.ip=ip
-
     def setState(self,state):
         self.state=state
-
     def getIP(self):
         return self.ip
     def getVendor(self):
@@ -63,4 +65,4 @@ class Ip(object):
         return self.hostname
     
     
-    
+# ip = Ip(ip='115.182.9.230') 
