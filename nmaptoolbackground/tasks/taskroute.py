@@ -135,7 +135,8 @@ def updatejob(request, state=''):
                 # 更新job(taskdata表)
                 if state == '3':
                     jobcontrol.jobupdate(jobstatus='2', groupid=jobid)
-                    taskscontrol.startjob(task) # 和createjob中的用法一致, 区别在于command是create还是work
+                    # 和createjob中的用法一致, 区别在于command是create还是work
+                    taskscontrol.startjob(task)
                     # tasktotally.add_work(tasks)
                 else:
                     jobcontrol.jobupdate(jobstatus=state, groupid=jobid)
