@@ -433,8 +433,8 @@
         function changtext(k, i) {
             clinckitem = i;
             var tempstr = '';
-            var json = eval('(' + clinckdata.ports[clinckitem].script + ')');
-            alert((json['http-title']));
+            //var json = eval('(' + clinckdata.ports[clinckitem].script + ')');
+            //alert((json['http-title']));
             if (k == 1) {
                 tempstr = clinckdata.ports[clinckitem].script;
                 document.getElementById("scriptdetail").innerHTML = tempstr;
@@ -608,10 +608,7 @@
                 var pagehtml = "";
 
                 if (pagesize > 0) {
-
-
                     if (currpage <= 1) {
-
                         pagehtml += "<li class=\"active\"><a onclick='loadtask(" + (currpage - 1).toString() + ");' href='javascript:void(0);'>1</a></li>";
 
 
