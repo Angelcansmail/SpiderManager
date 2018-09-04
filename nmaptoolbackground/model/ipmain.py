@@ -30,7 +30,7 @@ class Ip(object):
         self.region = region
         self.location = location
 
-	print "before init location...", location
+	# print "before init location...", location
         if self.location is None:
             self.location = Location(ip=str(self.ip)).getData()
         else:
@@ -41,7 +41,7 @@ class Ip(object):
                     self.location = Location(ip=str(self.ip)).getData()
             except Exception, e:
                 self.location = Location(ip=str(self.ip)).getData()
-	print "after init location...", self.location
+	# print "after init location...", self.location
 
     def setIP(self,ip):
         self.ip=ip

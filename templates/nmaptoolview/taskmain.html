@@ -297,25 +297,25 @@
                     temport = '全部可用端口';
                 }
                 else {
-                    temport = jobs[i].tasksport;
-                    bodyhtml += "<tr>" +
-                        "<td><input type=\"checkbox\">" +
-                        "<div class=\"img\"><img src=\"/static/nmaptool/img/owl.png\"></div>" +
-                        "<a href=\"/nmaptool/groupitem?groupid=" + jobs[i].tasksid + "\">" + jobs[i].tasksname + "</a></td>" +
-                        "<td class=\"description\">" + jobs[i].taskaddress + "</td>" +
-                        "<td class=\"description\">" + temport + "</td>" + statusshow +
+		    temport = jobs[i].tasksport;
+		}
+		bodyhtml += "<tr>" +
+		    "<td><input type=\"checkbox\">" +
+		    "<div class=\"img\"><img src=\"/static/nmaptool/img/owl.png\"></div>" +
+		    "<a href=\"/nmaptool/groupitem?groupid=" + jobs[i].tasksid + "\">" + jobs[i].tasksname + "</a></td>" +
+		    "<td class=\"description2\">" + jobs[i].taskaddress + "</td>" +
+		    "<td class=\"description\">" + temport + "</td>" + statusshow +
 
-                        "<td><ul class=\"actions\">" +
+		    "<td><ul class=\"actions\">" +
 
-                        "<li onclick='startjob(" + i + ");'><i class=\"table-start\" ></i></li>" +
-                        "<li onclick='pausejob(" + i + ");'><i class=\"table-pause\"></i></li>" +
-                        "<li  onclick='destroyjob(" + i + ");'><i class=\"table-edit\"></i></li>" +
-                        "<li><i class=\"table-settings\"></i></li>" +
-                        "<li class=\"last\"><i class=\"table-delete\"></i></li>" +
-                        "</ul>" +
-                        "</td>" +
-                        "</tr>";
-                }
+		    "<li onclick='startjob(" + i + ");'><i class=\"table-start\" ></i></li>" +
+		    "<li onclick='pausejob(" + i + ");'><i class=\"table-pause\"></i></li>" +
+		    "<li  onclick='destroyjob(" + i + ");'><i class=\"table-edit\"></i></li>" +
+		    "<li><i class=\"table-settings\"></i></li>" +
+		    "<li class=\"last\"><i class=\"table-delete\"></i></li>" +
+		    "</ul>" +
+		    "</td>" +
+		    "</tr>";
             }
             document.getElementById("head").innerHTML = bodyhtml;
         }
