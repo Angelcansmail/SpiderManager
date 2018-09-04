@@ -12,19 +12,19 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
     validresult=False
     request_params = []
     values_params = []
-    if taskname  !=  '':
+    if taskname != '':
         request_params.append('tasksname')
         values_params.append(SQLTool.formatstring(taskname))
-    if tasktatus  !=  '':
+    if tasktatus != '':
         request_params.append('status')
         values_params.append(SQLTool.formatstring(tasktatus))
-    if username  !=  '':
+    if username != '':
         request_params.append('username')
         values_params.append(SQLTool.formatstring(username))
-    if taskid  !=  '':
+    if taskid != '':
         request_params.append('tasksid')
         values_params.append(SQLTool.formatstring(taskid))
-    if taskport  !=  '':
+    if taskport != '':
         request_params.append('taskport')
         values_params.append(SQLTool.formatstring(taskport))
 
@@ -56,7 +56,8 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
         if count > 0:
             validresult=True
             # 依次遍历查询数据库返回的结果(taskdata和tasksdata的结果合并)，一个json格式
-            for temp in result :
+            for temp in result:
+	        print temp
                 ajob = tasks.Tasks(username=temp['username'],tasksid=temp['tasksid'],tasksname=temp['tasksname'],taskstatus=temp['status'],starttime=temp['starttime'],taskaddress=temp['tasksaddress'],tasksport=temp['taskport'],endtime=temp['endtime'],createtime=temp['createtime'],num=temp['num'],completenum=temp['completenum'])
                 jobs.append(ajob)
         return jobs, count, pagecount
@@ -72,8 +73,8 @@ def loadtask(request,username=''):
     forcesearch = request.POST.get('forcesearch','0')
     tempjob = None
 
-    # if taskaddress == '' or taskname == '':
-    if taskaddress == '' or tasksport == '':
+    if taskaddress == '' or tasksname == '':
+    # if taskaddress == '' or tasksport == '':
         return tempjob, False
     tempjob = tasks.Tasks(tasksname=tasksname,taskaddress=taskaddress,username=username,tasksport=tasksport,argument=abstract,forcesearch=forcesearch)
 

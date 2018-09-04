@@ -54,22 +54,23 @@ class SniffrtTool(object):
             callback = self.callback_result
         orders = ''
         if port != '':
-            orders += port	#为什么要加，直接使用port不一样吗，都是一个port
+	    # 为什么要加，直接使用port不一样吗，都是一个port, 多个端口也应该逗号分割啊
+            orders += port
         else :
             orders = None
         try:
             if hignpersmission == '0':
                 acsn_result = self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments)
-                self.logger.info("%s:%s扫描结束\n%s\n"%(hosts, orders, acsn_result))
+                print ("%s:%s扫描结束\n%s\n"%(hosts, orders, acsn_result))
                 return callback(acsn_result) 
             else:
                 return callback(self.nma.scan(hosts=hosts,ports=orders,arguments=arguments))
         except nmap.PortScannerError,e:
-            print "spidertool::scaninfo()", traceback.print_exc()
+            self.logger.warning("spidertool::scaninfo()", traceback.print_exc())
             return ''
 
         except:
-            self.logger.info('Unexpected error:%s',sys.exc_info()[0])
+            self.logger.warning('Unexpected error:%s',sys.exc_info()[0])
             return ''
 
     def callback_result(self, scan_result):
