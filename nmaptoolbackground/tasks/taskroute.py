@@ -34,6 +34,7 @@ def taskquery(request):
         response_data['result'] = '1'
         # tasks: a json array, collect all task info; taskcount: 任务数; pagecount: 页面数量
         tasks, taskcount, pagecount = taskscontrol.taskshow(username=username, page=page)
+	# print "taskquery finished. total hava %d tasks; taskcount:%d, pagecount:%d"%(len(tasks),taskcount, pagecount)
         response_data['length'] = taskcount
         response_data['jobs'] = tasks
         response_data['pagecount'] = pagecount

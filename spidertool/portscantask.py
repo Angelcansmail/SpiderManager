@@ -80,7 +80,7 @@ class PortscanTask(TaskTool):
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
-            self.logger.info('webutil.getwebinfo(%s) method_2 \nkeywords:%s\ntitle:%s\n', address, webkey, webtitle)
+            self.logger.info('webutil.getwebinfo(%s:%s) method_2 \nkeywords:%s\ntitle:%s\n', ip, str(port), webkey, webtitle)
             pass
 #         print page
 #         self.sqlTool.connectdb()

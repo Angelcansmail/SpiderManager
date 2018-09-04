@@ -38,6 +38,7 @@ def detailpage(request):
     content = request.POST.get('content', '')
     page = request.POST.get('page','0')
     username = request.COOKIES.get('username','')
+    userrole = request.COOKIES.get('role', '')
     response_data = {}
     response_data['result'] = '0'
     jsoncontent = None
@@ -119,7 +120,8 @@ def detailpage(request):
             print '检索完毕'
             response_data['result'] = '1'
             response_data['keywords'] = content.split()
-            response_data['username']=username
+            response_data['username'] = username
+            response_data['userrole'] = userrole
     else:
         action = jsoncontent.keys()
         if 'use' in action or 'city' in action:

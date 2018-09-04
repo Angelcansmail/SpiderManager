@@ -77,8 +77,9 @@ class ConnectTool:
 
 # header信息(如:Server,Content-Type, Set-Cookie:...
 			temp = str(response.info())
-			print 'connecttool::getHTML() cooke信息如下：'
-			for item in self.__cookie:
+			if self.__cookie != '':
+			    print 'connecttool::getHTML() cooke信息如下：'
+			    for item in self.__cookie:
 				print 'Name = '+item.name
 				print 'Value = '+item.value
 			msg = response.read()

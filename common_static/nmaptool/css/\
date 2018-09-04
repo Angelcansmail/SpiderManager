@@ -114,7 +114,6 @@
   background-color: #30a1ec;
 }
 
-
 /* table sample below */
 .table-products {
   width: 100%;
@@ -139,18 +138,8 @@
 }
 .table-products .table td.description {
   vertical-align: middle;
-  color: #516372;
-}
-.table-products .table td.description2 {
-  vertical-align: middle;
-  color: #516372;
-  width: 300px;
-  height: 48.2167px;
-  overflow-x: hidden;
-  white-space: nowrap;
-  display: inline-block;
-  text-overflow: ellipsis;
-  word-break: break-all;
+  color: #770077;
+  overflow: hidden;
 }
 .table-products .table td a {
   text-decoration: underline;
@@ -209,6 +198,7 @@
   float: right;
   margin-top: 35px;
 }
+
 /* responsive */
 @media (max-width: 768px) {
   #main-stats {
