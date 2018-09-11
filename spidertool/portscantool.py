@@ -8,6 +8,7 @@ import os
 import SQLTool
 import config
 import socket
+import traceback
 
 portway = {'sip':'INVITE  world \r\n\r\n','2':'8080','3':'443','4':'22','5':'23'}  
 
@@ -45,7 +46,7 @@ class Portscantool:
             else:
                 return 'reply info:  ',ans,keywords,hackinfo
         except Exception, msg:
-            print 'Failed to create socket. Error code: ' + str(msg)
+            print 'Failed to create socket. Error code: ' + str(msg) + ' Error info: ' + str(traceback.print_exc())
             return 'error info:','error',keywords,hackinfo
         finally:
             if self.socketclient is not None:

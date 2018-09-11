@@ -261,7 +261,7 @@
                 servicehtml += "<li class=\"service service-long\"><a name=\""+ports[i].port+"\"></a><div class=\"service-details\">"+
                                     "<div class=\"port\">"+ports[i].port+"</div>"+
                                     "<div class=\"protocol\">"+potocalname+"</div>"+
-                                    "<div class=\"state\">"+ports[i].product+"</div>";
+                                    "<div class=\"state\">"+(ports[i].product=='None'?'':ports[i].product)+"</div>";
                 if(potocalname=='http'||potocalname=='https'||potocalname=='ftp'){
                     servicehtml+= "<a href=\"" + potocalname + "://" + ports[i].ip + ':' + ports[i].port+"\" target=\"_blank\" class=\"link\"><i class=\"fa fa-mail-forward\">&nbsp; </i></a> ";
                 }
