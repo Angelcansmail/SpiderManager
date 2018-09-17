@@ -7,14 +7,14 @@ import datetime
 class TimeoutError(Exception):  
     pass  
   
-def command(cmd, timeout=60):  
+def command(cmd, timeout=3600):
     """Run command and return the output 
     cmd - the command to run 
     timeout - max seconds to wait for 
     """  
     is_linux = platform.system() == 'Linux'  
-    print ("command_tool::command() cmd:%s, is_linux:%d"%(cmd, is_linux))
-      
+    print (str(datetime.datetime.now()) + "command_tool::command() cmd:%s, is_linux:%d"%(cmd, is_linux))
+
     p = subprocess.Popen(cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, close_fds=True,shell=True, preexec_fn=os.setsid if is_linux else None)
     if timeout==0:
         return p.stdout.read()

@@ -75,6 +75,7 @@ class PortscanTask(TaskTool):
             except:
                 pass
         else:
+	    # mysql/ftp/rsync/ssh四个检测，暴力破解尝试登录；head和page无返回，为空
             head, page, keywords, hackinfo = self.portscan.do_scan(head=head,context=page,ip=ip,port=port,name=req[0],productname=productname,nmapscript=nmapscript)
             import webutil
             webinfo = webutil.getwebinfo(page)

@@ -1,5 +1,6 @@
 # format: path {severity=Severity} {tag="text string to find"} {status=HTTP_STATUS} {type="content-type should contain this string"} {type_no="content-type should not contain this string"}
 # each item must starts with right slash "/"
+
 # severity is 3 by default
 
 
@@ -163,8 +164,10 @@ _ {status=200}
 /etc/passwd    {tag="root:x:"}
 /etc/hosts     {tag="localhost"}
 /file/Placard/upload/Imo_DownLoadUI.php?cid=1&uid=1&type=1&filename=/../../../../etc/passwd {tag="root:x:"}
+
 #file read
 /dynamic/download.jsp?path=/dynamic/download.jsp {severity=2}
+
 #file upload
 
 //softwarer/bbs/uptest.asp {severity=2}
@@ -475,4 +478,6 @@ _ {status=200}
 #sql inject
 
 
+#structs
 
+/struts/webconsole.html	{status=200}
