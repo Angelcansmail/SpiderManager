@@ -16,13 +16,13 @@ def tick():
         print('too much work: %s' % datetime.now())
         pass
     else:
-        num = random.randint(1, 1)
+        num = random.randint(1, 8)
         temp = zmaptool.getObject()
         temp.do_scan(port=operator.get(str(num)),num='20',needdetail='1')
     print('Tick! The time is: %s' % datetime.now())
 
 def ticknormal():
-    num=random.randint(1, 1)
+    num=random.randint(1, 2)
     temp=zmaptool.getObject()
     temp.do_scan(port=operator.get(str(num)),num='30')
 

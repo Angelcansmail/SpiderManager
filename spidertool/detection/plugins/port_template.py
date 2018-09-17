@@ -52,5 +52,4 @@ def empty(ip='',port='',name='',productname=''):
     return head,ans,keywords,hackinfo
  
 
-    
 
