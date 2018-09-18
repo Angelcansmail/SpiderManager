@@ -22,7 +22,7 @@ def tick():
     print('Tick! The time is: %s' % datetime.now())
 
 def ticknormal():
-    num=random.randint(1, 2)
+    num=random.randint(1, 8)
     temp=zmaptool.getObject()
     temp.do_scan(port=operator.get(str(num)),num='30')
 
