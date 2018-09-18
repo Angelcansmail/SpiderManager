@@ -90,7 +90,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         if extra or updatevalue:
             logger.info('更新数据')
             instanceitem = instanceins.getdata(id=':'.join(eachitem[:primarykey]))
-            print "inserttableinfo_byparasm::instanceitem::", instanceitem
+            logger.info("inserttableinfo_byparasm::instanceitem::%s", instanceitem)
             logger.info(str(instanceitem))
             if instanceitem is None:
                 logger.info('找不到该数据，创建数据')

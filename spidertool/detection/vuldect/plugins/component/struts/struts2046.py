@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from t  import T
+from ..t  import T
 import random
 import base64
 import sys

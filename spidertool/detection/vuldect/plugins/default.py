@@ -42,7 +42,7 @@ class PocController(object):
     def __list_plugins(self, module_path):
 	# 将当前module下的所有文件名返回
 	# ~/component/xampp
-	print "__list_plugins: module_path:%s"%str(module_path)
+	# print "__list_plugins: module_path:%s"%str(module_path)
         return set(map(lambda item: item.endswith(('.py', '.pyc')) and item.replace('.pyc', '').replace('.py', ''), listdir(module_path)))
 
     # 按照组块下的py文件名称作为映射，并删除t\minicurl\__init__三个公用的非组建
@@ -65,7 +65,7 @@ class PocController(object):
         path = join(abspath(dirname(__file__)), componentname)
         modules_list = set(map(lambda item: isdir(join(path, item)) and item, listdir(path)))
 	# set([False, 'xampp', 'httpfileserver', 'struts', 'redis', 'openssl', 'joomla', 'cacti', 'fast_cgi', 'zebra', ...])
-	print "__get_component_detail_list", str(modules_list)
+	# print "__get_component_detail_list", str(modules_list)
         if False in modules_list:
             modules_list.remove(False)
         return modules_list
@@ -237,6 +237,7 @@ class PocController(object):
         return matched_modules, othermodule
 
     def detect(self, head='',context='',ip='',port='',productname={},keywords='',hackinfo='',defaultpoc=''):
+	# components[componentname][module_name] = P()
         self.logger.info('now the source component: %s', self.components)
         if self.components=={} or self.keywords == {} or self.rules=={}:
             self.loader()

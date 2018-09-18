@@ -9,7 +9,7 @@ Referer:	http://wooyun.org/bugs/wooyun-2010-080076
 
 import urlparse
 from ..miniCurl import Curl
-from t  import T
+from ..t import T
 
 class P(T):
     def __init__(self):

