@@ -160,16 +160,16 @@
             var ports = data2.ips;
             var datalength = data2.ipcount;
             var pagesize = data2.ippagecount;
-	    var geoinfo = JSON.parse(ports[0].location);
-            // alert(["location results:", geoinfo['geoip']['country']['name'], geoinfo['geoip']['city']['name'], geoinfo['geoip']['isp']['organization'], geoinfo['geoip']['location']['longitude'], geoinfo['geoip']['location']['latitude']]);
+	    // var geoinfo = JSON.parse(ports[0].location);
+            // alert(["location results:", ports[0].location['geoip']['country']['name'], ports[0].location['geoip']['city']['name'], ports[0].location['geoip']['isp']['organization'], ports[0].location['geoip']['location']['longitude'], ports[0].location['geoip']['location']['latitude']]);
             // location什么时候赋值的, getLocation.py?
 	    // alert(["country:", "ip:", ports[0].ip, ports[0].country, "city", ports[0].city, "isp:",ports[0].isp, "region:",ports[0].region, "osfamily",ports[0].osfamily, "osgen:",ports[0].osgen, "hostname:", ports[0].hostname]);
-            var country=(ports[0].country==0?geoinfo['geoip']['country']['name']:ports[0].country);
-            var city=(ports[0].city==0?geoinfo['geoip']['city']['name']:ports[0].city);
-            var isp=(ports[0].isp==0?geoinfo['geoip']['isp']['organization']:ports[0].isp);
-            var region=(ports[0].region==0?geoinfo['geoip']['subdivisions']['names']:ports[0].region)
-            var latitude = geoinfo['geoip']['location']['latitude'];
-            var longitude = geoinfo['geoip']['location']['longitude'];
+            var country=(ports[0].country==0?ports[0].location['geoip']['country']['name']:ports[0].country);
+            var city=(ports[0].city==0?ports[0].location['geoip']['city']['name']:ports[0].city);
+            var isp=(ports[0].isp==0?ports[0].location['geoip']['isp']['organization']:ports[0].isp);
+            var region=(ports[0].region==0?ports[0].location['geoip']['subdivisions']['names']:ports[0].region)
+            var latitude = ports[0].location['geoip']['location']['latitude'];
+            var longitude = ports[0].location['geoip']['location']['longitude'];
 
             var bodyhtml = "";
 
@@ -190,8 +190,8 @@
 
             // 调研下location的值获取有待补充
             // alert(["location results:", ports[0].location]);
-            // var latitude = geoinfo['geoip']['location']['latitude'];
-            // var longitude = geoinfo['geoip']['location']['longitude'];
+            // var latitude = ports[0].location['geoip']['location']['latitude'];
+            // var longitude = ports[0].location['geoip']['location']['longitude'];
             window.frames["detailmap"].src = '/fontsearch/map?latitude='+latitude+'&longitude='+longitude;
         }
     }

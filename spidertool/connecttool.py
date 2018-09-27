@@ -57,7 +57,6 @@ class ConnectTool:
 			data = urllib.urlencode(params)
 		if type=='JSON':
 			data=json.dumps(params) 
-
 		url=URL
 		if header is None:
 			header=self.__headers
@@ -72,15 +71,18 @@ class ConnectTool:
 		try:
 #			gc.enable() 
 #			gc.set_debug(gc.DEBUG_LEAK)
+#			添加证书代码
 			context = ssl._create_unverified_context()
 			response = urllib2.urlopen(req,context=context)
 
-# header信息(如:Server,Content-Type, Set-Cookie:...
+			# header信息(如:Server,Content-Type, Set-Cookie:...
 			temp = str(response.info())
 			if self.__cookie != '':
 			    print 'connecttool::getHTML() cooke信息如下：'
 			    for item in self.__cookie:
+			    	# ADMINCONSOLESESSION
 				print 'Name = '+item.name
+				# nWwPWTQED7S7OBVLoLTTySaF-AVlRfNfLvWz8LtSL7CfJohgstkb!808316288 
 				print 'Value = '+item.value
 			msg = response.read()
 

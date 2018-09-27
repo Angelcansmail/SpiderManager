@@ -22,7 +22,7 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
         fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
 
         print "\n\ndetection::page_identify::identify_main() pocsearchtask begin init...."
-        print ("detection::vuldetect::head[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nnmapscript[%s]\nprotocol[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(nmapscript),str(protocol)))
+#        print ("detection::vuldetect::head[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nnmapscript[%s]\nprotocol[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(nmapscript),str(protocol)))
         temp = pocsearchtask.getObject()
         print "\n\ndetection::page_identify::identify_main() pocsearchtask begin detect...."
         temp.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])

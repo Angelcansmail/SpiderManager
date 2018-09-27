@@ -212,12 +212,12 @@
                 var a = xmlhttp.responseText;
                 var data2 = JSON.parse(a);
 
-                alert(data2);   // result为返回的json串中的状态，1正确 0错误
+                //alert(data2);   // result为返回的json串中的状态，1正确 0错误
                 if (data2.result == '1') {
                     window.location.reload();
                 }
                 else {
-                    alert('操作失败, 不要重复执行!');
+                    alert('操作失败, 请检查后联系管理员!');
                 }
             }
         }

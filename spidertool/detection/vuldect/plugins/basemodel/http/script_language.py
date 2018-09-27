@@ -9,6 +9,7 @@
 """
 import re
 import urlparse
+from termcolor import cprint
 from ..miniCurl import Curl
 from ..t  import T
 
@@ -62,6 +63,7 @@ class P(T):
 
         app_suffix = getScript(arg)
         if len(app_suffix) != 0:
+	    cprint(arg + ' detect language they use is ' + str(app_suffix), 'blue')
             output(arg+' the language they use is '+ str(app_suffix),result,'note')
         return result
 

@@ -101,9 +101,9 @@ def updatejob(request, state=''):
     if request.method=='POST':   # POST
         islogin = request.COOKIES.get('islogin', False)
         jobid= request.POST.get('taskid','')
-        # jobid= request.POST.get('taskid','14032678-90ac-11e8-af6f-74e50ba386da')
         username = request.COOKIES.get('username','')
         role = request.COOKIES.get('role','1')
+    	starttime = webtool.getlocaltime()
         response_data = {}
         response_data['result'] = '0'
 
@@ -117,7 +117,7 @@ def updatejob(request, state=''):
 
         # 开始操作tasksdata表，执行对应的状态操作
         if state == '3':
-            tempresult = taskscontrol.jobupdate(jobstatus=state, username=username, taskid=jobid, completenum='0')
+            tempresult = taskscontrol.jobupdate(jobstatus=state, username=username, taskid=jobid, starttime=starttime, completenum='0')
         # elif  state=='4':
         #     pass
         else:

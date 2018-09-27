@@ -30,8 +30,11 @@ class Portscantool:
             # port_identify中的函数需要自己补充
             print ("\nportscaltool::do_scan(%s:%s)\n"%(ip, port))
             head,ans,keywords,hackinfo = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
+	    # 目前都是None
             if ans == None:
                 self.socketclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    		# self.socketclient.settimeout(25)
+    		# time.sleet(10)
                 self.socketclient.connect((ip,int(port)))
 #             message = "GET / HTTP/1.1\r\nHost: oschina.net\r\n\r\n"
                 message =portway.get(name,"GET  world \r\n\r\n")
@@ -45,9 +48,10 @@ class Portscantool:
                 return 'reply info:  ',reply,keywords,hackinfo
             else:
                 return 'reply info:  ',ans,keywords,hackinfo
-        except Exception, msg:
+	except Exception, msg:
             print 'Failed to create socket. Error code: ' + str(msg) + ' Error info: ' + str(traceback.print_exc())
-            return 'error info:','error',keywords,hackinfo
+#            return msg, 'SOCKET Error!',keywords,hackinfo
+	    return 'error info:','error',keywords,hackinfo
         finally:
             if self.socketclient is not None:
                 self.socketclient.close()

@@ -75,7 +75,7 @@ class InfoDisScanner(InfoDisScannerBase):
                 html_doc = ''
             return status, resp_headers, html_doc
         except Exception, e:
-            #logging.error('[Exception in InfoDisScanner._http_request] %s' % e)
+            self.logger.error('[Exception in InfoDisScanner._http_request] %s' % e)
             return -1, {}, ''
         finally:
             if conn is not None:

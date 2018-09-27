@@ -8,6 +8,7 @@ from ..t import T
 
 import re
 import urlparse
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -23,15 +24,16 @@ class P(T):
         code, head, res, errcode, _ = curl.curl('"%s"' % url)
         m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException', res)
         if m:
-            output(url,result,'warning')
+	    cprint(arg + '存在weblogic SSRF and XSS漏洞', 'orange')
+            output(arg, result, 'warning')
         del curl
         return result
 
 def output(url,result,label):
-    info = url + '  weblogic  Vul '
+    info = url + ' has weblogic SSRF and XSS weblogic  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
-    result['VerifyInfo']['type']='SSRF And XSS Vul'
+    result['VerifyInfo']['type']='weblogic Vul'
     result['VerifyInfo']['URL'] =url
     result['VerifyInfo']['payload']='/root/github/poccreate/middle/weblogic/weblogic_2379ff4b3eb7712b2949f85115c62fce.py'
     result['VerifyInfo']['level']=label

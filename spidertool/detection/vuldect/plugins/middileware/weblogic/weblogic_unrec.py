@@ -10,6 +10,7 @@ import platform
 import subprocess
 import signal
 import time
+from termcolor import cprint
 
 class TimeoutError(Exception):
     pass
@@ -206,13 +207,14 @@ class P(T):
             print 'weblogic_unrec there is error'+str(e)
             return result
         if  resultmsg:
+	    cprintf(target_url + '存在weblogic unrec vul漏洞','red')
             info = target_url + " weblogic unrec vul"
             result['result']=True
             result['VerifyInfo'] = {}
-            result['VerifyInfo']['type']='weblogic unrec vul'
-            result['VerifyInfo']['URL'] =target_url
-            result['VerifyInfo']['payload']=''
-            result['VerifyInfo']['result'] =msg
+            result['VerifyInfo']['type'] = 'weblogic unrec vul'
+            result['VerifyInfo']['URL'] = target_url
+            result['VerifyInfo']['payload'] = ''
+            result['VerifyInfo']['result'] = msg
             result['VerifyInfo']['level'] = 'hole'
         return result
 

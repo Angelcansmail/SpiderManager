@@ -3,6 +3,7 @@
 import urllib2
 
 from ..t import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -48,6 +49,7 @@ class P(T):
                         del res
                 for flag in flag_list:
                     if flag in res_html:
+		        cprint(target_url + '存在Weblogic Weak password漏洞', 'red')
                         info = '%s/console Weblogic Weak password %s:%s'%(target_url,user,password)
                         result['result']=True
                         result['VerifyInfo'] = {}

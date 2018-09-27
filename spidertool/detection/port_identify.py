@@ -35,7 +35,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
         print '从redids读取位置信息'
         keyword = redisresult
     else:
-        keyword = getgeoipinfo.getGeoipinfo(keyword)
+        keyword = getgeoipinfo.getGeoipinfo(ip)
         redistool.set(ip, keyword)
         print '从redids写入位置信息'
     keyword['keywords'] = keywords

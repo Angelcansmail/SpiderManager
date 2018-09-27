@@ -31,6 +31,7 @@ class ConnectPool:
 			return 0
 		return 1
 
+	# 从portscantask只传入了address
 	def getConnect(self,URL,way='GET',params={},times=1):
 		self.__connect_pool.put(1)
 		self.logger and self.logger.info('当前访问的位置为：%s', URL)

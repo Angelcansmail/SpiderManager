@@ -51,7 +51,7 @@
                     <label for="remember-me">记住密码</label>
                     <h8 style="color:red">{{data}}</h8>
                 </div>
-                <input type="submit" class="btn-glow primary login"></a>
+                <input type="submit" onclick="submitForm()" class="btn-glow primary login"></a>
         </div>
     </div>
 
@@ -81,6 +81,35 @@
         });
 
     });
+
+    function submitForm(){
+    	var theForm = document.forms[0];
+	if(theForm.username.value !='' && theForm.password.value !=''){ 
+	    theForm.password.value = getAES(theForm.password.value);
+	    theForm.submit();
+	}
+    }
+
+    function getAES(j_passwd){
+	var key  = 'zxmd2013qazwsx12';  //密钥
+	var iv   = 'qazwsx12zxmd2013';
+	var encrypted = getAesString(j_passwd,key,iv); //密文
+	alert(encrypted);
+	return encrypted;
+    }
+
+    function getAesString(data,key,iv){
+	var key  = CryptoJS.enc.Utf8.parse(key); 
+	var iv   = CryptoJS.enc.Utf8.parse(iv); 
+	alert([data, key, iv]);
+	var encrypted =CryptoJS.AES.encrypt(data,key,{
+		iv:iv, 
+		mode:CryptoJS.mode.CBC,
+		padding:CryptoJS.pad.Pkcs7 
+	});
+	return encrypted.toString();  //返回的是base64格式的密文
+    }
+
 </script>
 
 </body>

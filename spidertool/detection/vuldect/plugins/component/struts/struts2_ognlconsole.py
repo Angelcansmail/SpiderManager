@@ -8,6 +8,7 @@ Referer:	http://wooyun.org/bugs/wooyun-2010-080076
 """
 
 import urlparse
+from termcolor import cprint
 from ..miniCurl import Curl
 from ..t import T
 
@@ -22,7 +23,7 @@ class P(T):
         result = {}
         result['result']=False
 
-	# 如果发现了webconsole.html页面,则判断系统存在Struts2漏洞
+	# 如果存在了webconsole.html页面,则判断系统存在Struts2漏洞
 	# webconsole.html为了方便开发人员进行Debug而提供的功能, 只有在调试模式下才能使用
 	# <constant name="struts.devMode" value="true" /> 
 	# webconsole.html页面与后端交互时,使用了Dojo的js框架来完成请求和应答处理,
@@ -34,6 +35,7 @@ class P(T):
         code, head, res, errcode, _ = curl.curl('"%s"' % url)
     	print "code:%s,head:%s,res:%s,errcode:%s"%(code, head, res, errcode)
         if code == 200 and "Welcome to the OGNL console" in res:
+	    cprint(url + '存在structs ognl console漏洞', 'red')
             output('find ognl console:' +url,result,'info')
         del curl
         return result

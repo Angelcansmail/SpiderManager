@@ -5,6 +5,7 @@ from os import listdir
 from urlparse import urljoin
 from re import compile
 import callbackresult
+from termcolor import cprint
 
 GPocController=None
 
@@ -23,7 +24,8 @@ class PocController(object):
             {'module_name': 'database'},
             {'module_name': 'basemodel'},
             {'module_name': 'router'},
-            {'module_name': 'application'}
+            {'module_name': 'application'},
+            {'module_name': 'industrial'}
         ]
         self.keywords = {}
         self.rules = {}
@@ -48,9 +50,10 @@ class PocController(object):
     # 按照组块下的py文件名称作为映射，并删除t\minicurl\__init__三个公用的非组建
     def __get_component_plugins_list(self,componentname, module_name):
         path = join(abspath(dirname(__file__)), componentname+'/%s' % module_name)
+#	self.logger.info("__get_component_plugins_list_path[%s]",str(path))
         plugins_list = self.__list_plugins(path)
-	# set(['__init__', 'XAMPP_0513e4ffc8bbb2129805b3ac0e9545ea'])
-	print "__get_component[%s:%s]_plugins_list:%s"%(componentname, module_name, str(plugins_list))
+#	set(['__init__', 'XAMPP_0513e4ffc8bbb2129805b3ac0e9545ea'])
+#	self.logger.info("__get_component[%s:%s]_plugins_list:%s", componentname, module_name, str(plugins_list))
         if False in plugins_list:
             plugins_list.remove(False)
         plugins_list.remove('__init__')
@@ -64,8 +67,8 @@ class PocController(object):
     def __get_component_detail_list(self,componentname):
         path = join(abspath(dirname(__file__)), componentname)
         modules_list = set(map(lambda item: isdir(join(path, item)) and item, listdir(path)))
-	# set([False, 'xampp', 'httpfileserver', 'struts', 'redis', 'openssl', 'joomla', 'cacti', 'fast_cgi', 'zebra', ...])
-	# print "__get_component_detail_list", str(modules_list)
+#	set([False, 'xampp', 'httpfileserver', 'struts', 'redis', 'openssl', 'joomla', 'cacti', 'fast_cgi', 'zebra', ...])
+#	print "__get_component[%s]_detail_list[%s]"%(componentname, str(modules_list))
         if False in modules_list:
             modules_list.remove(False)
         return modules_list
@@ -97,12 +100,12 @@ class PocController(object):
     def __load_component_detail_info(self,module_name='',componentname='',func=None,params=None,text=''):
         try:
             params[module_name] = func(componentname,module_name)
-	    # module_name: 不同插件下的名称, 如component
-	    # self.logger.info('Module '+text+': %s -> %s', module_name, self.keywords[module_name])
+#	    module_name: 不同插件下的名称, 如component
+#	    self.logger.info('Module '+text+': %s -> %s', module_name, self.keywords[module_name])
         except Exception,e:
             print e
             params[module_name] = [],componentname
-	    # self.logger.info('Module '+text+': %s -> None', module_name)
+#	    self.logger.info('Module '+text+': %s -> None', module_name)
             pass
 
     def __load_component_detail_plugins(self, componentname=''):
@@ -152,7 +155,8 @@ class PocController(object):
             modules_list, _ = self.__match_modules_by_info(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackinfo=hackinfo)
         else:
             modules_list, _ = self.__match_modules_by_poc(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,defaultpoc=defaultpoc)
-        print ' 匹配到的可能组件:      '+str(modules_list) 
+    	# set([('http', 'basemodel'), ('tomcat', 'middileware'), ('struts', 'component'), ('apache', 'middileware')])
+        print ' 匹配到的可能组件:      '+str(modules_list)
         for modules, conponent in modules_list:
             for item in self.components[conponent][modules]:
                 P = item()
@@ -181,7 +185,7 @@ class PocController(object):
                     if result['result']:
                         i = 1
                         dataresult.append(result)
-                        print '发现漏洞'
+                        cprint(ip + ':' + port + '发现' + result['type'] + '漏洞', 'red')
             except Exception,e:
                 print e,poc
             else:
@@ -191,8 +195,7 @@ class PocController(object):
             # callbackresult.storeresult(dataresult)
             pass
         else:
-            print '-----------------------'
-            print '暂未发现相关漏洞'
+            cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')
         del POCS
 
     @classmethod
@@ -212,33 +215,40 @@ class PocController(object):
         if hackinfo ==None:
             hackinfo=''
 
-        kw=keywords#关键词
+        kw=keywords#关键词, location信息？
         for module_name, module_info in self.keywords.items():
-            modulekeywords=module_info[0]
-            comonentname=module_info[1]
+            modulekeywords = module_info[0]
+            componentname = module_info[1]
+#	    modulekeywords:['xampp'], componentname:component
+#	    print "__match_modules_by_info modulekeywords:%s, componentname:%s"%(str(modulekeywords), str(componentname))
             if not modulekeywords:
-                matched_modules.add((module_name,comonentname))
+	    	print "__match_modules_by_info modulekeywords is NULL.matched_modules.add((%s,%s))"%(str(module_name), str(componentname))
+                matched_modules.add((module_name,componentname))
                 continue
             for keyword in modulekeywords:
+#	 	组件在产品名、头部或者攻击信息中出现，均应当作危险信息进行检测验证
 	    	if keyword in kw or keyword in productname.get('productname','').lower()  or keyword in head.lower() or keyword in hackinfo.lower()    :
-#                     self.logger.info('Match Keyword: %s -> %s', resp.url, keyword)
-                    matched_modules.add((module_name,comonentname))
+                    self.logger.info('Match Keyword: -> %s', keyword)
+                    matched_modules.add((module_name,componentname))
                     break
         for module_name, module_info in self.rules.items():
             rules=module_info[0]
-            comonentname=module_info[1]
+            componentname=module_info[1]
+#	    <function rules at 0x7fea340322a8>, componentname:component
+#	    print "__match_modules_by_info modulerules:%s, componentname:%s"%(str(rules), str(componentname))
             if not rules:
-                matched_modules.add((module_name,comonentname))
+                matched_modules.add((module_name,componentname))
                 continue
-	    # 相应组件关键词在context中/productname/head等内容中出现，则返回true
+#	    相应组件关键词在context中/productname/head等内容中出现，则返回true
             if rules(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackinfo=''):
-                matched_modules.add((module_name,comonentname))
-#             matched_modules.add((module_name,comonentname))
+                self.logger.info('Match Rules: -> %s', keyword)
+                matched_modules.add((module_name,componentname))
         return matched_modules, othermodule
 
     def detect(self, head='',context='',ip='',port='',productname={},keywords='',hackinfo='',defaultpoc=''):
-	# components[componentname][module_name] = P()
-        self.logger.info('now the source component: %s', self.components)
+        print ("detection::vuldetect::plugins::default()\n\nhead[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nhackinfo[%s]\ndefaultpoc[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(hackinfo),str(defaultpoc)))
+#	形式components[componentname][module_name] = P()
+#	self.logger.info('now the source component: %s', self.components)
         if self.components=={} or self.keywords == {} or self.rules=={}:
             self.loader()
         self.env_init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackinfo=hackinfo,defaultpoc=defaultpoc)
