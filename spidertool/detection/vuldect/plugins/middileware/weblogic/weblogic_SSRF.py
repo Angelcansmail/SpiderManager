@@ -3,6 +3,7 @@
 import re
 from ..miniCurl import Curl
 from ..t import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -17,15 +18,14 @@ class P(T):
         code, head, res, errcode, _ = curl.curl2(url)
         # print res
         if code == 200 and 'weblogic.uddi.client.structures.exception.XML_SoapException: no protocol: operator=10.301.0.0:80' in res:
-            output(arg + ' has weblogic SSRF. ',result,'warning')
-    
-
+	    cprint(arg + '存在weblogic SSRF漏洞', 'orange')
+            output(arg,result,'warning')
         del curl
         return result
 
 
 def output(url,result,label):
-    info = url + '  weblogic  Vul '
+    info = url + ' has weblogic SSRF weblogic  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='weblogic Vul'

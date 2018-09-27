@@ -16,7 +16,7 @@ class Location(object):
         else:
             keyword=''
             try:
-                keyword = getgeoipinfo.getGeoipinfo(data)
+                keyword = getgeoipinfo.getGeoipinfo(ip)
             except:
                 pass
             redistool.set(ip, keyword)

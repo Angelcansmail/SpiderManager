@@ -14,7 +14,7 @@ import random
 import time
 import re
 from urlparse import urlparse
-
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -46,13 +46,14 @@ class P(T):
         check = "https://pysandbox.sinaapp.com/kv?act=get&k=javaunjbossa0b923820dcc509a".replace("a0b923820dcc509a",flag)
         code, head, body, errcode, final_url = curl.curl2(check)
         if 'javaun' in body and not 'None' in body:
-            output(arg + ' has java unserialize rce.',result,'hole')
+	    cprint(arg + '存在weblogic java unserialize rce漏洞', 'red')
+            output(arg, result, 'hole')
         del curl
         return result
 
 
 def output(url,result,label):
-    info = url + '  weblogic  Vul '
+    info = url + ' has java unserialize rce weblogic  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='weblogic Vul'

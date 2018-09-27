@@ -8,6 +8,8 @@ limitpage=15
 
 
 localconfig=config.Config()
+
+# taskroute中updatejob任务完成后调用
 def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='',page='0'):
     validresult=False
     request_params = []

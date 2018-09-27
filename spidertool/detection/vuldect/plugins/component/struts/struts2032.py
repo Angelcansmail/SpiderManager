@@ -4,6 +4,7 @@ from ..t  import T
 import random,urllib2
 import httplib
 import traceback
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -24,7 +25,7 @@ class P(T):
             else:
                 target_url = 'http://' + ip + ':' + port + '/login.action'
         result = {}
-        timeout=3
+        timeout=10
         result['result']=False
         res=None
         jsp_file = str(random.randint(1000, 1000000)) + '.jsp'
@@ -69,10 +70,11 @@ class P(T):
                 res.close()
                 del res
         if jsp_file in res_html:
-            info = target_url + "struts032  Vul"
+	    cprint(target_url + '存在structs2032漏洞', 'red')
+            info = target_url + "struts2032  Vul"
             result['result']=True
             result['VerifyInfo'] = {}
-            result['VerifyInfo']['type']='struts032 Vul'
+            result['VerifyInfo']['type']='struts2032 Vul'
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=poc_url
             result['VerifyInfo']['result'] =info

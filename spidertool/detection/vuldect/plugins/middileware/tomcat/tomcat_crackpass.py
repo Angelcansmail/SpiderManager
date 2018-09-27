@@ -3,6 +3,7 @@
 import urllib2
 import base64,re
 from ..t import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -57,6 +58,7 @@ class P(T):
                 info=''
                 for flag in flag_list:
                     if flag in res_html:
+		        cprint(login_url + ' tomcat weak password', 'red')
                         info = '%s Tomcat Weak password %s:%s'%(login_url,user,password)
 
                         result['result']=True

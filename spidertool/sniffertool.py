@@ -131,7 +131,7 @@ class SniffrtTool(object):
 
                         sqldatawprk.append(tempwprk)
                         self.sqlTool.add_work(sqldatawprk)
-			# 端口扫描
+			# 端口扫描(正常协议|非正常协议)
 			self.portscan.add_work([(tempportname,temphosts,tempport,tempportstate,tempproduct,tempscript)])
                 elif 'udp' in  tmp['scan'][host].keys():
                     ports = tmp['scan'][host]['udp'].keys()

@@ -214,7 +214,8 @@ class DBmanager:
 					col = None
 					if content is not None:
 						col = len(content)
-					print ("======================debug::searchtableinfo_byparams()======================\n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n"%(result,  content,  count,  col))
+					print ("======================debug::searchtableinfo_byparams()======================\n\nresults_count:%d\tresults_col:%d\n"%(count,  col))
+#					print ("======================debug::searchtableinfo_byparams()======================\n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n"%(result,  content,  count,  col))
 					return result, content, count, col
 				else:
 					print '没有相关信息'
@@ -419,12 +420,12 @@ def escapeword(word):
 	return msg
 
 def escapewordby(word):
-	if word is None:
-		return ''
-	else:
-		content = ''
-		content = str(MySQLdb.escape_string(str(decodestr(word))))
-		return content
+    if word is None:
+    	return ''
+    else:
+	content = ''
+    	content = str(MySQLdb.escape_string(str(decodestr(word))))
+    	return content
 
 def getproperty(dic, property):
 	return decodestring(str(dic.get(property, '')))

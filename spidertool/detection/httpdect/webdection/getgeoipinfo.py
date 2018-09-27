@@ -4,9 +4,10 @@ import urllib2
 import json
 
 def getGeoipinfo(data):
-    # 组成查询ip地理位置的网址；
-    url = 'http://ip-api.com/json/%s' % (data['ip'][0])
-    # 访问url地址, urlobject是<type 'instance'>对象；
+    # 组成查询ip地理位置的网址，返回字典格式在前端fontsearch/detailmapview.html展示
+    url = 'http://ip-api.com/json/%s' % (data)
+#    url = 'http://ip-api.com/json/%s' % (data['ip'][0])
+    # 访问url地址, urlobject是<type 'instance'>对象
     urlobject = urllib2.urlopen(url)
     urlcontent = urlobject.read()
 
@@ -36,5 +37,6 @@ def getGeoipinfo(data):
     isp = res['isp']
     organization = res['org']
     keywords = {'geoip':{'country':{'name':countryName,'code':countryCode},'city':{'name':cityname},'isp':{'organization':organization},'subdivisions':{'names':subdivisionnames},'location':{'longitude':Longitude,'latitude':Latitude}}}
-    keywords = json.dumps(keywords, sort_keys=True, indent=4, separators=(',', ': '))
+    # 直接返回的是字典，不用转为字符串，后续还要调用其中的字段
+#    keywords = json.dumps(keywords, sort_keys=True, indent=4, separators=(',', ': '))
     return keywords

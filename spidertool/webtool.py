@@ -8,10 +8,10 @@ import traceback
 
 # urllib2 默认情况下会针对 HTTP 3XX 返回码自动进行 redirect 动作，无需人工配置, 但不想自动redirect，可以自己定义
 class RedirectHandler(urllib2.HTTPRedirectHandler):
-	def http_error_301(self,req,fp,code,msg,headers):
-		print '301问题'
-	def http_error_302(self,req,fp,code,msg,headers):
-		print '302问题'
+    def http_error_301(self,req,fp,code,msg,headers):
+	print '301问题'
+    def http_error_302(self,req,fp,code,msg,headers):
+	print '302问题'
 
 def formatstring(str):
 	return '\''+str+'\''
@@ -52,11 +52,11 @@ def dict2object(d):
     return inst
 
 def getlocaltime():
-	return str(time.strftime("%Y-%m-%d %X", time.localtime()))
+    return str(time.strftime("%Y-%m-%d %X", time.localtime()))
 
 def getmicrosecondtime():
-	import datetime
-	return str(datetime.datetime.now())
+    import datetime
+    return str(datetime.datetime.now())
 
 def isip(ip):
  	if re.match('\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}', ip) != None:

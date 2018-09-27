@@ -45,6 +45,7 @@ class PocsearchTask(TaskTool):
         port='' if req[3] is None else req[3]
 	# Apache Tomcat/Coyote JSP engine
         productname='' if req[4] is None else req[4]
+	# getgeoipinfo获取到的位置信息
         keywords='' if req[5] is None else req[5]
 	# {'http-server-header': 'Apache-Coyote/1.1', 'http-title': '\\xE9\\xA6\\x96\\xE9\\xA1\\xB5--\\xE5\\x8F\\xA4\\xE9\\x9F\\xB5\\xE6\\xAD\\xA3\\xE5\\xA3\\xB0'}
         nmapscript='' if req[6] is None else req[6]

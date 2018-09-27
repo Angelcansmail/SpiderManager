@@ -227,13 +227,8 @@
 
 
     <div class="col-md-12 bio">
-
-
         <div id="pad-wrapper" class="users-list">
-
-
             <div class="row header">
-
                 <h3>任务明细</h3>
                 <div class="col-md-10 col-sm-12 col-xs-12 pull-right">
                     <input type="text" class="col-md-5 search" placeholder="输入端口...">
@@ -552,10 +547,8 @@
                 currpage = Number(nowpage) + 1;
                 var bodyhtml = "";
                 for (var i = 0; i < datalength; i++) {
-
                     var msgshow = '';
                     if (ports[i].detail == null || ports[i].detail == '') {
-
                         msgshow = '';
                     }
                     else {
@@ -566,7 +559,6 @@
                     }
                     var tempscript = '';
                     if (ports[i].script == null || ports[i].script == '') {
-
                         tempscript = '';
                     }
                     else {
@@ -611,9 +603,7 @@
                     if (currpage <= 1) {
                         pagehtml += "<li class=\"active\"><a onclick='loadtask(" + (currpage - 1).toString() + ");' href='javascript:void(0);'>1</a></li>";
 
-
                     } else {
-
                         pagehtml += "<li ><a onclick='loadtask(" + (currpage - 2).toString() + ");' href='javascript:void(0);'>&#8249;</a></li>";
                         pagehtml += "<li ><a onclick='loadtask(" + (currpage - 2).toString() + ");' href='javascript:void(0);'>" + (currpage - 1).toString() + "</a></li>";
                         pagehtml += "<li class=\"active\"><a onclick='loadtask(" + (currpage - 1).toString() + ");' href='javascript:void(0);'>" + currpage.toString() + "</a></li>";
@@ -653,15 +643,11 @@
             xmlhttp.send(str);
         }
         function portcallback() {
-
             if (xmlhttp.readyState != 4) {
-
 
             }
             else {
-
                 if (xmlhttp.status == 200) {
-
                     var a = xmlhttp.responseText;
                     ipshow(a);
                 }

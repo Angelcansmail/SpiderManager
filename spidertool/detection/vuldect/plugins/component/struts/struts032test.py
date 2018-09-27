@@ -2,6 +2,7 @@
 # encoding: utf-8
 from ..t import T
 import requests
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
@@ -39,6 +40,7 @@ class P(T):
                 res.close()
                 del res
         if res_html.find("88888887") <> -1:
+	    cprint(target_url + '存在structs016漏洞', 'red')
             info = target_url + "struts016  Vul"
             result['result']=True
             result['VerifyInfo'] = {}

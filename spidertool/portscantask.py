@@ -44,7 +44,7 @@ class PortscanTask(TaskTool):
         keywords = ''
         webkey = ''
         webtitle = ''
-        self.logger.info('端口%s扫描%s执行任务中%s', port, threadname, str(datetime.datetime.now()))
+        self.logger.info('端口[%s]扫描%s执行任务中%s', port, threadname, str(datetime.datetime.now()))
         # 7001端口是Freak88, Weblogic默认端口
         if (req[0] == 'http' or req[0] == 'https') or (req[0] in ['tcpwrapped','None'] and port in ['80','8080','7001']):
             if ip[0:4]=='http':
@@ -89,6 +89,8 @@ class PortscanTask(TaskTool):
         insertdata=[]
         temp = str(page)
 
+    	# 通过转义存入数据库，不然一些\'和sql语句冲突，无法存入！str(word).replace("'", "&apos;")
+	# str(MySQLdb.escape_string(str(decodestr(word))))
         head = SQLTool.escapewordby('{'+head+'}')
         msg = SQLTool.escapewordby('{'+temp+'}')
         hackinfomsg = SQLTool.escapewordby(hackinfo)
@@ -105,7 +107,7 @@ class PortscanTask(TaskTool):
 #         inserttableinfo_byparams(table=self.config.porttable,select_params=['ip','port','timesearch','detail'],insert_values=insertdata,extra=extra)
 
 #         self.sqlTool.closedb()
-        self.logger.info('%s 端口扫描　任务结束%s', threadname,str(datetime.datetime.now()))
+        self.logger.info('%s 端口[%s]扫描任务结束%s', port, threadname,str(datetime.datetime.now()))
         return page
 
 if __name__ == "__main__":
