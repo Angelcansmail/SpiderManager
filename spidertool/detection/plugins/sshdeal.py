@@ -8,7 +8,7 @@ def ssh2(ip='',port='22',name='',productname=''):
     head=''
     ans=None
     keywords=''
-    hackinfo=''
+    hackresults=''
 
     ssh=None
     userlist=['root','admin','hadoop']
@@ -26,24 +26,24 @@ def ssh2(ip='',port='22',name='',productname=''):
 		# 连接服务器
                 ssh.connect(ip,int(port),username,i,timeout=10)
 
-                hackinfo= ' ssh the password is :'+username+':'+i
-                print ip+hackinfo
+                hackresults= str({'level':'warning','result':'ssh the password is '+username+':'+i})
+                print ip+hackresults
                 keywords='ssh'
                 break
             except Exception,e:
                 keywords='ssh'
-                hackinfo=str(e)
+                hackresults=str(e)
                 print "Exception:", e[0]
                 if e[0] is None:
                     msg=None
                     break
                 if e[0]==111:
-                    hackinfo=str(e)
+                    hackresults=str(e)
                     keywords='ssh'
                     print ip+'  key is not '+i
                     continue
                 if e[0]==113:
-                    hackinfo=str(e)
+                    hackresults=str(e)
                     keywords=' '
                     break
                 if e[0] in 'Authentication failed.':
@@ -55,9 +55,9 @@ def ssh2(ip='',port='22',name='',productname=''):
                 if ssh !=None:
                     ssh.close()
             continue
-        if 'password' in hackinfo or msg is None:
+        if 'password' in hackresults or msg is None:
             break
-    return head,ans,keywords,hackinfo
+    return head,ans,keywords,hackresults
 
 if __name__ == "__main__":
     temp=ssh2('219.232.193.125')

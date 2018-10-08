@@ -41,7 +41,7 @@ class P(T):
                 del req
             return content
     
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 
         result = {}
         content_2 = self.CVE20151427(ip,port)
@@ -59,7 +59,4 @@ class P(T):
 
         return result
 if __name__ == '__main__':
-        
     print P().verify(ip='42.120.7.130',port='9200')       
-        
-        

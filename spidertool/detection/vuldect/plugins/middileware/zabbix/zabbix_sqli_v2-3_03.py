@@ -10,7 +10,7 @@ class P(T):
         self.version='2.2.x,3.0.0-3.0.3'
         self.type = 'sqli'
 
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         timeout=3
         target_url = 'http://'+ip+':'+port
         result = {}

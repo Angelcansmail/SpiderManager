@@ -1,5 +1,5 @@
 KEYWORDS = ['cacti', ]
-def rules(head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+def rules(head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
     
     
     if 'Cacti' in context :

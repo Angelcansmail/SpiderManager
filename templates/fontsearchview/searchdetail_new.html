@@ -327,7 +327,7 @@
                     "<p class=\"package-description\">概要信息：</p>";
 
                 if (data2.username == 'admin') {
-                    bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == null && ports[i].hackinfo == null && ports[i].disclosure == null ? '无' : encodeHtml(cutitem(utf8to16(decode64(ports[i].script))) + '\nhackinfo:\n ' + cutitem(ports[i].hackinfo) + ' \n disclosed:\n ' + cutitem(ports[i].disclosure)).toString()) + "</pre></div>" +
+                    bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == null && ports[i].hackresults == null && ports[i].disclosure == null ? '无' : encodeHtml(cutitem(utf8to16(decode64(ports[i].script))) + '\nhackresults:\n ' + cutitem(ports[i].hackresults) + ' \n disclosed:\n ' + cutitem(ports[i].disclosure)).toString()) + "</pre></div>" +
                             // "<div class=\"col-md-9 \">" +
                             "<p class=\"package-description\">详细信息：</p>";
                 }

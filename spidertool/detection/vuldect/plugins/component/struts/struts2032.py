@@ -11,7 +11,7 @@ class P(T):
         T.__init__(self)
         keywords=['struts']
 
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = ''
         target_url = 'http://' + ip + ':' + port
 

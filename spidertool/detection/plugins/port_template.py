@@ -9,7 +9,7 @@ def mysql(ip='',port='3306',name='',productname=''):
     head=''
     ans=None
     keywords=''
-    hackinfo=''
+    hackresults=''
     # apt-get install python-mysqldb
     import MySQLdb
     con=None
@@ -17,8 +17,8 @@ def mysql(ip='',port='3306',name='',productname=''):
     for i in passwd:
         try:
             con= MySQLdb.connect(host=ip,port=int(port),user='root',passwd=i)
-            hackinfo= ' the password is :'+i
-            print ip+hackinfo
+            hackresults = str({'level':'warning', 'result':'the password is root:'+i})
+            print ip+hackresults
             keywords='mysql'
             break;
         except Exception,e:
@@ -32,24 +32,24 @@ def mysql(ip='',port='3306',name='',productname=''):
                 continue
             else:
                 keywords='mysql'
-                hackinfo=str(e)
+                hackresults=str(e)
                 print e,e[0]
                 break;
 
         finally:
             if con !=None:
                 con.close()
-    return head,ans,keywords,hackinfo
+    return head,ans,keywords,hackresults
     
 
 def empty(ip='',port='',name='',productname=''):
     head=None
     ans=None
     keywords=None
-    hackinfo=None
+    hackresults=None
     print 'this is empty func'
     
-    return head,ans,keywords,hackinfo
+    return head,ans,keywords,hackresults
  
 
 

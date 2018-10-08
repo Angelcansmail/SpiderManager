@@ -105,10 +105,10 @@ def detailpage(request):
                     response_data['portspage'] = page
             except Exception,e:
                 # 连接失败/
-                print "search Error! in 模糊检索", traceback.print_exc()
+                print "Search Error! in 模糊检索", traceback.print_exc()
                 try:
                     # 模糊检索 match against
-                    extra = ' where match(version,product,head,detail,script,hackinfo,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '
+                    extra = ' where match(version,product,head,detail,script,hackinfo,hackresults,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '
                     ports, portcount, portpagecount = portcontrol.portabstractshow(page=page,extra=extra,command='or')
                     # ports, portcount, portpagecount = getattr(portcontrol, 'portabstractshow', 'portabstractshow')(**jsoncontent)
                     response_data['ports'] = ports
@@ -129,7 +129,7 @@ def detailpage(request):
                 del jsoncontent['use']
             jsoncontent['page']=page
             if 'all' in action:
-                extra = ' where match(version,product,head,detail,script,hackinfo,disclosure,keywords) against(\''+jsoncontent['all']+'\' in Boolean mode)  '
+                extra = ' where match(version,product,head,detail,script,hackinfo,hackresults,disclosure,keywords) against(\''+jsoncontent['all']+'\' in Boolean mode)  '
                 ports,portcount,portpagecount = portcontrol.portabstractshow(page=page,extra=extra,command='or')
             else:
                 ports, portcount, portpagecount = getattr(portcontrol, 'portabstractshow','portabstractshow')(**jsoncontent)

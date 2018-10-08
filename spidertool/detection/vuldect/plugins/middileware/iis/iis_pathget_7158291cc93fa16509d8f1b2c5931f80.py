@@ -16,7 +16,7 @@ from ..t  import T
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -37,7 +37,7 @@ def output(url,result,label):
     info = url + '  iis  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
-    result['VerifyInfo']['type']='path get Vul'
+    result['VerifyInfo']['type']='iis path get Vul'
     result['VerifyInfo']['URL'] =url
     result['VerifyInfo']['payload']='/root/github/poccreate/middle/iis/iis_7158291cc93fa16509d8f1b2c5931f80.py'
     result['VerifyInfo']['level']=label

@@ -8,7 +8,7 @@ import urlparse
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -65,17 +65,15 @@ class P(T):
                 output(url,result,'hole')
                 break
     
-    
-
         del curl
         return result
 
 
 def output(url,result,label):
-    info = url + '  iis  Vul '
+    info = url + ' iis  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
-    result['VerifyInfo']['type']='db Vul'
+    result['VerifyInfo']['type']='iis db Vul'
     result['VerifyInfo']['URL'] =url
     result['VerifyInfo']['payload']='/root/github/poccreate/middle/iis/iis_9302267e7026e957e78f0860b94f3fc9.py'
     result['VerifyInfo']['level']=label

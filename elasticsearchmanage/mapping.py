@@ -23,7 +23,7 @@ class snifferdata(DocType):
     detail = Text(analyzer='ik')
     id=Text()
     head = Text(analyzer='ik')
-    hackinfo = Text(analyzer='ik')
+    hackresults = Text(analyzer='ik')
     keywords = Text(analyzer='ik')
     disclosure = Text(analyzer='ik')
     webtitle  = Text(analyzer='ik')

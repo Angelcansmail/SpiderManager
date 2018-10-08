@@ -1,13 +1,16 @@
+#!/usr/bin/env python
+# encoding: utf-8
+# Can import any built-in Python Library
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# Can import any built-in Python Library
+
 import urlparse
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/inc/conn_db.inc'
         curl=Curl()
         result = {}
@@ -15,7 +18,8 @@ class P(T):
 
         code, head, res, errcode, final_url = curl.curl(arg)
         if code == 200 and 'db_id' in res and  'db_name' in res and 'db_pass' in res:
-             output(arg,result,'warning')
+	    cprint(arg + '存在db information Vul漏洞', 'yellow')
+            output(arg,result,'warning')
     
     
 

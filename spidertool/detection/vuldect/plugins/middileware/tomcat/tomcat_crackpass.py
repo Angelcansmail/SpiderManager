@@ -8,7 +8,7 @@ from termcolor import cprint
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         timeout=10
         target_url = 'http://'+ip+':'+port
         result = {}

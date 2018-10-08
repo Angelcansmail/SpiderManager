@@ -35,7 +35,7 @@ class P(T):
     def __init__(self):
         T.__init__(self)
 
-    def verify(self,head='',context='',ip='',port='',productname='',keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname='',keywords='',hackresults=''):
         timeout=3
 
         result = {}
@@ -61,11 +61,11 @@ class P(T):
             for user in userlist:
                 for pwd in passlist:
                     print 'ftp尝试'+user+':'+pwd
-                    result,hackinfo=ftp_crack(ip, user, pwd,port)
+                    result,hackresults=ftp_crack(ip, user, pwd,port)
                     if result:
-                        return head,ans,keywords,hackinfo
+                        return head,ans,keywords,hackresults
 	    return result
-#            return head,ans,keywords,hackinfo
+#            return head,ans,keywords,hackresults
 
 if __name__ == '__main__':
     print P().verify(ip='218.246.86.195', port='21')

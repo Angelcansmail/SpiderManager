@@ -1,5 +1,3 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 #__Author__ = 01001000entai
@@ -7,12 +5,14 @@ from ..t  import T
 #__Refer___ = https://www.exploit-db.com/exploits/37620/
 
 import re
-
+from ..miniCurl import Curl
+from ..t  import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -24,9 +24,8 @@ class P(T):
         if code == 200:
         	res = re.findall('<b>([^<]+)</b> on line <b>', body)
         	if (len(res) > 0):
-        		output(res[0],result,'warning')
-    
-
+		    cprint(res[0] + '存在joomla Vul漏洞', 'yellow')
+		    output(res[0],result,'warning')
         del curl
         return result
 

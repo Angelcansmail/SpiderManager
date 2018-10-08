@@ -15,13 +15,13 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
     head=None
     ans=None
     keywords=name
-    hackinfo=''
+    hackresults=''
     # mysql/rsync/ssh2/ftpdeal 有内容
     # port:3306:mysql 873:rsync 22:ssh2 21:ftpdeal有内容
     port_function = getFunc(name,port,productname)
     if port_function != None:
-    	# head=''/ans=None/keywords=func's name/hackinfo='xx password' or 'Exception info'
-        head, ans, keywords, hackinfo = port_function(ip=ip,port=port,name=name,productname=productname)
+    	# head=''/ans=None/keywords=func's name/hackresults='xx password' or 'Exception info'
+        head, ans, keywords, hackresults = port_function(ip=ip,port=port,name=name,productname=productname)
     else:
         temp = pocsearchtask.getObject()
         temp.add_work([(head, context, ip, port, productname, keywords, nmapscript, name)])
@@ -39,7 +39,7 @@ def port_deal(ip='',port='',name='',productname='',head=None,context=None,nmapsc
         redistool.set(ip, keyword)
         print '从redids写入位置信息'
     keyword['keywords'] = keywords
-    return head, ans, keyword, hackinfo
+    return head, ans, keyword, hackresults
 
 
 def getFunc(name,port,productname):

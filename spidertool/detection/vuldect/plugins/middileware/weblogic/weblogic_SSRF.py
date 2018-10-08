@@ -8,7 +8,7 @@ from termcolor import cprint
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -18,7 +18,7 @@ class P(T):
         code, head, res, errcode, _ = curl.curl2(url)
         # print res
         if code == 200 and 'weblogic.uddi.client.structures.exception.XML_SoapException: no protocol: operator=10.301.0.0:80' in res:
-	    cprint(arg + '存在weblogic SSRF漏洞', 'orange')
+	    cprint(arg + '存在weblogic SSRF漏洞', 'yellow')
             output(arg,result,'warning')
         del curl
         return result

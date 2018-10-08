@@ -23,7 +23,7 @@ class P(T):
     def __init__(self):
 	T.__init__(self)
 
-    def verify(self, head='', context='', ip='', port='80', productname={}, keywords='', hackinfo=''):
+    def verify(self, head='', context='', ip='', port='80', productname={}, keywords='', hackresults=''):
 	result = {}
 	result['result'] = False
 

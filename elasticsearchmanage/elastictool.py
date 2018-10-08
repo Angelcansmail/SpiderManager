@@ -85,7 +85,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         # 表对象
         logger.info('elastictool::inserttableinfo_byparams::get_table_obj->%s', table)
         instanceins = get_table_obj(table)
-        logger.info('get each insert: %s', eachitem)
+#        logger.info('get each insert: %s', eachitem)
         # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
         if extra or updatevalue:
             logger.info('更新数据')
@@ -100,7 +100,8 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
             instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
 
         for i in xrange(0,len(select_params)):
-            logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
+            logger.info('更新数据%s',select_params[i])
+#            logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
             setvalue(instanceitem, select_params[i], decodestr(str(eachitem[i])))
         try:
             res = instanceitem.save()
@@ -119,10 +120,10 @@ def search(page='0',dic=None, content=None):
     validresult=False
     orderlabel=0
     orderarray = []
-    print ("======================elastictool::search() dic:%s, content:%s======================"%(str(dict), str(content)))
+    print ("======================elastictool::search content:%s======================"%(str(content)))
     if content is not None:
         q = Q("multi_match", query=content, fields=['ip', 'name','product',
-                'script' ,'detail' ,'head'  ,'hackinfo','keywords' ,'disclosure'])
+                'script' ,'detail' ,'head', 'hackinfo', 'hackresults','keywords' ,'disclosure'])
     # 何时会执行？进入search前已经判断content是否为空了
     else:
         searcharray=[]
@@ -150,6 +151,8 @@ def search(page='0',dic=None, content=None):
                 searcharray.append(Q('match', script=dic[key]))               
             if key=='hackinfo':
                 searcharray.append(Q('match', hackinfo=dic[key]))
+            if key=='hackresults':
+                searcharray.append(Q('match', hackresults=dic[key]))
             if key=='head':
                 searcharray.append(Q('match', head=dic[key]))                
             if key=='detail':
@@ -163,7 +166,7 @@ def search(page='0',dic=None, content=None):
             if key=='order':
                 orderarray.append(dic[key])
                 orderlabel=1
-        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'mysql')
+        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'hackresults', 'keywords', 'disclosure'], query=u'mysql')
         q = Q('bool', must=searcharray)
     print ("======================elasticsearch Q:\n%s\n"%q)
     # elasticsearch检索数据库信息
@@ -211,7 +214,7 @@ def search(page='0',dic=None, content=None):
                 dic=temp.to_dict()
                 # 只获取snifferdata中的数据，没有位置信息，这里将city赋为空作用和在，后面用了city判断，直接用
                 print ("elastictool::search() index:count[%s]'s dic keys:%s"%(str(count), str(dic.keys())))
-                aport = ports.Port(ip=getproperty(dic,'ip'),port=getproperty(dic,'port'),timesearch=getproperty(dic,'timesearch'),state=getproperty(dic,'state'),name=getproperty(dic,'name'),product=getproperty(dic,'product'),version=getproperty(dic,'version'),script=base64.b64encode(str(getproperty(dic,'script'))),detail=getproperty(dic,'detail'),head=getproperty(dic,'head'),city='',hackinfo=getproperty(dic,'hackinfo'),disclosure=getproperty(dic,'disclosure'),keywords=getproperty(dic,'keywords'),webtitle=base64.b64encode(str(getproperty(dic,'webtitle'))),webkeywords=getproperty(dic,'webkeywords'))
+                aport = ports.Port(ip=getproperty(dic,'ip'),port=getproperty(dic,'port'),timesearch=getproperty(dic,'timesearch'),state=getproperty(dic,'state'),name=getproperty(dic,'name'),product=getproperty(dic,'product'),version=getproperty(dic,'version'),script=base64.b64encode(str(getproperty(dic,'script'))),detail=getproperty(dic,'detail'),head=getproperty(dic,'head'),city='',hackinfo=getproperty(dic,'hackinfo'),hackresults=getproperty(dic,'hackresults'),disclosure=getproperty(dic,'disclosure'),keywords=getproperty(dic,'keywords'),webtitle=base64.b64encode(str(getproperty(dic,'webtitle'))),webkeywords=getproperty(dic,'webkeywords'))
                 # ip=getproperty(dic,'ip')
                 # port=getproperty(dic,'port')
                 # timesearch=getproperty(dic,'timesearch')
@@ -223,7 +226,7 @@ def search(page='0',dic=None, content=None):
                 # detail=getproperty(dic,'detail')
                 # head=getproperty(dic,'head')
                 # city=''
-                # hackinfo=getproperty(dic,'hackinfo')
+                # hackresults=getproperty(dic,'hackresults')
                 # disclosure=getproperty(dic,'disclosure')
                 portarray.append(aport)
         return portarray, count, pagecount

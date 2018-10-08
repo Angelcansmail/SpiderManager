@@ -154,7 +154,10 @@ class InfoDisScanner(InfoDisScannerBase):
                         # print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
                         if results.get(prefix,None) is None:
                             results[prefix] = []
-                        results[prefix].append({'status':c_status, 'url': '%s' % (url)} )
+			add_disclosure = {'status':c_status, 'url': '%s' % (url)}
+			if add_disclosure in results[prefix]:
+			    continue
+                        results[prefix].append(add_disclosure)
                         self._update_severity(severity)
 
                 if len(results) >= 30:
@@ -193,7 +196,7 @@ class InfoDisScanner(InfoDisScannerBase):
             self._enqueue(url, tempqueue)
             dataresult = self._scan_worker(url_queue=tempqueue,protocal=protocal,_status=status,has_404=has404,ip=ip,port=port)
             if dataresult is not None:
-                callbackfuzz.storedata(ip=ip, port=port, hackinfo=dataresult)
+                callbackfuzz.storedata(ip=ip, port=port, hackresults=dataresult)
                 pass
         else:
             pass

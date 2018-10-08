@@ -12,7 +12,7 @@ class P(T):
         T.__init__(self)
 
     # extends?
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 	print "rsync.py\'s verify"
         result = {}
         result['result']=False

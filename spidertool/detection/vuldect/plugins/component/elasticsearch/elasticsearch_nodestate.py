@@ -6,7 +6,7 @@ import requests,urllib2,json,urlparse
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = "http://"+ip+":"+port+"/_nodes/stats"
         result = {}
         result['result']=False
@@ -16,7 +16,7 @@ class P(T):
             if r.status_code==200:
                 result['result']=True
                 result['VerifyInfo'] = {}
-                result['VerifyInfo']['type']='information unclosed'
+                result['VerifyInfo']['type']='Information Unclosed'
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']='IP:port/_nodes/stats'
                 result['VerifyInfo']['result'] =r.text
