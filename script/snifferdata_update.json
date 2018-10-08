@@ -7,7 +7,7 @@
         "statefile" : "snifferdata_statefile.json",
         "schedule" : "0 0/15 0-23 ? * *",
         "sql" : [{
-        	"statement": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackinfo,\")\") as hackinfo,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch > ?",
+        	"statement": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackresults,\")\") as hackresults,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch > ?",
                 "parameter" : [ "$metrics.lastexecutionstart" ]
 	}],
         "index" : "datap",

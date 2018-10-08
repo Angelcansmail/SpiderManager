@@ -7,7 +7,7 @@ import urllib2,requests,urllib2,json,urlparse
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         timeout=3
         target_url = 'http://'+ip+':'+port
         payload=target_url+'/axis2/services/listServices'

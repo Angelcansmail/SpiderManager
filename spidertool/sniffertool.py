@@ -54,7 +54,7 @@ class SniffrtTool(object):
             callback = self.callback_result
         orders = ''
         if port != '':
-	    # 为什么要加，直接使用port不一样吗，都是一个port, 多个端口也应该逗号分割啊
+	    # 为什么要加，直接使用port不一样吗，在网页输入的时候是逗号分割的port
             orders += port
         else :
             orders = None

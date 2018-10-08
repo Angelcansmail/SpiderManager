@@ -295,14 +295,14 @@ CREATE TABLE `snifferdata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `head` text,
   `portnumber` varchar(8) DEFAULT NULL,
-  `hackinfo` text,
+  `hackresults` text,
   `keywords` text,
   `disclosure` text,
   `webkeywords` text,
   `webtitle` text,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index2` (`ip`,`port`),
-  FULLTEXT  `cnFullIndex` (`version`,`product`,`head`,`detail`,`script`,`hackinfo`,`disclosure`,`keywords`,`name`,`webkeywords`,`webtitle`)
+  FULLTEXT  `cnFullIndex` (`version`,`product`,`head`,`detail`,`script`,`hackresults`,`disclosure`,`keywords`,`name`,`webkeywords`,`webtitle`)
 ) ENGINE=MyISAM AUTO_INCREMENT=12889846 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -390,7 +390,7 @@ CREATE TABLE `testdata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `head` text,
   `portnumber` varchar(8) DEFAULT NULL,
-  `hackinfo` text,
+  `hackresults` text,
   `keywords` text,
   `disclosure` text,
   `label` text,
@@ -426,7 +426,7 @@ CREATE TABLE `traindata` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `head` text,
   `portnumber` varchar(8) DEFAULT NULL,
-  `hackinfo` text,
+  `hackresults` text,
   `keywords` text,
   `disclosure` text,
   `label` text,

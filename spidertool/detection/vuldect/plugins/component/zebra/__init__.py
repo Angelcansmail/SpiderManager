@@ -1,5 +1,5 @@
 KEYWORDS = ['zebra', ]
-def rules(head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+def rules(head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 
 
     if 'zebra' in port :

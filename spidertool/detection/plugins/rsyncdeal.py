@@ -11,24 +11,24 @@ def rsync(ip='',port='',name='',productname=''):
     head=''
     ans=None
     keywords=''
-    hackinfo=''
+    hackresults=''
     
     p=None
 #     import subprocess    
 #     p = subprocess.Popen("rsync "+ip+"::", shell=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)    
 #     lines=p.stdout.readlines()
-#     hackinfo="".join(lines)   
+#     hackresults="".join(lines)   
     usecommand="rsync "+ip+"::"
     result=''
     try:  
         result = commandtool.command(usecommand,timeout=10)
         result = result+commandtool.command(usecommand+result.split()[0],timeout=10)
     except commandtool.TimeoutError,e:  
-        hackinfo=str(e) 
+        hackresults=str(e) 
     else:  
-        hackinfo='command:'+usecommand+'\nresult:'+result 
+        hackresults=str({'level':'warning', 'result':'command:'+usecommand+'\nresult:'+result})
         keywords='rsync'
-    return head,ans,keywords,hackinfo
+    return head,ans,keywords,hackresults
 
 # print rsync(ip='119.147.47.158')
 # rsync(ip='202.100.78.10')121.40.217.83

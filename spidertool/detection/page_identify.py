@@ -6,7 +6,7 @@ import gc,objgraph
 
 def identify_main(head='',context='',ip='',port='',productname='',protocol='',nmapscript=''):
     keywords=''
-    hackinfo=''
+    hackresults=''
 #     print '运行前状态'
 #     gc.collect()
 #     objgraph.show_growth()
@@ -15,8 +15,8 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
         # from httpdect import headdect	#webdetection缺失
         from fluzzdetect import fuzztask    # 只给了这部分代码, 检测拼接的子url和父url
         from vuldect import pocsearchtask
-        # 通过webdetection获取webinfo，hackinfo为空
-        # keywords, hackinfo = headdect.dect(head=head, context=context, ip=ip, port=port, protocol=protocol)
+        # 通过webdetection获取webinfo，hackresults为空
+        # keywords, hackresults = headdect.dect(head=head, context=context, ip=ip, port=port, protocol=protocol)
         print "\n\ndetection::page_identify::identify_main() fuzztask begin detect...."
         fuz = fuzztask.getObject()
         fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
@@ -33,7 +33,7 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
     objgraph.show_growth()
     print '检测运行后状态'
 
-    return keywords, hackinfo
+    return keywords, hackresults
 
 # from fluzzdetect import fuzztask
 

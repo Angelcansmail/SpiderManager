@@ -22,7 +22,7 @@ def ipsearch(page='0',dic=None,content=None):
     orderarray = []
     print ("======================ipestool::ipsearch() dic:%s, content:%s======================"%(dict, content))
     if content is not None:
-        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'keywords', 'disclosure'], query=u'database')
+        # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackresults', 'keywords', 'disclosure'], query=u'database')
         q = Q("multi_match", query=content, fields=['ip', 'city','vendor',
                 'isp' ,'region' ,'area', 'country'  ,'updatetime','county' ,'osfamily'  ])
     # GET方式访问/ipsearch传入dict(貌似只有一个ip)

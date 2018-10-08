@@ -26,19 +26,19 @@ def ftp_crack(host, user, pwd, port='21'):
         ftp.retrlines('LIST')
         ftp.quit()
         print '\n[+] 破解成功，用户名：' + user + ' 密码：' + pwd
-        return True,'ftp password is '+user+':'+pwd
+        return True,str({'level':'warning', 'reslut':'ftp password is '+user+':'+pwd})
     except ftplib.all_errors:
         return False,''
 
 def ftpdeal(ip='',port='21',name='',productname=''):
     ans=None
     head=''
-    hackinfo=''
+    hackresults=''
     keywords='ftp'
 
     if ftp_anon(ip,port):
-        hackinfo='allow annoymous ftp'
-        return head,ans,'ftp',hackinfo
+        hackresults=str({'level':'warning','result':'allow annoymous ftp'})
+        return head,ans,'ftp',hackresults
     else:
 #         userlist=['root','123456','admin','12345','111111','password','123123','1234','12345678','123456789','sa','test','Administrator','ftp']
 # 
@@ -51,7 +51,7 @@ def ftpdeal(ip='',port='21',name='',productname=''):
         for user in userlist:
             for pwd in passlist:
                 print 'ftp尝试'+user+':'+pwd
-                result, hackinfo = ftp_crack(ip, user, pwd,port)
+                result, hackresults = ftp_crack(ip, user, pwd,port)
                 if result:
-                    return head,ans,keywords,hackinfo
-        return head,ans,keywords,hackinfo
+                    return head,ans,keywords,hackresults
+        return head,ans,keywords,hackresults

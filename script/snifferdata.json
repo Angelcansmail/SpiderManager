@@ -4,7 +4,7 @@
         "url" : "jdbc:mysql://localhost:3306/datap?useSSL=true",
         "user" : "root",
         "password" : "gzh123",
-        "sql": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackinfo,\")\") as hackinfo,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch>\"2018-08-20 00:00:00\"",
+        "sql": "select CONCAT(ip,\":\",port) as _id,ip as ip,port as port,timesearch as timesearch,state as state,name as name,product as product,version as version,CONCAT(\"(\",script,\")\") as script, CONCAT(\"(\",detail,\")\") as detail,id as id, CONCAT(\"(\",head,\")\") as head,CONCAT(\"(\",hackresults,\")\") as hackresults,CONCAT(\"(\",keywords,\")\") as keywords,  CONCAT(\"(\",disclosure,\")\") as disclosure,  CONCAT(\"(\",webtitle,\")\") as webtitle,  CONCAT(\"(\",webkeywords,\")\") as webkeywords from snifferdata where timesearch>\"2018-08-20 00:00:00\"",
         "index" : "datap",
         "type" : "snifferdata",
         "metrics": {

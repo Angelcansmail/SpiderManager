@@ -1,4 +1,5 @@
 #!/usr/bin/python
+# encoding: utf-8
 
 # Hut3 Cardiac Arrest - A script to check OpenSSL servers for the Heartbleed bug (CVE-2014-0160).
 #

@@ -21,7 +21,7 @@ class Portscantool:
     # portscantask.py中，非正常协议
     def do_scan(self,head=None,context=None,ip=None,port=None,name=None,productname=None,nmapscript=None):
         keywords = {}
-        hackinfo = ''
+        hackresults = ''
         ans = None
         reply=''
         self.socketclient = None
@@ -29,7 +29,7 @@ class Portscantool:
             from detection import port_identify
             # port_identify中的函数需要自己补充
             print ("\nportscaltool::do_scan(%s:%s)\n"%(ip, port))
-            head,ans,keywords,hackinfo = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
+            head,ans,keywords,hackresults = port_identify.port_deal(ip=ip,port=port,name=name,productname=productname,head=head,context=context,nmapscript=nmapscript)
 	    # 目前都是None
             if ans == None:
                 self.socketclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -45,13 +45,13 @@ class Portscantool:
                     self.socketclient.connect((ip,int(port)))
                 reply = self.socketclient.recv(4096)
 
-                return 'reply info:  ',reply,keywords,hackinfo
+                return 'reply info:  ',reply,keywords,hackresults,hackresults
             else:
-                return 'reply info:  ',ans,keywords,hackinfo
+                return 'reply info:  ',ans,keywords,hackresults,hackresults
 	except Exception, msg:
             print 'Failed to create socket. Error code: ' + str(msg) + ' Error info: ' + str(traceback.print_exc())
-#            return msg, 'SOCKET Error!',keywords,hackinfo
-	    return 'error info:','error',keywords,hackinfo
+            return str(msg), 'SOCKET Error!',keywords,hackresults,hackresults
+#	    return 'error info:','error',keywords,hackresults
         finally:
             if self.socketclient is not None:
                 self.socketclient.close()

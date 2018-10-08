@@ -40,7 +40,8 @@ class PortscanTask(TaskTool):
         nmapscript = req[5]
         head = None
         page = None
-        hackinfo = ''
+	hackinfo = ''
+        hackresults = ''
         keywords = ''
         webkey = ''
         webtitle = ''
@@ -68,15 +69,15 @@ class PortscanTask(TaskTool):
             
             try:
                 # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
-                # httpdect(headdect) 可以获得keywords和hackinfo信息, 后续要探究下这部分怎么解析, 所以目前返回的结果为空
+                # httpdect(headdect) 可以获得keywords和hackresults信息, 后续要探究下这部分怎么解析, 所以目前返回的结果为空
                 # pocsearch 后续也要加入
                 from detection import page_identify
-                keywords, hackinfo = page_identify.identify_main(head=head,context=page,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
+                keywords, hackresults = page_identify.identify_main(head=head,context=page,ip=ip,port=port,productname=productname,protocol=req[0],nmapscript=nmapscript)
             except:
                 pass
         else:
 	    # mysql/ftp/rsync/ssh四个检测，暴力破解尝试登录；head和page无返回，为空
-            head, page, keywords, hackinfo = self.portscan.do_scan(head=head,context=page,ip=ip,port=port,name=req[0],productname=productname,nmapscript=nmapscript)
+            head, page, keywords, hackinfo, hackresults = self.portscan.do_scan(head=head,context=page,ip=ip,port=port,name=req[0],productname=productname,nmapscript=nmapscript)
             import webutil
             webinfo = webutil.getwebinfo(page)
             webkey = webinfo['keywords']
@@ -94,13 +95,14 @@ class PortscanTask(TaskTool):
         head = SQLTool.escapewordby('{'+head+'}')
         msg = SQLTool.escapewordby('{'+temp+'}')
         hackinfomsg = SQLTool.escapewordby(hackinfo)
+        hackresultsmsg = SQLTool.escapewordby(hackresults)
         keywords = SQLTool.escapewordby(str(keywords))
         import Sqldata
-        insertdata.append((ip,port,localtime,msg,str(head),str(port),hackinfomsg,keywords,webkey,webtitle))
-                                         
-        extra = ' on duplicate key update  detail=\''+msg+'\' ,head=\''+str(head)+'\', timesearch=\''+localtime+'\',hackinfo=\''+hackinfomsg+'\',keywords=\''+str(keywords)+'\',webkeywords=\''+webkey+'\',webtitle=\''+webtitle+'\''
+        insertdata.append((ip,port,localtime,msg,str(head),str(port),hackinfomsg,hackresultsmsg,keywords,webkey,webtitle))
+
+        extra = ' on duplicate key update  detail=\''+msg+'\' ,head=\''+str(head)+'\', timesearch=\''+localtime+'\', hackinfo=\''+hackinfomsg+'\',hackresults=\''+hackresultsmsg+'\',keywords=\''+str(keywords)+'\',webkeywords=\''+webkey+'\',webtitle=\''+webtitle+'\''
         sqldatawprk = []
-        dic = {"table":self.config.porttable,"select_params":['ip','port','timesearch','detail','head','portnumber','hackinfo','keywords','webkeywords','webtitle'],"insert_values":insertdata,"extra":extra}
+        dic = {"table":self.config.porttable,"select_params":['ip','port','timesearch','detail','head','portnumber','hackinfo','hackresults','keywords','webkeywords','webtitle'],"insert_values":insertdata,"extra":extra}
         tempwprk = Sqldata.SqlData('inserttableinfo_byparams',dic)
         sqldatawprk.append(tempwprk)
         self.sqlTool.add_work(sqldatawprk)

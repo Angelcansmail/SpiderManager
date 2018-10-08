@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 import taskscontrol, jobcontrol
 import objgraph
-operator = {'6':'3306','1':'80','2':'8080','3':'443','4':'22','5':'21','7':'873','8':'9200'}  
+operator = {'6':'3306','1':'80','2':'8080','3':'443','4':'22','5':'21','7':'873','8':'9200', '9':'44818'}
 
 def test():
     print('Tick! The time is: %s' % datetime.now())
@@ -16,7 +16,7 @@ def tick():
         print('too much work: %s' % datetime.now())
         pass
     else:
-        num = random.randint(1, 1)
+        num = random.randint(1,1)
         temp = zmaptool.getObject()
         temp.do_scan(port=operator.get(str(num)),num='20',needdetail='1')
     print('Tick! The time is: %s' % datetime.now())

@@ -16,7 +16,7 @@ class P(T):
     def __init__(self):
         T.__init__(self)
 
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port
 	print arg
         curl=Curl()
@@ -33,7 +33,7 @@ class P(T):
         url = arg + payload
 	print url
         code, head, res, errcode, _ = curl.curl('"%s"' % url)
-    	print "code:%s,head:%s,res:%s,errcode:%s"%(code, head, res, errcode)
+#    	print "code:%s,head:%s,res:%s,errcode:%s"%(code, head, res, errcode)
         if code == 200 and "Welcome to the OGNL console" in res:
 	    cprint(url + '存在structs ognl console漏洞', 'red')
             output('find ognl console:' +url,result,'info')

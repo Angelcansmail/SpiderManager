@@ -36,7 +36,7 @@ class P(T):
                 response.close()
         return result
 
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = ''
         target_url = 'http://' + ip + ':' + port
 

@@ -4,7 +4,7 @@
 from spidertool import webtool
 from location import Location
 class Port(object):
-    def __init__(self,ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',head='',city='',hackinfo='',disclosure='',keywords=None,webtitle='',webkeywords=''):
+    def __init__(self,ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',head='',city='',hackinfo='',hackresults='',disclosure='',keywords=None,webtitle='',webkeywords=''):
         '''
         Constructor
         '''
@@ -23,9 +23,10 @@ class Port(object):
         self.detail=detail
         self.head=head
         self.city=city
-        self.hackinfo=hackinfo
-        self.disclosure=disclosure
-        self.keywords=keywords
+        self.hackinfo = hackinfo
+        self.hackresults = hackresults
+        self.disclosure = disclosure
+        self.keywords = keywords
         self.webkeywords = webkeywords
         self.webtitle = webtitle
 
@@ -62,5 +63,3 @@ class Port(object):
         return self.script
     def getHead(self):
         return self.head
-   
-   

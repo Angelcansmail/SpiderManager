@@ -73,6 +73,9 @@ class LinksParser(object):
     def get_baseurl(self):
         tag = self.soup.find('base')
         if tag and tag.attrs.has_key('href'):
+	    # urlparser.urlparse('http://www.baidu.com/index.php?username=guol')
+	    # 协议、位置、路径、参数、查询、片段
+	    # ParseResult(scheme='http', netloc='www.baidu.com', path='/index.php', params='', query='username=guol', fragment='')
             if not urlparse.urlparse(tag.attrs['href']).netloc == '':
                 self.baseurl = tag.attrs['href']
         return self.baseurl
@@ -158,10 +161,12 @@ class LinksParser(object):
         return self.url_links
 
     def get_links_internal(self):
+	# 获取所有的url
         b = self.getall()
         for a in b:
             for i in b[a]:
                 p = urlparse.urlparse(i)
+	    	# 子链接和父链接的netloc都是一样的，所以加入
                 if  p.netloc == urlparse.urlparse(self.weburl).netloc:
                     self.internal_links.append(i)
                 else:

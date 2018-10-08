@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- encoding: utf-8 -*-
+
 from ..t  import T
 import requests
 from termcolor import cprint
@@ -12,7 +13,8 @@ class P(T):
     def check_vul(self, full_target_url):
 	# http://gimssom.bnuz.edu.cn:8089/login.action/
 	url_piece = full_target_url.split('/')
-	hack_script = '${(111+111)}'	#because url is composed by xxx://两个/,所以拆分的时候用倒数第二个
+	#because url is composed by xxx://两个/,所以拆分的时候用倒数第二个
+	hack_script = '${(111+111)}'
 	check_url = ''
 	for i in url_piece:
 	    if i == url_piece[-1]:
@@ -22,7 +24,7 @@ class P(T):
 	# print "convert[%s] to [%s]"%(full_target_url, check_url)
 	return check_url
 
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = 'http://' + ip + ':' + port
 
         if productname.get('path', ''):

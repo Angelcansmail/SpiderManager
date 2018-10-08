@@ -439,7 +439,7 @@
                 document.getElementById("scriptdetail").innerHTML = tempstr;
             }
             if (k == 3) {
-                tempstr = clinckdata.ports[clinckitem].hackinfo;
+                tempstr = clinckdata.ports[clinckitem].hackresults;
                 document.getElementById("scriptdetail").innerHTML = tempstr;
             }
         }
@@ -568,17 +568,17 @@
                             tempscript = encodeHtml(ports[i].script);
                     }
 
-                    var temphackinfo = '';
+                    var temphackresults = '';
 
-                    if (ports[i].hackinfo == null || ports[i].hackinfo == '') {
+                    if (ports[i].hackresults == null || ports[i].hackresults == '') {
 
-                        temphackinfo = '';
+                        temphackresults = '';
                     }
                     else {
-                        if (ports[i].hackinfo.length > 30)
-                            temphackinfo = encodeHtml(ports[i].hackinfo.substring(0, 30));
+                        if (ports[i].hackresults.length > 30)
+                            temphackresults = encodeHtml(ports[i].hackresults.substring(0, 30));
                         else
-                            temphackinfo = encodeHtml(ports[i].hackinfo);
+                            temphackresults = encodeHtml(ports[i].hackresults);
                     }
 
 
@@ -590,7 +590,7 @@
                             "<td ><a href=\"https://www.baidu.com/s?wd=" + ports[i].product + "\">" + ports[i].product + "</a></td>" +
                             "<td ><a id=\"modal-19990\"  data-toggle=\"modal\" href=\"#modal-container-19990\" role=\"button\" onclick=\"changtext(1," + i + ")\">" + tempscript + "</a></td>" +
                             "<td ><a id=\"modal-19991\"  data-toggle=\"modal\" href=\"#modal-container-19990\" role=\"button\" onclick=\"changtext(2," + i + ")\">" + msgshow + "</a></td>" +
-                            "<td ><a id=\"modal-19992\"  data-toggle=\"modal\" href=\"#modal-container-19990\" role=\"button\" onclick=\"changtext(3," + i + ")\">" + temphackinfo + "</a></td>" +
+                            "<td ><a id=\"modal-19992\"  data-toggle=\"modal\" href=\"#modal-container-19990\" role=\"button\" onclick=\"changtext(3," + i + ")\">" + temphackresults + "</a></td>" +
                             "</tr>";
 
                 }

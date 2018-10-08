@@ -249,7 +249,7 @@ class DBmanager:
 				else:
 					return False
 				self.logger.info('替换插入表%s操作\n%s', table, str(sql))
-				self.logger.info('插入表%s内容为:\n%s', str(table), str(insert_values))
+#				self.logger.info('插入表%s内容为:\n%s', str(table), str(insert_values))
 
 				returnmeg = None
 				try:
@@ -373,8 +373,8 @@ class DBmanager:
 						sql = sql+updatevalue[o]+' =  values('+updatevalue[o]+')  , '
 					sql = sql+updatevalue[ulen-1]+'   = values('+updatevalue[ulen-1]+') '
 				sql += extra
-				self.logger.info('插入数据库操作\n%s',  str(sql))
-				self.logger.info('插入数据库内容为:\n%s',  str(insert_values))
+#				self.logger.info('插入数据库操作\n%s',  str(sql))
+#				self.logger.info('插入数据库内容为:\n%s',  str(insert_values))
 
 				returnmeg = None
 				try:

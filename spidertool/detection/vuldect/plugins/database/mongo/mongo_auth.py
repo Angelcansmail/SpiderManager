@@ -8,7 +8,7 @@ import requests,urllib2,json,urlparse
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackinfo=''):
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         result = {}
         result['result']=False
         r=None
