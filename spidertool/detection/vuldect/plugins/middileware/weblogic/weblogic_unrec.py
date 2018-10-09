@@ -166,6 +166,7 @@ class WeblogicExp:
         return True
 
     def verify(self):
+	self.__print_msg('weblogic_unrec begin verify...')
         (result, msg) = self.__weblogic_connect()
         if not result:
             return (result, msg)

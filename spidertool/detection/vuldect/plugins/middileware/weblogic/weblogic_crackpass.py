@@ -28,9 +28,11 @@ class P(T):
             if res is not None:
                 res.close()
                 del res
+    	res = None
         for user in user_list:
             for password in pass_list:
                 try:
+		    res = None
                     PostStr='j_username=%s&j_password=%s&j_character_encoding=UTF-8'%(user,password)
                     request = urllib2.Request(target_url+'/console/j_security_check',PostStr)
                     request.add_header("Cookie",cookies)
