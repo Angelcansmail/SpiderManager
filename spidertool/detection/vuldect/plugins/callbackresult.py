@@ -25,7 +25,7 @@ def storedata(ip='',port='',hackresults=None):
 	hackinfo = hackresults
     else:
     	for hack in hackresults:
-#    	    print '\n\nstoredata', type(hack), str(hack)
+    	    print '\n\nstoredata', type(hack), str(hack)
     	    if isinstance(hack,dict):
 # 有的结果没有存储result，所以使用type进行归类
 		hacks = hack['VerifyInfo']

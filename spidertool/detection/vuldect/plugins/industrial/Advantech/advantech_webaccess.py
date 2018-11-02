@@ -13,6 +13,7 @@ import ssl
 from urllib2 import urlopen
 import socket
 import traceback
+from termcolor import cprint
 
 reload(sys)
 sys.setdefaultencoding('utf8')
@@ -45,6 +46,7 @@ class P(T):
             print target_url, "connect time out\n", traceback.print_exc()
 	    return result
 	if 'Advantech' in html_content:
+	    cprint(target_url + '可能存在漏洞(版本有待检测)', 'orange')
 	    info = target_url + " Advantech Webaccess"
 	    result['result']=True
 	    result['VerifyInfo'] = {}

@@ -1,6 +1,6 @@
 #!/usr/bin/python
-#coding:utf-8
 # -*- encoding: utf-8 -*-
+
 from spidertool import sniffertask, scapytask
 import schedule
 from datetime import datetime
@@ -60,11 +60,11 @@ def scheduleinit():
     # mainschedule.addschedule(event=taskitem.recovertask,type='date')  # 异常宕机恢复
     # mainschedule.addschedule(event=taskitem.normaltask,type='date')  # 后台异步任务
 
-#     mainschedule.addschedule(taskitem.listiptask,'0-6','*/21','13','0',id='listiptask')#自定义扫描段任务器
-    mainschedule.addschedule(taskitem.tick,'0-6','13','25','0',id='nmap')#nmap定时任务器
-#     mainschedule.addschedule(taskitem.ticknormal,'0-6','18','02','0',id='zmap')#zmap定时任务器
-#     mainschedule.addschedule(taskitem.gchelp,'0-6','0-23','0','0',id='gc')#gc collect   
-#     mainschedule.addschedule(taskitem.test,'0-6','0-23','34','0',id='test')#gc collect   
+#    mainschedule.addschedule(taskitem.listiptask,'0-6','*/21','13','0',id='listiptask')#自定义扫描段任务器
+    mainschedule.addschedule(taskitem.tick,'0-6','02','47','0',id='nmap')#nmap定时任务器
+#    mainschedule.addschedule(taskitem.ticknormal,'0-6','0','48','0',id='zmap')#zmap定时任务器
+#    mainschedule.addschedule(taskitem.gchelp,'0-6','0-23','0','0',id='gc')#gc collect   
+#    mainschedule.addschedule(taskitem.test,'0-6','0-23','34','0',id='test')#gc collect   
 
     print 'init schedule'
 

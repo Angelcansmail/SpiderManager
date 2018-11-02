@@ -4,7 +4,6 @@
 def sipdeal(ip='',port='',name='',productname=''):
     print 'this is sipdeal'
 
-
 def mysql(ip='',port='3306',name='',productname=''):
     head=''
     ans=None

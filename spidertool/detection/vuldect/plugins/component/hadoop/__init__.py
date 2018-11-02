@@ -1,7 +1,7 @@
-KEYWORDS = ['redis', ]
+KEYWORDS = ['hadoop', 'namenode']
 
 def rules(head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
-    if int(port) in [6379] or productname.get('protocol','') in ['redis']:
+    if port in '50070' or 'namenode' in context.lower():
         return True
     else:
         return False

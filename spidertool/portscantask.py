@@ -56,7 +56,7 @@ class PortscanTask(TaskTool):
                 else:
                     if req[0]=='tcpwrapped' and port in ['80','8080','7001']:
                         address = 'http://' + ip + ':' + port
-                    else: # None, 不合法?ftp/smtp...
+                    else: # None, 不合法?ftp/smtp...貌似无法访问，都是error
                         address = req[0]+'://'+ip+':'+port
             # 获取网页反馈的头部和整个网页信息(urllib2, requests)
             head, page = self.connectpool.getConnect(address)
@@ -66,7 +66,7 @@ class PortscanTask(TaskTool):
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
             self.logger.info('webutil.getwebinfo(%s) method_1 \nkeywords:%s\ntitle:%s\n', address, webkey, webtitle)
-            
+
             try:
                 # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
                 # httpdect(headdect) 可以获得keywords和hackresults信息, 后续要探究下这部分怎么解析, 所以目前返回的结果为空

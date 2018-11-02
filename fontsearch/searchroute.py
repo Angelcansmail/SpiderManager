@@ -105,7 +105,7 @@ def detailpage(request):
                     response_data['portspage'] = page
             except Exception,e:
                 # 连接失败/
-                print "Search Error! in 模糊检索", traceback.print_exc()
+                print "EL Search Error! in 模糊检索", traceback.print_exc()
                 try:
                     # 模糊检索 match against
                     extra = ' where match(version,product,head,detail,script,hackinfo,hackresults,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '

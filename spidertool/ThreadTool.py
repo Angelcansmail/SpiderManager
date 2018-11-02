@@ -242,8 +242,8 @@ class ThreadTool:
 					continue
 			else:
 				try:
-					req = self.q_request.get(block=True,timeout=60*60)
 					threadname=threading.currentThread().getName()
+					req = self.q_request.get(block=True,timeout=60*60)
 				except:
 					with self.lock:
 						self.alivenum -= 1

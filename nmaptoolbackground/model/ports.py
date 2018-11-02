@@ -34,7 +34,6 @@ class Port(object):
             self.keywords = Location(ip=str(self.ip)).getData()
         else:
             try:
-
                 data = eval(keywords)
                 self.keywords = data
                 if self.keywords.get('geoip',None) is None:

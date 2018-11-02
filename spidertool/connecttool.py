@@ -86,9 +86,10 @@ class ConnectTool:
 				print 'Value = '+item.value
 			msg = response.read()
 
+#			{'confidence': 0.4871288480763484, 'language': 'Turkish', 'encoding': 'Windows-1254'}
 			chardit1 = chardet.detect(msg)
 			the_page = str(msg)
-			
+
 			try:
 				return temp.decode(chardit1['encoding']).encode('utf-8'),the_page.decode(chardit1['encoding']).encode('utf-8')
 			except Exception,e:

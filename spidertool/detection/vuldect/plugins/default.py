@@ -6,6 +6,7 @@ from urlparse import urljoin
 from re import compile
 import callbackresult
 from termcolor import cprint
+import traceback
 
 GPocController=None
 
@@ -181,13 +182,13 @@ class PocController(object):
             try:
                 result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults)
     		# 默认result['result']=False
-                if type(result) == dict:
+                if isinstance(result, dict):
                     if result['result']:
                         i = 1
                         dataresult.append(result)
                         cprint(ip + ':' + port + '发现' + result['type'] + '漏洞', 'red')
             except Exception,e:
-                print e,poc
+		print str(poc) + ' verify failed!' + str(e)
             else:
                 pass
         if i==1:
@@ -226,7 +227,7 @@ class PocController(object):
                 matched_modules.add((module_name,componentname))
                 continue
             for keyword in modulekeywords:
-#	 	组件在产品名、头部或者攻击信息中出现，均应当作危险信息进行检测验证
+#	 	组件在产品名、头部或者nmapscript(这里命名有问题，hackresults->nmapscript)信息中出现，均应当作危险信息进行检测验证
 	    	if keyword in kw or keyword in productname.get('productname','').lower()  or keyword in head.lower() or keyword in hackresults.lower()    :
                     self.logger.info('Match Keyword: -> %s', keyword)
                     matched_modules.add((module_name,componentname))

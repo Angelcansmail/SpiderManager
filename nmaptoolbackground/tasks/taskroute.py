@@ -131,6 +131,7 @@ def updatejob(request, state=''):
             print ('\n%s更新成功, 总数为:%s页数为:%d'%(table, count, pagecount))
 
             if count > 0:
+#		execute multi thread sniffertask
                 tasktotally = taskcontrol.getObject()
                 task = tasks[0] # a Job object
                 # 更新job(taskdata表)

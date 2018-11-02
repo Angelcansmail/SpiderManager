@@ -99,10 +99,12 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         else:
             instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
 
+	update_data = ''
         for i in xrange(0,len(select_params)):
-            logger.info('更新数据%s',select_params[i])
-#            logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
+	    update_data += select_params[i] + '=' + decodestr(str(eachitem[i])) + '\t'
             setvalue(instanceitem, select_params[i], decodestr(str(eachitem[i])))
+#            logger.info('更新数据%s :%s',select_params[i], decodestr(str(eachitem[i])))
+        logger.info('更新nmap tcp/udp \n%s', update_data)
         try:
             res = instanceitem.save()
         except Exception,e:

@@ -48,5 +48,3 @@ def storedata(ip='',port='',hackresults=None):
     '''
     pass
  
-     
-     

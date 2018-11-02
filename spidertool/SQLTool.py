@@ -452,9 +452,7 @@ def getdecodeproperty(dic, property):
 	return decodestring(str(dic.get(property, '')))
 def decodestring(msg):
 	if str:
-
 		return decodestr(msg.decode('string_escape').decode('string_escape'))
-
 	else:
 		return ''
 

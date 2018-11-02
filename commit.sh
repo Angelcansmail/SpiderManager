@@ -17,3 +17,9 @@ rm `find -name "*.pyc"`
 git add *
 git commit -m "$content"
 git push origin master
+
+# 获取大文件列表
+# git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
+
+# 删除git上的大文件
+# git filter-branch -f --prune-empty --index-filter 'git rm -rf --cached --ignore-unmatch xxxxx' --tag-name-filter cat -- --all

@@ -1,5 +1,3 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
@@ -8,7 +6,11 @@ Author    : a
 mail      :a@lcx.cc
 """
 
+from ..miniCurl import Curl
+from ..t  import T
+
 import socket
+from termcolor import cprint
 
 def getPDList():
      pwlist =[]
@@ -50,23 +52,22 @@ class P(T):
                     if 'OK' in data:
                         output('password :' + p,result,'hole')
                         break
-                   
             s.close()
         except:
             pass
-    
 
         del curl
         return result
 
 
 def output(url,result,label):
+    cprint(url + '存在弱口令', 'red')
     info = url + '  redis  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
-    result['VerifyInfo']['type']='redis Vul'
+    result['VerifyInfo']['type']='redis weak pass Vul'
     result['VerifyInfo']['URL'] =url
-    result['VerifyInfo']['payload']='/root/github/poccreate/thirdparty/redis/redis_20acd453edc2cd2b2adc89a7abbaf213.py'
+    result['VerifyInfo']['payload']='redis weak pass Vul'
     result['VerifyInfo']['level']=label
     result['VerifyInfo']['result'] =info
 

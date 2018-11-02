@@ -18,7 +18,8 @@ class Portscantool:
         self.config = config.Config
         self.socketclient = None
 
-    # portscantask.py中，非正常协议
+#   portscantask.py中，非正常协议
+#   return head, page, keywords, hackinfo, hackresults
     def do_scan(self,head=None,context=None,ip=None,port=None,name=None,productname=None,nmapscript=None):
         keywords = {}
         hackresults = ''
@@ -33,8 +34,8 @@ class Portscantool:
 	    # 目前都是None
             if ans == None:
                 self.socketclient = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    		# self.socketclient.settimeout(25)
-    		# time.sleet(10)
+    		self.socketclient.settimeout(15)
+    		time.sleep(10)
                 self.socketclient.connect((ip,int(port)))
 #             message = "GET / HTTP/1.1\r\nHost: oschina.net\r\n\r\n"
                 message =portway.get(name,"GET  world \r\n\r\n")
@@ -45,13 +46,15 @@ class Portscantool:
                     self.socketclient.connect((ip,int(port)))
                 reply = self.socketclient.recv(4096)
 
-                return 'reply info:  ',reply,keywords,hackresults,hackresults
+                return '',reply,keywords,hackresults,hackresults
+#                return 'sock reply info:  ',reply,keywords,hackresults,hackresults
             else:
-                return 'reply info:  ',ans,keywords,hackresults,hackresults
+                return '',ans,keywords,hackresults,hackresults
+#                return 'Sock reply info:  ',ans,keywords,hackresults,hackresults
 	except Exception, msg:
             print 'Failed to create socket. Error code: ' + str(msg) + ' Error info: ' + str(traceback.print_exc())
             return str(msg), 'SOCKET Error!',keywords,hackresults,hackresults
-#	    return 'error info:','error',keywords,hackresults
+#	    return 'Error info:','Error',keywords,hackresults
         finally:
             if self.socketclient is not None:
                 self.socketclient.close()

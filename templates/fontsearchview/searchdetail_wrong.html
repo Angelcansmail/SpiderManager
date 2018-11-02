@@ -336,17 +336,21 @@
 
                       // if (data2.username == 'admin') {
                       if (data2.userrole == '3') {
-                          // bodyhtml += "<div class=\"box\"><pre>" + '脚本内容:\n ' + utf8to16(decode64(ports[i].script)) + '\n攻击信息:\n ' + ports[i].hackinfo + ' \n漏洞网址:\n ' + ports[i].disclosure + "</pre></div>" +
-                          bodyhtml += "<div class=\"box\"><pre>" + (cutitem(utf8to16(decode64(ports[i].script))) == '' && ports[i].hackinfo == 'None' && ports[i].disclosure == 'None' ? '无' : '脚本内容:\n ' + encodeHtml(cutitem(utf8to16(decode64(ports[i].script))) + '\n攻击信息:\n ' + (ports[i].hackinfo == 'None' || ports[i].hackinfo == '' ? '无' : ports[i].hackinfo) + ' \n漏洞网址:\n ' + (ports[i].disclosure == 'None' ? '无' : (cutitem(ports[i].disclosure)).toString()))) + "</pre></div>" +
+                          // bodyhtml += "<div class=\"box\"><pre>" + '头部内容:\n ' + ports[i].head + '\n攻击信息:\n ' + ports[i].hackinfo + ' \n漏洞网址:\n ' + ports[i].disclosure + "</pre></div>" +
+                          // bodyhtml += "<div class=\"box\"><pre>" + (ports[i].head == 'None' && ports[i].hackinfo == 'None' && ports[i].disclosure == 'None' ? '无' : '头部内容:\n ' + encodeHtml(cutitem(utf8to16(decode64(ports[i].head))) + '\n攻击信息:\n ' + (cutitem(ports[i].hackinfo) == '' ? '无' : cutitem(ports[i].hackinfo)) + ' \n漏洞网址:\n ' + (ports[i].disclosure == 'None' ? '无' : (cutitem(ports[i].disclosure)).toString()))) + "</pre></div>" +
+                          bodyhtml += "<div class=\"box\"><pre>" + (ports[i].head == 'None' ? '无' : encodeHtml(cutitem(utf8to16(decode64(ports[i].head))))) + "</pre></div>" +
                               // "<div class=\"col-md-9 \">" +
-                              "<p class=\"package-description\">详细信息：</p>";
+                              "<p class=\"package-description\">漏洞信息：</p>";
+			  bodyhtml += "<div class=\"box\"><pre>" + (ports[i].hackinfo == 'None' && ports[i].disclosure == 'None' ? '安全' : '\n攻击信息:\n ' + (ports[i].hackinfo == 'None' ? '无' : cutitem(ports[i].hackinfo)) + ' \n漏洞网址:\n ' + (ports[i].disclosure == 'None' ? '无' : (cutitem(ports[i].disclosure)).toString())) + "</pre></div>" +
                       }
                       else {
-                          bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ? '无' : encodeHtml(cutitem(utf8to16(decode64(ports[i].script)))).toString()) + "</pre></div>" +
+                          // bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ? '无' : encodeHtml(cutitem(utf8to16(decode64(ports[i].script)))).toString()) + "</pre></div>" +
+			  bodyhtml += "<div class=\"box\"><pre>" + (ports[i].head == 'None' && ports[i].detail == 'None' ? '无' : (cutitem(ports[i].head) == '' ? cutitem(ports[i].detail).toString() : encodeHtml(cutitem(ports[i].head) + '\n' + cutitem(ports[i].detail)).toString())) + "</pre></div></div></div></div>";
                               // "<div class=\"col-md-9 \">" +
                               "<p class=\"package-description\">详细信息：</p>";
                       }
-                      bodyhtml += "<div class=\"box\"><pre>" + (ports[i].head == 'None' && ports[i].detail == 'None' ? '无' : (cutitem(ports[i].head) == '' ? cutitem(ports[i].detail).toString() : encodeHtml(cutitem(ports[i].head) + '\n' + cutitem(ports[i].detail)).toString())) + "</pre></div></div></div></div>";
+                      // bodyhtml += "<div class=\"box\"><pre>" + (ports[i].head == 'None' && ports[i].detail == 'None' ? '无' : (cutitem(ports[i].head) == '' ? cutitem(ports[i].detail).toString() : encodeHtml(cutitem(ports[i].head) + '\n' + cutitem(ports[i].detail)).toString())) + "</pre></div></div></div></div>";
+                      bodyhtml += "</div></div></div>";
                       // xmp
             }
             document.getElementById("resultinfo").innerHTML = bodyhtml;

