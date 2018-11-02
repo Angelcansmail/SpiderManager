@@ -66,7 +66,7 @@ class PortscanTask(TaskTool):
             webkey = webinfo['keywords']
             webtitle = webinfo['title']
             self.logger.info('webutil.getwebinfo(%s) method_1 \nkeywords:%s\ntitle:%s\n', address, webkey, webtitle)
-
+            
             try:
                 # 调用检测功能（http/poc/fuzz，目前只开源了fuzz检测）
                 # httpdect(headdect) 可以获得keywords和hackresults信息, 后续要探究下这部分怎么解析, 所以目前返回的结果为空

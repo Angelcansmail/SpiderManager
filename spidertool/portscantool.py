@@ -63,6 +63,3 @@ if __name__ == "__main__":
     temp = Portscantool()
     temp.do_scan(ip='118.25.43.205', port='3306')
 #     temp.do_scan('218.106.87.35', '110')
-    
-
-

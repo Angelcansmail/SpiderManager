@@ -14,6 +14,8 @@ from ..t  import T
 import socket
 from termcolor import cprint
 
+import socket
+
 class P(T):
     def __init__(self):
         T.__init__(self)
