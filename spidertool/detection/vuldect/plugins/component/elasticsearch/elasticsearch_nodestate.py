@@ -2,6 +2,7 @@
 # encoding: utf-8
 from ..t import T
 
+from termcolor import cprint
 import requests,urllib2,json,urlparse
 
 class P(T):
@@ -22,6 +23,7 @@ class P(T):
                 result['VerifyInfo']['payload']='IP:port/_nodes/stats'
                 result['VerifyInfo']['result'] =r.text
                 result['VerifyInfo']['level'] = 'hole'
+		cprint(target_url + '存在信息泄漏风险', 'red')
             else:
                 pass
         except Exception,e:

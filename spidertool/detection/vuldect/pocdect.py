@@ -4,6 +4,4 @@
 def dect(head='',context='',ip='',port='',productname='',keywords='',hackresults=''):
     #     webdection
 
-
-
     return keywords,hackresults
