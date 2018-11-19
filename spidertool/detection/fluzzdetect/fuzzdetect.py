@@ -154,14 +154,14 @@ class InfoDisScanner(InfoDisScannerBase):
                         # print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
                         if results.get(prefix,None) is None:
                             results[prefix] = []
-			add_disclosure = {'status':c_status, 'url': '%s' % (url)}
+			add_disclosure = {'status':c_status, 'url':'%s' % (url)}
 			if add_disclosure in results[prefix]:
 			    continue
                         results[prefix].append(add_disclosure)
                         self._update_severity(severity)
 
                 if len(results) >= 30:
-                    print 'More than 30 vulnerabilities found for [%s], could be false positive.' % url
+                    self.logger.warning('More than 30 vulnerabilities found for [%s], could be false positive.', url)
             except Exception, e:
                 self.logger.error('[InfoDisScanner._scan_worker][2][%s] Exception %s' % (url, e))
 
@@ -191,6 +191,7 @@ class InfoDisScanner(InfoDisScannerBase):
         self.final_severity = 0
         url = ip + ':' + str(port)
         status, has404 = self.check_404(url=url,protocal=protocal)           # check the existence of status 404
+
         if status != -1:
             tempqueue = Queue.Queue()
             self._enqueue(url, tempqueue)

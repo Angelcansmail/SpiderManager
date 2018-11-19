@@ -39,13 +39,13 @@ def initLog(logfile, level=2, verbose=False,name='root'):
 	return logger
 
 if __name__ == '__main__':
-	logger = initLog("logger_test.log", 3, True,'a')
+	logger = initLog("logger_test.log", 2, True,'gzh')
 	logger.debug("debug %s", "1")
 	logger.info("info %s", "2")
 	logger.warning("warning %s", "3")
 	logger.error("error %s", "4")
 	logger.exception("exception %s", "4")
 	logger.critical("critical %s", "5")
-	from test import aaaa
-	aaaa()
+#	from test import aaaa
+#	aaaa()
 

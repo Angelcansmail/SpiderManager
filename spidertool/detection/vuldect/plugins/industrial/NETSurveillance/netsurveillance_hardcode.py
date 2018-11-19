@@ -63,7 +63,7 @@ class P(T):
 	    try:
 		connect_result = session_requests.post(target_url, data=payload, headers=headers)
 	    except Exception, e:
-		print target_url, "connect time out\n", traceback.print_exc()
+#		print target_url, "connect time out\n", traceback.print_exc()
 		return result
 
 	    soup = bs4.BeautifulSoup(connect_result.content, "lxml")

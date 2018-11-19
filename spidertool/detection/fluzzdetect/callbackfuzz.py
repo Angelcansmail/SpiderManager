@@ -24,7 +24,7 @@ def storedata(ip='',port='',hackresults=None):
     for ip_port in hackresults:
     	disinfo_list = hackresults[ip_port]
 	for disinfo in disinfo_list:
-	    disclosure += str(disinfo) + '\n '
+	    disclosure += str(disinfo) + '\\n '
 #	    disinfo_list.remove(disinfo)
     disclosure = SQLTool.escapewordby(disclosure)
 #    hackresults = SQLTool.escapewordby(str(hackresults))
@@ -38,13 +38,13 @@ def storedata(ip='',port='',hackresults=None):
     tempwprk = Sqldata.SqlData('inserttableinfo_byparams',dic)
     sqldatawprk.append(tempwprk)
     sqlTool.add_work(sqldatawprk)
-    '''
+
     print 'fuzz 转poc检测'
     from ..vuldect import pocsearchtask
     temp = pocsearchtask.getObject()
     # head,context,ip,port,productname,keywords,nmapscript,protocol
     temp.add_work([(None,None,ip,port,None,None,hackresults,None)])
     print 'fuzz 数据存储调用'
-    '''
     pass
- 
+
+

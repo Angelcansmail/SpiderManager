@@ -62,7 +62,7 @@ def detailpage(request):
                 redisresult = redistool.get(str(item))
 
                 if redisresult:
-                    print '从redids取的数据'
+                    print '从redis取的数据'
                     try:
                         response_data['result'] = '1'
                         response_data['ports'] = redisresult['ports']
@@ -149,7 +149,7 @@ def detailpage(request):
                 print "content md5:", item
                 redisresult = redistool.get(item)
                 if redisresult:
-                    print '从redids取的数据'
+                    print '从redis取的数据'
                     try:
                         response_data['result'] = '1'
 
@@ -310,7 +310,7 @@ def mapsearch(request):
 
         redisresult = redistool.get(webtool.md5(str(jsoncontent.__str__)))
         if redisresult:
-            print '从redids取的数据'
+            print '从redis取的数据'
             response_data['result'] = '1'
 
             response_data['ports'] = redisresult['ports']

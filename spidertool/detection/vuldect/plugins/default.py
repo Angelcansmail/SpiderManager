@@ -51,10 +51,10 @@ class PocController(object):
     # 按照组块下的py文件名称作为映射，并删除t\minicurl\__init__三个公用的非组建
     def __get_component_plugins_list(self,componentname, module_name):
         path = join(abspath(dirname(__file__)), componentname+'/%s' % module_name)
-#	self.logger.info("__get_component_plugins_list_path[%s]",str(path))
+#	self.logger.debug("__get_component_plugins_list_path[%s]",str(path))
         plugins_list = self.__list_plugins(path)
 #	set(['__init__', 'XAMPP_0513e4ffc8bbb2129805b3ac0e9545ea'])
-#	self.logger.info("__get_component[%s:%s]_plugins_list:%s", componentname, module_name, str(plugins_list))
+#	self.logger.debug("__get_component[%s:%s]_plugins_list:%s", componentname, module_name, str(plugins_list))
         if False in plugins_list:
             plugins_list.remove(False)
         plugins_list.remove('__init__')
@@ -77,7 +77,7 @@ class PocController(object):
     def __load(self, module_name, plugin_name):
         plugin_name = '%s.%s' % (module_name, plugin_name)
         plugin = __import__(plugin_name,globals=globals(), fromlist=['P'])
-#        self.logger.info('Load Plugin: %s.P', plugin_name)
+#        self.logger.debug('Load Plugin: %s.P', plugin_name)
 	# 初始化result{type,version}, keywords{}, versions{}
         return plugin.P
 
@@ -102,11 +102,11 @@ class PocController(object):
         try:
             params[module_name] = func(componentname,module_name)
 #	    module_name: 不同插件下的名称, 如component
-#	    self.logger.info('Module '+text+': %s -> %s', module_name, self.keywords[module_name])
+#	    self.logger.debug('Module '+text+': %s -> %s', module_name, self.keywords[module_name])
         except Exception,e:
             print e
             params[module_name] = [],componentname
-#	    self.logger.info('Module '+text+': %s -> None', module_name)
+#	    self.logger.debug('Module '+text+': %s -> None', module_name)
             pass
 
     def __load_component_detail_plugins(self, componentname=''):
@@ -131,7 +131,7 @@ class PocController(object):
         self.components = {}
 	# load module’s name[middileware,database,...]
         self.__load_component_plugins(map(lambda module_info: module_info['module_name'], self.modules_list))
-	# self.logger.info('**************************vuldect loader done!!!**************************')
+	# self.logger.debug('**************************vuldect loader done!!!**************************')
 
     def env_init(self, head='',context='',ip='',port='',productname=None,keywords='',hackresults='',defaultpoc=''):
         self.init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,defaultpoc=defaultpoc)
@@ -157,7 +157,7 @@ class PocController(object):
         else:
             modules_list, _ = self.__match_modules_by_poc(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,defaultpoc=defaultpoc)
     	# set([('http', 'basemodel'), ('tomcat', 'middileware'), ('struts', 'component'), ('apache', 'middileware')])
-        print ' 匹配到的可能组件:      '+str(modules_list)
+        self.logger.info('%s:%s 匹配到的可能组件:%s', ip, str(port), str(modules_list))
         for modules, conponent in modules_list:
             for item in self.components[conponent][modules]:
                 P = item()
@@ -166,9 +166,9 @@ class PocController(object):
                     if self.__match_rules(pocclass=P,head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults, **kw):
                         POCS.append(P)
                 except Exception,e:
-                    self.logger.info('error: %s', e)
-#                self.logger.info('Init Plugin: %s', item)
-#        print ' 要执行筛选的组件:      '+str(POCS) 
+                    self.logger.error('error: %s', e)
+#                self.logger.debug('Init Plugin: %s', item)
+        self.logger.info('要执行筛选的组件: %s', str(POCS))
 	# 执行每个组件下的verify函数，验证是否存在漏洞，区别在于payload不同
         self.match_POC(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,POCS=POCS, **kw)
 
@@ -181,15 +181,19 @@ class PocController(object):
         for poc in POCS:
             try:
                 result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults)
+#    		print('\033[1;36m ' + str(poc) + '::result->' + str(result) + '\033[0m')
     		# 默认result['result']=False
                 if isinstance(result, dict):
                     if result['result']:
                         i = 1
                         dataresult.append(result)
-                        cprint(ip + ':' + port + '发现' + result['type'] + '漏洞', 'red')
-            except Exception,e:
-		print str(poc) + ' verify failed!' + str(e)
+		        print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
+#                        cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
+            except Exception, e:
+		self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
+#		print str(poc) + ' verify failed!->' + e.message
             else:
+		cprint('<<<<' + str(result) + '>>>>', 'grey')
                 pass
         if i==1:
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
@@ -229,7 +233,7 @@ class PocController(object):
             for keyword in modulekeywords:
 #	 	组件在产品名、头部或者nmapscript(这里命名有问题，hackresults->nmapscript)信息中出现，均应当作危险信息进行检测验证
 	    	if keyword in kw or keyword in productname.get('productname','').lower()  or keyword in head.lower() or keyword in hackresults.lower()    :
-                    self.logger.info('Match Keyword: -> %s', keyword)
+                    self.logger.debug('Match Keyword: -> %s', keyword)
                     matched_modules.add((module_name,componentname))
                     break
         for module_name, module_info in self.rules.items():
@@ -242,14 +246,14 @@ class PocController(object):
                 continue
 #	    相应组件关键词在context中/productname/head等内容中出现，则返回true
             if rules(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=''):
-                self.logger.info('Match Rules: -> %s', keyword)
+                self.logger.debug('Match Rules: -> %s', keyword)
                 matched_modules.add((module_name,componentname))
         return matched_modules, othermodule
 
     def detect(self, head='',context='',ip='',port='',productname={},keywords='',hackresults='',defaultpoc=''):
         print ("detection::vuldetect::plugins::default()\n\nhead[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nhackresults[%s]\ndefaultpoc[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(hackresults),str(defaultpoc)))
 #	形式components[componentname][module_name] = P()
-#	self.logger.info('now the source component: %s', self.components)
+#	self.logger.debug('now the source component: %s', self.components)
         if self.components=={} or self.keywords == {} or self.rules=={}:
             self.loader()
         self.env_init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,defaultpoc=defaultpoc)
