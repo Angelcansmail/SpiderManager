@@ -63,8 +63,9 @@ class Zmaptool:
             for i in ip_list:
                 insertdata.append((str(i), port, localtime, 'open', str(port)))
                 print ("zmaptool scan ip:%s"%i)
-                self.getlocationtool.add_work([str(i)]) # save ip info(get from ip.taobao.com) to ip_maindata
-                if needdetail=='0':
+		self.getlocationtool.add_work([str(i)]) # save ip info(get from ip.taobao.com) to ip_maindata
+
+		if needdetail=='0':
                     global portname
                     nowportname=portname.get(port,'')
                     self.portscan.add_work([(nowportname,str(i), port,'open','','')])

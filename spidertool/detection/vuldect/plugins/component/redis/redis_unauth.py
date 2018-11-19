@@ -19,6 +19,7 @@ import socket
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         result = {}
         result['result']=False
@@ -32,12 +33,12 @@ class P(T):
             if recvdata and 'redis_version' in recvdata:
                 output(ip + ':' + str(port), result, 'hole')
             s.close()
-        except:
+        except Exception, e:
+    	    cprint(str(e).upper(), 'grey')
             pass
         return result
 
 def output(url,result,label):
-    cprint(url + '存在未授权访问漏洞', 'red')
     info = url + '  redis  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
@@ -46,9 +47,8 @@ def output(url,result,label):
     result['VerifyInfo']['payload']='redis unauth access Vul'
     result['VerifyInfo']['level']=label
     result['VerifyInfo']['result'] =info
+    cprint(url + '存在未授权访问漏洞', 'red')
 
 if __name__ == '__main__':
     print P().verify(ip='http://yunlai.cn:803/sfdsfds/',port='80')
 
-#/root/github/poccreate/thirdparty/redis/redis_110cf1b2c499f8a16cacf3d07c0dbb51.py
-#/root/github/poccreate/codesrc/exp-750.py

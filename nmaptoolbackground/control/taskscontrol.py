@@ -1,12 +1,10 @@
 #!/usr/bin/python
 #coding:utf-8
+
 from spidertool import SQLTool, config, iptask
 from ..model import tasks, job
 
-
 limitpage=15
-
-
 localconfig=config.Config()
 
 # taskroute中updatejob任务完成后调用
@@ -14,6 +12,7 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
     validresult=False
     request_params = []
     values_params = []
+
     if taskname != '':
         request_params.append('tasksname')
         values_params.append(SQLTool.formatstring(taskname))
@@ -50,8 +49,8 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
         # result is a json array 
         result, content, count, col = DBhelp.searchtableinfo_byparams([table], ['username','tasksid','tasksname','status','starttime','tasksaddress','taskport','endtime','createtime','num','completenum'], request_params, values_params,limit,order='createtime desc')
 
-        print ("debug::searchtableinfo_byparams() \n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n\n" \
-                %(result,  content,  count,  col))
+        print ("debug::searchtableinfo_byparams() return count:%d\'s results\n"%(count))
+#	print ("debug::searchtableinfo_byparams() \n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n\n"%(result,  content,  count,  col))
 
         DBhelp.closedb()
         jobs = []
@@ -252,7 +251,8 @@ def identifyip(msg, dic):
             m2 = re.search(regixx, i)
             if m2:
                 ary.add(m2.group())
-            else:   # web页面地址,eg:www.baidu.com
+            else:
+# 		web页面地址,eg:www.baidu.com
                 ary.add(i)
     for i in ary:
         listitem.add_work([(i, i, dic)])

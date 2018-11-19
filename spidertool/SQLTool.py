@@ -248,7 +248,7 @@ class DBmanager:
 					sql = sql + '%s' + ')'			
 				else:
 					return False
-				self.logger.info('替换插入表%s操作\n%s', table, str(sql))
+#				self.logger.info('替换插入表%s操作\n%s', table, str(sql))
 #				self.logger.info('插入表%s内容为:\n%s', str(table), str(insert_values))
 
 				returnmeg = None

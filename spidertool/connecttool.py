@@ -111,8 +111,9 @@ class ConnectTool:
 				return self.getHTML(URL, way, params, times+1)
 			else :
 				print str(url)+'  失败次数过多，停止链接'
-				the_page= msgg
-				return '',the_page
+				the_page = msgg
+				return '', ''
+#				return '',the_page
 		finally:
 				if response:
 					response.close()

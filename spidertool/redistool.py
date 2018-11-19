@@ -24,19 +24,22 @@ def expire(key,expiration):
         return None
     redisinstance.expire(key, expiration)
 
+#from ip to location
 def get(key):
+    # content's md5 value; redisinstance获取链接的数据库db
     print "======================redistool::get(%s)======================"%key
     if redisinstance is None:
         return None
-    prev_topicList=None
+    prev_topicList = None
     try:
         prev_topicList_redis = redisinstance.get(key)
         prev_topicList = prev_topicList_redis
 	# print ("redistool::get(%s) prev_topicList_redis:%s "%(key, prev_topicList_redis))
+        # 没有key，就是正常的关键词检索，非字典
         if prev_topicList_redis is None:
             return prev_topicList_redis
         # import pickle
-        # prev_topicList=pickle.loads(prev_topicList_redis)
+        # prev_topicList = pickle.loads(prev_topicList_redis)
         prev_topicList = json.loads(prev_topicList_redis,encoding='utf-8')
         prev_topicList = debase64(prev_topicList)
     except Exception,e:
