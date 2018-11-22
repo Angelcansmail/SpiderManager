@@ -12,6 +12,7 @@
 
 content=$1
 
+rm `find -name "*.err"`
 rm `find -name "*.log"`
 rm `find -name "*.pyc"`
 git add *
