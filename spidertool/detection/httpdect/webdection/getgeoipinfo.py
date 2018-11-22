@@ -4,6 +4,7 @@ import urllib2
 import json
 
 def getGeoipinfo(data):
+    print "httpdect::webdection::getGeoipinfo(%s)..."% data
     # 组成查询ip地理位置的网址，返回字典格式在前端fontsearch/detailmapview.html展示
     url = 'http://ip-api.com/json/%s' % (data)
 #    url = 'http://ip-api.com/json/%s' % (data['ip'][0])

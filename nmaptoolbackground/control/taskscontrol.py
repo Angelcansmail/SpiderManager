@@ -49,7 +49,7 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
         # result is a json array 
         result, content, count, col = DBhelp.searchtableinfo_byparams([table], ['username','tasksid','tasksname','status','starttime','tasksaddress','taskport','endtime','createtime','num','completenum'], request_params, values_params,limit,order='createtime desc')
 
-        print ("debug::searchtableinfo_byparams() return count:%d\'s results\n"%(count))
+        print ("\ndebug::searchtableinfo_byparams() return %d\'s results\n"%(count))
 #	print ("debug::searchtableinfo_byparams() \n\nresult:%s\n\ncontent:%s\n\ncount:%d\n\ncol:%d\n\n"%(result,  content,  count,  col))
 
         DBhelp.closedb()
@@ -58,7 +58,6 @@ def taskshow(taskname='',tasktatus='',username='',taskid='',taskport='',result='
             validresult=True
             # 依次遍历查询数据库返回的结果(taskdata和tasksdata的结果合并)，一个json格式
             for temp in result:
-	        print temp
                 ajob = tasks.Tasks(username=temp['username'],tasksid=temp['tasksid'],tasksname=temp['tasksname'],taskstatus=temp['status'],starttime=temp['starttime'],taskaddress=temp['tasksaddress'],tasksport=temp['taskport'],endtime=temp['endtime'],createtime=temp['createtime'],num=temp['num'],completenum=temp['completenum'])
                 jobs.append(ajob)
         return jobs, count, pagecount

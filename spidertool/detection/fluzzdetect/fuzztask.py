@@ -20,7 +20,7 @@ fuzzlog=None
 def getloghandle():
     global fuzzlog
     if fuzzlog is None:
-        fuzzlog = initLog('logs/fuzzDect.log', 2, True)
+        fuzzlog = initLog('logs/fuzzDect.log', 1, False)
     return fuzzlog
 
 class FuzzTask(TaskTool):
@@ -31,7 +31,7 @@ class FuzzTask(TaskTool):
         self.fuzzscan = InfoDisScanner(logger=self.logger)
 
     def task(self,req,threadname):
-        self.logger and self.logger.info('%s FUZZ检测任务启动%s', threadname,str(datetime.datetime.now()))
+        self.logger and self.logger.debug('%s FUZZ检测任务启动%s', threadname,str(datetime.datetime.now()))
         head='' if req[0] is None else req[0]
         context='' if req[1] is None else req[1]
         ip='' if req[2] is None else req[2]
@@ -46,11 +46,11 @@ class FuzzTask(TaskTool):
         objgraph.show_growth()
         # 后续补
         # temp = default.PocController(logger=logger)
-        self.logger and self.logger.info('FUZZ检测:   %s:%s,%s',ip,port,protocol)
+        self.logger and self.logger.debug('FUZZ检测:   %s:%s,%s',ip,port,protocol)
         self.fuzzscan.scanvul(ip=ip,port=port,protocal=protocol)    # 相当于fuzzdetect.py下单独执行, 扫描ip和端口，如果父子不同，则将status和url存入数据库中，同步es.
 
 #        self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords, hackresults=nmapscript)
-        self.logger and self.logger.info('%sFUZZ检测任务结束%s', threadname,str(datetime.datetime.now()))
+        self.logger and self.logger.debug('%sFUZZ检测任务结束%s', threadname,str(datetime.datetime.now()))
         print 'Fuzztask   内存增长状况'
         gc.collect()
         objgraph.show_growth()

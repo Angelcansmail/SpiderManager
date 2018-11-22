@@ -12,6 +12,7 @@ import glob
 import socket
 #import ipaddress
 import os
+import traceback
 import webbrowser
 from lib.interface import InfoDisScannerBase
 import callbackfuzz
@@ -75,7 +76,7 @@ class InfoDisScanner(InfoDisScannerBase):
                 html_doc = ''
             return status, resp_headers, html_doc
         except Exception, e:
-            self.logger.error('[Exception in InfoDisScanner._http_request] %s' % e)
+            self.logger.error('[Exception in InfoDisScanner._http_request] %s %s', str(e), str(traceback.print_exc()))
             return -1, {}, ''
         finally:
             if conn is not None:

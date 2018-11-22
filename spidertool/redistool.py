@@ -1,11 +1,15 @@
 #!/usr/bin/env pythen
 # -*- coding: utf-8 -*-
+
 import sys
+import json,datetime
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
-import json,datetime
+
 #通过python操作redis缓存
 redisinstance=None
+
 try:
     if redisinstance is None:
         import redis
@@ -29,12 +33,15 @@ def get(key):
     # content's md5 value; redisinstance获取链接的数据库db
     print "======================redistool::get(%s)======================"%key
     if redisinstance is None:
+    	print "redisinstance is None."
         return None
+
     prev_topicList = None
+
     try:
         prev_topicList_redis = redisinstance.get(key)
         prev_topicList = prev_topicList_redis
-	# print ("redistool::get(%s) prev_topicList_redis:%s "%(key, prev_topicList_redis))
+#        print ("redistool::get(%s) prev_topicList_redis:%s "%(key, prev_topicList_redis))
         # 没有key，就是正常的关键词检索，非字典
         if prev_topicList_redis is None:
             return prev_topicList_redis
@@ -43,11 +50,11 @@ def get(key):
         prev_topicList = json.loads(prev_topicList_redis,encoding='utf-8')
         prev_topicList = debase64(prev_topicList)
     except Exception,e:
-        print e,'redis-get'
+        print 'redis-get', e
         try:
             prev_topicList=eval(prev_topicList)
         except Exception,e:
-            print e
+            print 'eval(prev_topicList)', e
     return prev_topicList
 
 def debase64(dic):

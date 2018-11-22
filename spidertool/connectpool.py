@@ -34,7 +34,7 @@ class ConnectPool:
 	# 从portscantask只传入了address
 	def getConnect(self,URL,way='GET',params={},times=1):
 		self.__connect_pool.put(1)
-		self.logger and self.logger.info('当前访问的位置为：%s', URL)
+		self.logger.info('当前访问的位置为：%s', URL)
 # 		gc.enable() 
 # 		gc.set_debug(gc.DEBUG_STATS|gc.DEBUG_LEAK|gc.DEBUG_COLLECTABLE | gc.DEBUG_UNCOLLECTABLE | gc.DEBUG_INSTANCES | gc.DEBUG_OBJECTS)
 		head, page = self.connectTool.getHTML(URL,way,params,times)

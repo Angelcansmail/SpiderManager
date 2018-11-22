@@ -85,10 +85,8 @@ def detailpage(request):
                         redisdic['portslength'] = portcount
                         redisdic['portspagecount'] = portpagecount
                         redisdic['portspage'] = page
-
                         redistool.set(item, redisdic)
                         redistool.expire(item, timeout)
-
                         response_data['ports'] = ports
                         response_data['portslength'] = portcount
                         response_data['portspagecount'] = portpagecount
@@ -105,10 +103,8 @@ def detailpage(request):
                     redisdic['portslength'] = portcount
                     redisdic['portspagecount'] = portpagecount
                     redisdic['portspage'] = page
-
                     redistool.set(item, redisdic)
                     redistool.expire(item, timeout)
-
                     response_data['ports'] = ports
                     response_data['portslength'] = portcount
                     response_data['portspagecount'] = portpagecount
@@ -158,6 +154,7 @@ def detailpage(request):
                 return HttpResponse(json.dumps(response_data,skipkeys=True,default=webtool.object2dict), content_type="application/json")  
             logger.debug('Into condition elasticsearch special keywords match.')
             try:
+	    	'''
                 item = str(webtool.md5('sch_' + str(jsoncontent) + '_page' + str(page)))
                 redisresult = redistool.get(item)
 
@@ -186,7 +183,8 @@ def detailpage(request):
                         redisdic['portspage'] = page
                         redistool.set(item, redisdic)
                         redistool.expire(item, timeout)
-		else :
+                '''
+		if True:
                     logger.debug('Get data from EL.')
                     import sys
                     sys.path.append("..")
@@ -212,7 +210,7 @@ def detailpage(request):
                     logger.debug('Save to redis Done.')
 
             except Exception,e:
-                logger.error("detailpage condition search Error:%s", str(traceback.print_exc()))
+                logger.error("detailpage condition search Error:%s", str(e))
                 ports, portcount, portpagecount = getattr(portcontrol, 'portabstractshow', 'portabstractshow')(**jsoncontent)
                 response_data['ports']=ports
                 response_data['portslength']=portcount

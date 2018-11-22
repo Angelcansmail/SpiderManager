@@ -10,14 +10,14 @@ DBhelp=None
 # searchroute::detailpage传入page, extra, command='or'
 def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',page='0',extra='',command='and',head='',city='',hackinfo='',hackresults='',disclosure=''):
     localconfig = config.Config()
-    table = localconfig.porttable   #snifferdata
-    iptable = localconfig.iptable   #ip_maindata
+    port_table = localconfig.porttable   #snifferdata
+    ip_table = localconfig.iptable   #ip_maindata
     validresult = False
     request_params = []
     values_params = []
 
     if ip != '':
-        request_params.append(table+'.'+'ip')
+        request_params.append(port_table+'.'+'ip')
         values_params.append(SQLTool.formatstring(ip))
     if port != '':
         request_params.append('port')
@@ -26,7 +26,7 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
         request_params.append('timesearch')
         values_params.append(SQLTool.formatstring(timesearch))
     if state != '':
-        request_params.append(table+'.'+'state')
+        request_params.append(port_table+'.'+'state')
         values_params.append(SQLTool.formatstring(state))
     if name != '':
         request_params.append('name')
@@ -57,9 +57,9 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
     content = None
     result = None
     try:
-        result,content,count,col=DBhelp.searchtableinfo_byparams([table+' left join ip_maindata on snifferdata.ip=ip_maindata.ip'], ['count(*)'], request_params, values_params,extra=extra,command=command)
-    except Exception,e:
-        print str(e)+'portcontrol 58'
+        result,content,count,col=DBhelp.searchtableinfo_byparams([port_table+' left join ' + ip_table + ' on ' + port_table + '.ip=' + ip_table + '.ip'], ['count(*)'], request_params, values_params,extra=extra,command=command)
+    except Exception, e:
+        print "portcontrol::portabstractshow() 62::", str(e)
         if DBhelp is not None:
             DBhelp.closedb()
             DBhelp=None
@@ -73,21 +73,21 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
     else:
         pagecount = count / limitpage
 
-#     print pagecount
     if pagecount>0:
         limit = ' limit '+str(int(page)*limitpage)+','+str(limitpage)
         try:
-            result, content, count, col = DBhelp.searchtableinfo_byparams([table + ' left join ip_maindata on snifferdata.ip=ip_maindata.ip'], [table+'.'+'ip','port','timesearch',table+'.'+'state','name','product','version','script','detail','head','city','hackinfo','hackresults','disclosure'], request_params, values_params,limit=limit,order=table+'.'+'port',extra=extra,command=command)
+            result, content, count, col = DBhelp.searchtableinfo_byparams([port_table + ' left join ' + ip_table + ' on ' + port_table + '.ip=' + ip_table + '.ip'], [port_table+'.ip','port','timesearch',port_table+'.'+'state','name','product','version','script','detail','head','city','hackinfo','hackresults','disclosure'], request_params, values_params,limit=limit,order=port_table+'.'+'port',extra=extra,command=command)
         except Exception,e:
-            print str(e) + 'portcontrol 69'
+            print "portcontrol::portabstractshow() 81::", str(e)
             if DBhelp is not None:
                 DBhelp.closedb()
             return [],0,0
         if DBhelp is not None:
                 DBhelp.closedb()
                 DBhelp=None
-            
+
         portarray=[]
+
         if count > 0:
             validresult=True
             import  base64
@@ -144,12 +144,12 @@ def portshow(ip='',port='',timesearch='',state='',name='',product='',version='',
     DBhelp = SQLTool.DBmanager()
     DBhelp.connectdb()
     localconfig = config.Config()
-    table = localconfig.porttable #snifferdata
+    port_table = localconfig.porttable #snifferdata
     content = None
     result=None
 
     try:
-        result, content, count, col = DBhelp.searchtableinfo_byparams([table], ['count(*)'], request_params, values_params, extra=extra, command=command)
+        result, content, count, col = DBhelp.searchtableinfo_byparams([port_table], ['count(*)'], request_params, values_params, extra=extra, command=command)
     except Exception,e:
         print str(e) + 'portcontrol 50'
         if DBhelp is not None:
@@ -171,7 +171,7 @@ def portshow(ip='',port='',timesearch='',state='',name='',product='',version='',
     if pagecount > 0:
         limit = ' limit ' + str(int(page)*limitpage) + ',' + str(limitpage)
         try:
-            result, content, count, col=DBhelp.searchtableinfo_byparams([table], ['ip','port','timesearch','state','name','product','version','script','detail','head','hackinfo','hackresults'], request_params, values_params,limit,order=order,extra=extra,command=command)
+            result, content, count, col=DBhelp.searchtableinfo_byparams([port_table], ['ip','port','timesearch','state','name','product','version','script','detail','head','hackinfo','hackresults'], request_params, values_params,limit,order=order,extra=extra,command=command)
         except Exception,e:
             print str(e) + ' portcontrol 69'
             if DBhelp is not None:
@@ -236,12 +236,12 @@ def portadd(port):
     if head != '':
         request_params.append('head')
         values_params.append(SQLTool.formatstring(head))      
-    table=localconfig.porttable
+    port_table=localconfig.porttable
     DBhelp=SQLTool.DBmanager()
     DBhelp.connectdb()
     tempresult=None
     try:
-        tempresult=DBhelp.replaceinserttableinfo_byparams(table, request_params, [tuple(values_params)])
+        tempresult=DBhelp.replaceinserttableinfo_byparams(port_table, request_params, [tuple(values_params)])
     except Exception,e:
         print str(e)
     finally:

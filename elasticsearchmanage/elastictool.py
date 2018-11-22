@@ -10,11 +10,12 @@ from elasticsearch_dsl.query import MultiMatch, Match
 from elasticsearch_dsl.connections import connections
 import mapping
 from logger import initLog
+logger = initLog('logs/elastic.log', 1, True)
+
 import chardet
 import traceback
-logger = initLog('logs/elastic.log', 2, True)
-# Define a default Elasticsearch client
 
+# Define a default Elasticsearch client
 connections.create_connection(hosts=['localhost'])
 import base64
 
@@ -47,10 +48,10 @@ def decodestring(msg):
                 item=msg.decode('string_escape').decode('string_escape')
             except Exception,e:
                 item=msg.decode('string_escape')
-                print e,47
+                logger.error(e)
             
         except Exception,e:
-            print e,42
+	    logger.error(e)
         return decodestr(item)
     else:
         return ' '
@@ -88,12 +89,11 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
 #        logger.info('get each insert: %s', eachitem)
         # 有额外内容（ on duplicate key update xxx=aaa,yyy=bbb...
         if extra or updatevalue:
-            logger.info('更新数据')
             instanceitem = instanceins.getdata(id=':'.join(eachitem[:primarykey]))
             logger.info("inserttableinfo_byparasm::instanceitem::%s", instanceitem)
-            logger.info(str(instanceitem))
+
             if instanceitem is None:
-                logger.info('找不到该数据，创建数据')
+                logger.debug('找不到该数据，创建数据')
                 instanceins = get_table_obj(table)
                 instanceitem = instanceins(meta={'id': ':'.join(eachitem[:primarykey])})
         else:
@@ -108,7 +108,7 @@ def inserttableinfo_byparams(table,select_params,insert_values, extra='', update
         try:
             res = instanceitem.save()
         except Exception,e:
-            logger.error("%s", str(e))
+            logger.error("%s %s", str(e), str(traceback.print_exc()))
         else:
             logger.info('insert success')
 
@@ -122,11 +122,12 @@ def search(page='0',dic=None, content=None):
     validresult=False
     orderlabel=0
     orderarray = []
-    print ("======================elastictool::search content:%s======================"%(str(content)))
+    print ("======================elastictool::search dic:%s content:%s======================"%(str(dic), str(content)))
+
     if content is not None:
         q = Q("multi_match", query=content, fields=['ip', 'name','product',
                 'script' ,'detail' ,'head', 'hackinfo', 'hackresults','keywords' ,'disclosure'])
-    # 何时会执行？进入search前已经判断content是否为空了
+    # 当按照条件检索的时候，dic是将content转为json格式的内容，content为None
     else:
         searcharray=[]
         keys = dic.keys()
@@ -170,7 +171,7 @@ def search(page='0',dic=None, content=None):
                 orderlabel=1
         # MultiMatch(fields=['ip', 'name', 'product', 'script', 'detail', 'head', 'hackinfo', 'hackresults', 'keywords', 'disclosure'], query=u'mysql')
         q = Q('bool', must=searcharray)
-    print ("======================elasticsearch Q:\n%s\n"%q)
+    print ("======================elasticsearch::Q:\n%s\n"%q)
     # elasticsearch检索数据库信息
     if orderlabel == 0:
         s = Search(index='datap', doc_type='snifferdata').query(q)
@@ -215,7 +216,7 @@ def search(page='0',dic=None, content=None):
             for temp in response :
                 dic=temp.to_dict()
                 # 只获取snifferdata中的数据，没有位置信息，这里将city赋为空作用和在，后面用了city判断，直接用
-                print ("elastictool::search() index:count[%s]'s dic keys:%s"%(str(count), str(dic.keys())))
+#                print ("elastictool::search() index:count[%s]'s dic keys:%s"%(str(count), str(dic.keys())))
                 aport = ports.Port(ip=getproperty(dic,'ip'),port=getproperty(dic,'port'),timesearch=getproperty(dic,'timesearch'),state=getproperty(dic,'state'),name=getproperty(dic,'name'),product=getproperty(dic,'product'),version=getproperty(dic,'version'),script=base64.b64encode(str(getproperty(dic,'script'))),detail=getproperty(dic,'detail'),head=getproperty(dic,'head'),city='',hackinfo=getproperty(dic,'hackinfo'),hackresults=getproperty(dic,'hackresults'),disclosure=getproperty(dic,'disclosure'),keywords=getproperty(dic,'keywords'),webtitle=base64.b64encode(str(getproperty(dic,'webtitle'))),webkeywords=getproperty(dic,'webkeywords'))
                 # ip=getproperty(dic,'ip')
                 # port=getproperty(dic,'port')

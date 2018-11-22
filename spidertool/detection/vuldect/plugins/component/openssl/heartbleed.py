@@ -10,6 +10,7 @@ import requests,urllib2,json,urlparse
 
 class TimeoutError(Exception):
     pass
+
 def command(cmd, timeout=60):
     """Run command and return the output
     cmd - the command to run
@@ -34,11 +35,12 @@ def command(cmd, timeout=60):
             raise TimeoutError(cmd, timeout)
         time.sleep(0.1)
     return p.stdout.read()
+
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         result = {}
         result['result']=False
         r=None
