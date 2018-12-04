@@ -168,109 +168,125 @@
         i = size/40;
         // alert(["getdata size=", size]);
 	options = createoption(data, i, size/2);
-	myChart.setOption(options); $
+        myChart.hideLoading();
+	myChart.setOption(options, true);
 	//if (options && options == "object") {
 	//    myChart.hideLoading();
-	//    myChart.setOption(options); $
+	//    myChart.setOption(options);
 	//}
     }
 
     function createoption(data, i, size) {
-        var option = {$
-            backgroundColor: '#BBFFFF',$
-            title : {$
-                text: '异常分布',$
-                x:'center'
+        var option = {
+            backgroundColor: '#404a59',
+            title : {  
+                text: '异常分布',  
+                //x:'center',
+                left: 'center',
+                textStyle: {
+                    color: '#fff'
+                }
             },
             // 浮层设置
-            tooltip: {$
+            tooltip: {  
                 trigger: 'item',        //触发类型,'item'数据项图形触发
+                textStyle: {
+                    color: '#fff'
+                },
                 formatter: function(params) {
-                    var res = params.name+'<br/>';  $
-                    var myseries = option.series;  $
-                    if (convertData) {$
-                        for (var i = 0; i < myseries.length-1; i++) {$
+                    var res = params.name+'<br/>'; 
+                    var myseries = option.series; 
+                    if (convertData) {  
+                        for (var i = 0; i < myseries.length-1; i++) {  
                             for (var j=0;j<myseries[i].data.length;j++) {
                                 if(myseries[i].data[j].name==params.name){
-                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>'; $
-                                }$
-                            }$
-                        }$
-                    }$
-                    else {$
-                        for (var i = 0; i < myseries.length; i++) {  $
-                            for(var j=0;j<myseries[i].data.length;j++){  $
-                                if(myseries[i].data[j].name==params.name){  $
-                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';  $
-                                }  $
-                            }  $
-                        } $
-                    }  $
-                    return res;  $
-                }  $
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>';
+                                }  
+                            }  
+                        }  
+                    }  
+                    else {  
+                        for (var i = 0; i < myseries.length; i++) { 
+                            for(var j=0;j<myseries[i].data.length;j++){ 
+                                if(myseries[i].data[j].name==params.name){ 
+                                    res+=myseries[i].name +' : '+myseries[i].data[j].value+'</br>'; 
+                                } 
+                            } 
+                        }
+                    } 
+                    return res; 
+                } 
             }, 
-            legend: {$
+            legend: {  
                 orient: 'vertical',
                 y: 'bottom',
-                x:'90%',$
-                data:['主机','Top City']
+                x:'90%',  
+                data:['主机','Top City'],
+                textStyle: {
+                    color: '#fff'
+                }
             }, 
-            geo: {$
-                map: 'china',$
-                label: {$
-                    emphasis: {$
+            geo: {  
+                map: 'china',  
+                label: {  
+                    emphasis: {  
                         show: false
-                    }$
+                    }  
                 },
                 roam: true,
-                itemStyle: {$
-                    normal: {$
-                        areaColor: '#FFE4CA',$
-                        borderColor: '#84C1FF',$
-                        borderWidth: 0.8$
-                    },$
-                    emphasis: {$
-                        areaColor: '#FFC78E'$
-                    }$
-                }$
-            },$
+                itemStyle: {  
+                    normal: {
+                        areaColor: '#323c48',
+                        borderColor: '#111',
+                        borderWidth: 0.8  
+                    },  
+                    emphasis: {  
+                        areaColor: '#2a333d'
+                    }  
+                }  
+            },  
             dataRange: {
                 min: 0,
                 max: 2*size,
                 x: 'left',
                 y: 'bottom',
                 text:['高','低'],
+                textStyle: {
+                    color: '#fff'
+                },
                 calculable : true,
-                color:['red','orange','yellow','green'],$
+		// color: ['orangered','yellow','lightskyblue']
+                color:['red','orangered','yellow','lightskyblue']
             }, 
-            toolbox: {$
-                show: true,$
-                orient : 'vertical',$
-                x: 'right',$
-                y: 'center',$
-                feature : {$
-                    mark : {show: true},$
-                    dataView : {show: true, readOnly: false},$
-                    restore : {show: true},$
-                    saveAsImage : {show: true}$
-                }$
-            },$
-            roamController: {$
-                show: true,$
-                x: 'right',$
-                mapTypeControl: {$
-                    'china': true$
-                }$
-            },$
-            series : [$
-                {$
-                    name: '主机',$
+            toolbox: {
+                show: true,
+                orient : 'vertical',
+                x: 'right',
+                y: 'center',
+                feature : {
+                    mark : {show: true},
+                    dataView : {show: true, readOnly: false},
+                    restore : {show: true},
+                    saveAsImage : {show: true},
+                    textStyle: {color: '#fff'}
+                }
+            },
+            roamController: {  
+                show: true,  
+                x: 'right',  
+                mapTypeControl: {
+                    'china': true
+                }
+            },  
+            series : [  
+                {  
+                    name: '主机',  
                     type: 'scatter', 
-                    coordinateSystem: 'geo',$
-                    itemStyle:{$
+                    coordinateSystem: 'geo',  
+                    /*itemStyle:{  
                         normal:{label: {show: false}},
-                        emphasis:{label:{show:true}}$
-                    },$
+                        emphasis:{label:{show:true}}  
+                    },*/  
                     data: convertData(data),
                     // symbolSize: 15,
                     symbolSize: function (val) {
@@ -292,29 +308,34 @@
                     // 图形样式，normal 是图形在默认状态下的样式；emphasis 是图形在高亮状态下的样式，比如在鼠标悬浮或者图例联动高亮时
                     itemStyle: {
                         normal: {
-                            color: '#ddb926'
+                            //color: '#ddb926'
+                            color: '#f4e925'
                         }
                     }
                 },
-                {$
+                {  
                     name: 'Top City',
-                    type: 'effectScatter',//影响散点$
-                    coordinateSystem: 'geo',$
+                    type: 'effectScatter',//影响散点  
+                    coordinateSystem: 'geo',  
                     data: convertData(data.sort(function (a, b) {
                         return b.value - a.value;
                     }).slice(0, 6)),
-                    symbolSize: 12,
-                    /*symbolSize: function (val) {
-                        return val[2]/size;
-                    },*/
+                    //symbolSize: 12,
+                    symbolSize: function (val) {
+                        var item=val[2]/size;
+
+                        var number=(Math.exp(item-1))*i;
+                        console.log(item,number,val[2],val[2]/number);
+                        return val[2]/number+1;
+                    },
                     showEffectOn: 'render', 
                     //波纹的绘制方式，可选 'stroke' 和 'fill'。
-                    rippleEffect: {$
-                        brushType: 'stroke'$
-                    },$
-                    hoverAnimation: true,$
-                    label: {$
-                        normal: {$
+                    rippleEffect: {  
+                        brushType: 'stroke'  
+                    },  
+                    hoverAnimation: true,  
+                    label: {  
+                        normal: {  
                             formatter: '{b}',
                             position: 'right',
                             show: true
@@ -326,18 +347,18 @@
                     itemStyle: {
                         normal: {
                             color: '#f4e925',
-                            shadowBlur: 10,$
+                            shadowBlur: 10,  
                             shadowColor: '#333' 
                         }
                     },
                     zlevel: 1
                 }
-            ]$
-        };$
+            ]  
+        };  
         return option;
     }
 
-    var geoCoordMap = {//自定义城市坐标$
+    var geoCoordMap = {//自定义城市坐标  
         '安康': [109.025787354, 32.6898651123],
         '安庆': [117.034431458, 30.5126457214],
         '安顺': [105.926071167, 26.2442588806],
@@ -1064,7 +1085,7 @@
         '淄博市': [118.05, 36.78],
         '自贡市': [104.778442, 29.33903],
         '遵义市': [106.9, 27.7]
-    };$
+    };  
 
     // 获取城市对应的经纬度
     var convertData = function(data) {
@@ -1084,15 +1105,15 @@
 
     // 调用显示
     // options = createoption();
-    // myChart.setOption(options); $
-    myChart.on('mouseover', function (params) {$
-        var dataIndex = params.dataIndex;$
-        console.log(params);$
-    });$
+    // myChart.setOption(options);
+    myChart.on('mouseover', function (params) {  
+        var dataIndex = params.dataIndex;  
+        console.log(params);  
+    });  
 
-    window.addEventListener("resize",function(){$
-        myChart.resize();$
-    });$
+    window.addEventListener("resize",function(){  
+        myChart.resize();  
+    });  
 
     document.onkeydown = function (e) {
         //捕捉回车事件

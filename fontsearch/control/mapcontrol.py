@@ -46,10 +46,9 @@ def mapshow(ip='',port='',state='',name='',product='',version='',searchcontent='
 
     if isdic == 0:
         if searchcontent =='':
-            sql = """SELECT city, COUNT(*) FROM ip_maindata  GROUP BY city"""
+            sql = """SELECT city, COUNT(*) FROM ip_maindata GROUP BY city"""
         else:
-            sql = """SELECT city, COUNT(*) FROM (SELECT ip AS ipitem FROM snifferdata WHERE MATCH (version , product , head , detail , script , hackresults , hackinfo, disclosure , keywords) AGAINST ('%s' IN BOOLEAN MODE)
-    GROUP BY ip) AS iptable LEFT JOIN ip_maindata ON ipitem = ip_maindata.ip GROUP BY city""" %(searchcontent)
+            sql = """SELECT city, COUNT(*) FROM (SELECT ip AS ipitem FROM snifferdata WHERE MATCH (version , product , head , detail , script , hackresults , hackinfo, disclosure , keywords) AGAINST ('%s' IN BOOLEAN MODE) GROUP BY ip) AS iptable LEFT JOIN ip_maindata ON ipitem = ip_maindata.ip GROUP BY city""" %(searchcontent)
     else:
         sql = """SELECT city, COUNT(*) FROM (SELECT ip AS ipitem FROM snifferdata WHERE  """
         request_params_length=len(request_params)

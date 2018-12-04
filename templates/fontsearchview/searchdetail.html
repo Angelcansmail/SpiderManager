@@ -221,6 +221,7 @@
         var str = '';
         nowpage = currpage;
         str = 'content=' + content + '&page=' + number;
+	alert(["searchdetail", str]);
 
         xmlhttp.open("POST", "/fontsearch/searchdetail", true);	// detailpage
         xmlhttp.onreadystatechange = callback;

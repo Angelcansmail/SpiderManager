@@ -5,11 +5,12 @@ import json
 
 def getGeoipinfo(data):
     print "httpdect::webdection::getGeoipinfo(%s)..."% data
-    # 组成查询ip地理位置的网址，返回字典格式在前端fontsearch/detailmapview.html展示
+#   组成查询ip地理位置的网址，返回字典格式在前端fontsearch/detailmapview.html展示
     url = 'http://ip-api.com/json/%s' % (data)
 #    url = 'http://ip-api.com/json/%s' % (data['ip'][0])
-    # 访问url地址, urlobject是<type 'instance'>对象
-    urlobject = urllib2.urlopen(url)
+#   访问url地址, urlobject是<type 'instance'>对象
+#   设置超时时间，否则会假死
+    urlobject = urllib2.urlopen(url, timeout=3)
     urlcontent = urlobject.read()
 
     '''
