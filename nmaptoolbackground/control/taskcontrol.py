@@ -54,17 +54,17 @@ def addschedule(event, day_of_week='0-6', hour='11',minute='57' ,second='0',id='
 def scheduleinit():
     from spidertool import scapytool 
     import taskitem
-#    scapyitem = scapytask.ScapyTask()#被动嗅探
+    # scapyitem = scapytask.ScapyTask()#被动嗅探
     global mainschedule
     mainschedule = schedule.schedulecontrol()
     # mainschedule.addschedule(event=taskitem.recovertask,type='date')  # 异常宕机恢复
     # mainschedule.addschedule(event=taskitem.normaltask,type='date')  # 后台异步任务
 
-#    mainschedule.addschedule(taskitem.listiptask,'0-6','*/21','13','0',id='listiptask')#自定义扫描段任务器
-    mainschedule.addschedule(taskitem.tick,'0-6','19','29','0',id='nmap')#nmap定时任务器
-#    mainschedule.addschedule(taskitem.ticknormal,'0-6','13','20','0',id='zmap')#zmap定时任务器
-#    mainschedule.addschedule(taskitem.gchelp,'0-6','0-23','0','0',id='gc')#gc collect   
-#    mainschedule.addschedule(taskitem.test,'0-6','0-23','34','0',id='test')#gc collect   
+    # mainschedule.addschedule(taskitem.listiptask,'0-6','*/21','13','0',id='listiptask')#自定义扫描段任务器
+    mainschedule.addschedule(taskitem.tick,'0-6','15','40','0',id='nmap')#nmap定时任务器
+    # mainschedule.addschedule(taskitem.ticknormal,'0-6','18','30','0',id='zmap')#zmap定时任务器
+    # mainschedule.addschedule(taskitem.gchelp,'0-6','0-23','0','0',id='gc')#gc collect
+    # mainschedule.addschedule(taskitem.test,'0-6','0-23','34','0',id='test')#gc collect
 
     print 'init schedule'
 

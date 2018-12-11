@@ -6,6 +6,7 @@ import urllib2
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         timeout=3
         target_url = 'http://'+ip+':'+port
@@ -21,7 +22,7 @@ class P(T):
             for password in pass_list:
                 try:
                     PostStr='j_username=%s&j_password=%s&loginButton=Login&loginButton.DisabledHiddenField=true'%(user,password)
-                    print PostStr
+                    # print PostStr
                     request = urllib2.Request(target_url+'/common/j_security_check',PostStr)
                     res = urllib2.urlopen(request,timeout=timeout)
                     res_html = res.read()

@@ -48,20 +48,20 @@ class P(T):
             dic['password'] = 'zabbix'
             # print dic
             r = s.post(target_url + '/index.php', data=dic, headers=h2, timeout=10)
-            print r.content
+            # print r.content
             if 'chkbxRange.init();' in r.content:
                 for each in blacklist:
                     if each in r.content:
                         return result
-                else:
-                    info = ' zabbix Weak password Admin:zabbix'
+                    else:
+                        info = ' zabbix Weak password Admin:zabbix'
 
-                    result['result'] = True
-                    result['VerifyInfo'] = {}
-                    result['VerifyInfo']['type'] = 'zabbix Weak password'
-                    result['VerifyInfo']['URL'] = target_url
-                    result['VerifyInfo']['result'] = info
-                    result['VerifyInfo']['level'] = 'hole'
+                        result['result'] = True
+                        result['VerifyInfo'] = {}
+                        result['VerifyInfo']['type'] = 'zabbix Weak password'
+                        result['VerifyInfo']['URL'] = target_url
+                        result['VerifyInfo']['result'] = info
+                        result['VerifyInfo']['level'] = 'hole'
         except Exception, e:
             print e
         finally:

@@ -8,6 +8,7 @@ import requests,urllib2,json,urlparse
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         result = {}
         result['result']=False
@@ -24,7 +25,6 @@ class P(T):
             result['VerifyInfo']['payload']='None'
             result['VerifyInfo']['result'] ='MongoClient unauth'
             result['VerifyInfo']['level'] = 'hole'
-
         except Exception,e:
             print e.text
         finally:

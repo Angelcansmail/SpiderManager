@@ -14,6 +14,7 @@ from termcolor import cprint
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         target_url = "http://"+ip+":"+port+"/dfshealth.jsp"
         result = {}
@@ -21,8 +22,9 @@ class P(T):
         r=None
         try:
             r = requests.get(url=target_url,timeout=2)
+
             if r.status_code==200:
-	    	cprint(target_url+'存在hadoop unac漏洞', 'red')
+                cprint(target_url+'存在hadoop unac漏洞', 'red')
                 result['result']=True
                 result['VerifyInfo'] = {}
                 result['VerifyInfo']['type']='hadoop unauthority.'

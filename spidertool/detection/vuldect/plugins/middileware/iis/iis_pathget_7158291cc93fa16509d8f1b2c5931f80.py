@@ -11,17 +11,17 @@ QQ        :  779408317
 """
 
 from ..miniCurl import Curl
-from ..t  import T
+from ..t import T
 
 class P(T):
     def __init__(self):
         T.__init__(self)
+     
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()
         result = {}
         result['result']=False
-
         url = arg + 'testvulxxxxxxxxxxxxxxxxxxxx'
         code, head, body, error, _ = curl.curl(url)
         #修正正则，可匹配非中文情况

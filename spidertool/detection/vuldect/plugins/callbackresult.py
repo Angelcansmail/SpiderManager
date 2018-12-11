@@ -20,7 +20,7 @@ def storedata(ip='',port='',hackresults=None):
                     
 #     else:
 
-    hackinfo = ''
+    hackinfo = ' '
     if isinstance(hackresults,str):
 	hackinfo = hackresults
     else:
@@ -31,14 +31,14 @@ def storedata(ip='',port='',hackresults=None):
 		hacks = hack['VerifyInfo']
 		print '\n\nstoredata', hacks
 		if 'result' in hacks.keys() and len(hacks['result']) < 150:
-		    hackinfo += str({'level':hacks['level'], 'result': hacks['result']}) + '\\n '
+		    hackinfo += str({'level':hacks['level'], 'result': hacks['result']}) + '\\n'
 		else:
-		    hackinfo += str({'level':hacks['level'], 'result': hacks['type']}) + '\\n '
+		    hackinfo += str({'level':hacks['level'], 'result': hacks['type']}) + '\\n'
 	    else:
 	    	print '\n\nhack is a list but not a dict!!', type(hack)
-	        hackinfo += str({'level':'NOTE', 'result':str(hack)}) + '\\n '
+	        hackinfo += str({'level':'NOTE', 'result':str(hack)}) + '\\n'
 	print '\n\nhackinfo',hackinfo
-    hackinfo = SQLTool.escapewordby(hackinfo.strip('\\n '))
+    hackinfo = SQLTool.escapewordby(hackinfo.strip('\\n'))
     hackresults = SQLTool.escapewordby(str(hackresults))
     extra=' on duplicate key update hackinfo=\''+hackinfo+'\' , hackresults=\''+hackresults+'\' , timesearch=\''+localtime+'\''
 

@@ -26,7 +26,7 @@ handler404 = "nmaptoolbackground.nmaproute.page_not_found"
 handler500 = "nmaptoolbackground.nmaproute.page_error"
 
 urlpatterns = [
-#    url(r'^', include('fontsearch.urls', namespace='fontsearch')),
+    url(r'^', include('nmaptoolbackground.urls', namespace='nmaptool')),
     url(r'^admin/', admin.site.urls),
     url(r'^favicon.ico$', RedirectView.as_view(url='/static/favicon.ico')),
     url(r'^status/$', route.indexpage, name='status'),

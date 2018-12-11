@@ -14,13 +14,15 @@ import pexpect
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
 
         result = {}
         result['result']=False
+        i=0
         cmd=None
         passwd='zebra'
-        i=0
+
         cmd = pexpect.spawn('telnet %s %s' %(ip,port) )
         try:
             i = cmd.expect(['Password:','Connection refused'], timeout=2)
@@ -39,7 +41,6 @@ class P(T):
             result['VerifyInfo']['payload'] = passwd
             result['VerifyInfo']['level'] = 'hole'
             result['VerifyInfo']['result'] = 'pass is  %s'% passwd
-
         except pexpect.EOF:
             pass
         except pexpect.TIMEOUT:

@@ -15,10 +15,14 @@ content=$1
 rm `find -name "*.err"`
 rm `find -name "*.log"`
 rm `find -name "*.pyc"`
+mv SpiderManager/settings.py elasticsearchmanage/elastictool.py elasticsearchmanage/mapping.py spidertool/config.py ../
 git add *
 git commit -m "$content"
 git push origin master
 
+mv ../elastictool.py ../mapping.py elasticsearchmanage/
+mv ../settings.py SpiderManager/
+mv ../config.py spidertool/
 # 获取大文件列表
 # git rev-list --objects --all | grep "$(git verify-pack -v .git/objects/pack/*.idx | sort -k 3 -n | tail -5 | awk '{print$1}')"
 

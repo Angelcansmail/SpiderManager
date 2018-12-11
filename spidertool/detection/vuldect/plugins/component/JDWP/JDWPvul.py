@@ -51,7 +51,7 @@ class P(T):
             if 'Command successfully executed' in msgresult:
                 result['result']=True
                 result['VerifyInfo'] = {}
-                result['VerifyInfo']['type']='Java Debug Wire Protocol   vul'
+                result['VerifyInfo']['type']='Java Debug Wire Protocol vul'
                 result['VerifyInfo']['URL'] =ip+':'+port
                 result['VerifyInfo']['payload']='Java Debug Wire Protocol poc'
                 result['VerifyInfo']['result'] =msgresult

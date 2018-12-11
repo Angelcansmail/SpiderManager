@@ -1,7 +1,9 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from ..miniCurl import Curl
+from ..t  import T
+
 """
 POC Name  : Joomla Random Article SQL Injection
 From : http://cxsecurity.com/issue/WLB-2015030172
@@ -21,7 +23,6 @@ class P(T):
         code, head, res, _, _ = curl.curl("%s" % target_url)
         if code==200 and '4beed3b9c4a886067de0e3a094246f78' in res :
             output(target_url,result,'hole')
-    
 
         del curl
         return result

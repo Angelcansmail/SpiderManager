@@ -187,14 +187,14 @@ class PocController(object):
                     if result['result']:
                         i = 1
                         dataresult.append(result)
-		        print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
-#                        cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
+                        print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
+                        # cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
+                else:
+                    cprint('<<<<' + str(result) + '>>>>', 'grey')
+                    pass
             except Exception, e:
-		self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
-#		print str(poc) + ' verify failed!->' + e.message
-            else:
-		cprint('<<<<' + str(result) + '>>>>', 'grey')
-                pass
+                # self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
+                print str(poc) + ' verify failed!->' + str(e.message)
         if i==1:
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
             # callbackresult.storeresult(dataresult)
@@ -232,7 +232,7 @@ class PocController(object):
                 continue
             for keyword in modulekeywords:
 #	 	组件在产品名、头部或者nmapscript(这里命名有问题，hackresults->nmapscript)信息中出现，均应当作危险信息进行检测验证
-	    	if keyword in kw or keyword in productname.get('productname','').lower()  or keyword in head.lower() or keyword in hackresults.lower()    :
+	    	if keyword in kw or keyword in productname.get('productname','').lower()  or keyword in head.lower() or keyword in str(hackresults).lower():
                     self.logger.info('Match Keyword: -> %s', keyword)
                     matched_modules.add((module_name,componentname))
                     break

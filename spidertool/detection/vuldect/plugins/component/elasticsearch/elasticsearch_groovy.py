@@ -35,20 +35,17 @@ class P(T):
         except Exception,e:
             content = e
         finally:
-
             if req:
                 req.close()
                 del req
             return content
     
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
-
         result = {}
         content_2 = self.CVE20151427(ip,port)
-
         result['result']=False
-        if 'Cannot run program \\\\\\\"COMMAND\\\\\\\"' in content_2:
 
+        if 'Cannot run program \\\\\\\"COMMAND\\\\\\\"' in content_2:
             result['result']=True
             result['VerifyInfo'] = {}
             result['VerifyInfo']['type']='Command Execution'

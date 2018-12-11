@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 #-*- encoding:utf-8 -*-
 #__author__ = '0x3D'
-#CVE: 2010-2263
+'''
+CVE: 2010-2263
+nginx Remote Source Code Disclosure and Denial of Service
+'''
 
 from ..miniCurl import Curl
 from ..t import T
@@ -11,6 +14,7 @@ import re
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         arg='http://'+ip+':'+port+'/'
         curl=Curl()

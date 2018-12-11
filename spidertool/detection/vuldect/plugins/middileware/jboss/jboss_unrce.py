@@ -1,10 +1,12 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-
+'''
+CVE-2015-7501 POC
+'''
 import urllib2
 import binascii
 import time
-
+from termcolor import cprint
 from ..t import T
 
 def readfile(path):

