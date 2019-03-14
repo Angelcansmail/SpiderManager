@@ -74,7 +74,6 @@ class ProcessTool:
 		time.sleep(0.5)
 
 
-
 	def getqueue_size(self):
 		return self.q_request.qsize()
 	def set_Thread_size(self,threads_num=10):

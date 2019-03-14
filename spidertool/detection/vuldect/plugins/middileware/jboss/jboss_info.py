@@ -23,6 +23,7 @@ class P(T):
         finally:
             if res is not None:
                 res.close()
+
         if "Max processing time" in res_html:
             info = vul_url + " Jboss Information Disclosure"
             result['result']=True
@@ -33,10 +34,7 @@ class P(T):
             result['VerifyInfo']['result'] =info
             result['VerifyInfo']['level'] = 'info'
         return result
-   
-            
 
-           
 
 if __name__ == '__main__':
     print P().verify(ip='1.202.164.105',port='8080')      

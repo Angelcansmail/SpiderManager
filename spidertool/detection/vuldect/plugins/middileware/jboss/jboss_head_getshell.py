@@ -22,11 +22,10 @@ def readfile(path):
         file_object.close( )
     return data
 
-
-
 class P(T):
     def __init__(self):
         T.__init__(self)
+
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         timeout=3
         target_url = 'http://'+ip+':'+port
@@ -67,7 +66,7 @@ class P(T):
                 result['VerifyInfo']['level'] = 'hole'
         except Exception,e:
             print e
-    
+
         finally:
             if res is not None:
                 res.close()

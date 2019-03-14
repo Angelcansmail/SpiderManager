@@ -1,12 +1,15 @@
 #!/usr/bin/python
 #coding:utf-8
 
+
 from spidertool import webtool
 from location import Location
+import ast
+
 class Port(object):
-    def __init__(self,ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',head='',city='',hackinfo='',hackresults='',disclosure='',keywords=None,webtitle='',webkeywords=''):
+    def __init__(self,ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',head='',city='',hackinfo='',hackresults=None,disclosure=None,geoinfo=None,webtitle='',webkeywords=''):
         '''
-        Constructor
+            Constructor
         '''
         self.ip=ip
         self.port=port
@@ -26,23 +29,34 @@ class Port(object):
         self.hackinfo = hackinfo
         self.hackresults = hackresults
         self.disclosure = disclosure
-        self.keywords = keywords
+        self.geoinfo = geoinfo
         self.webkeywords = webkeywords
         self.webtitle = webtitle
 
-        if self.keywords is None:
-            self.keywords = Location(ip=str(self.ip)).getData()
+        if self.geoinfo is None:
+            self.geoinfo = Location(ip=str(self.ip)).getData()
         else:
             try:
-                data = eval(keywords)
-                self.keywords = data
-                if self.keywords.get('geoip',None) is None:
-                    self.keywords = Location(ip=str(self.ip)).getData()
-            except Exception,e:
+                data = eval(geoinfo)
+                self.geoinfo = data
+                if self.geoinfo.get('geoip',None) is None:
+                    self.geoinfo = Location(ip=str(self.ip)).getData()
+            except Exception, e:
+                self.geoinfo = Location(ip=str(self.ip)).getData()
+            # print self.geoinfo
+            # print self.geoinfo['geoip']['country']
 
-                self.keywords = Location(ip=str(self.ip)).getData()
-            # print self.keywords
-            # print self.keywords['geoip']['country']
+        try:
+            # print("ports detect hackresults", type(hackresults), len(hackresults), str(hackresults))
+            if self.hackresults is not None and self.hackresults != '':
+                self.hackresults = ast.literal_eval(hackresults)
+                # print "ports detect hackresults.", type(self.hackresults), str(self.hackresults)
+            # print "ports detect disclosure.", (type(disclosure)), len(disclosure), disclosure
+            if self.disclosure is not None:
+                self.disclosure = ast.literal_eval(disclosure)
+                # print "ports detect disclosure.", type(self.disclosure), str(self.disclosure)
+        except Exception, e:
+            print "ports trans hackresults and disclosures error: ", str(e)
 
     def getIP(self):
         return self.ip

@@ -39,17 +39,17 @@ class PocsearchTask(TaskTool):
 
         head='' if req[0] is None else req[0]
         context='' if req[1] is None else req[1]
-	# 202.108.143.152
+	    # 202.108.143.152
         ip='' if req[2] is None else req[2]
-	# 80
+	    # 80
         port='' if req[3] is None else req[3]
-	# Apache Tomcat/Coyote JSP engine
+	    # Apache Tomcat/Coyote JSP engine
         productname='' if req[4] is None else req[4]
-	# plugins下检测到的keywords（ssh、mysql、ftp、rsync）和getgeoipinfo获取到的位置信息
+	    # plugins下fuzzeydetect disclosures与检测到的keywords（ssh、mysql、ftp、rsync）和getgeoipinfo获取到的位置信息
         keywords='' if req[5] is None else req[5]
-	# {'http-server-header': 'Apache-Coyote/1.1', 'http-title': '\\xE9\\xA6\\x96\\xE9\\xA1\\xB5--\\xE5\\x8F\\xA4\\xE9\\x9F\\xB5\\xE6\\xAD\\xA3\\xE5\\xA3\\xB0'}
+	    # {'http-server-header': 'Apache-Coyote/1.1', 'http-title': '\\xE9\\xA6\\x96\\xE9\\xA1\\xB5--\\xE5\\x8F\\xA4\\xE9\\x9F\\xB5\\xE6\\xAD\\xA3\\xE5\\xA3\\xB0'}
         nmapscript='' if req[6] is None else req[6]
-	# http
+	    # http
         protocol='' if req[7] is None else req[7]
 
         productinfo={}
@@ -60,9 +60,9 @@ class PocsearchTask(TaskTool):
         gc.collect()
         objgraph.show_growth()
     	# 已经初始化了为啥还要执行？
-	# temp = default.PocController(logger=logger)
+	    # temp = default.PocController(logger=logger)
     	# 为传入defaultpoc参数？
-        self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productinfo, keywords=keywords, hackresults=nmapscript)
+        self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productinfo, keywords=keywords, nmapscript=nmapscript)
 
         print threadname+'POC检测任务结束'+str(datetime.datetime.now())
         print 'POC   内存增长状况'

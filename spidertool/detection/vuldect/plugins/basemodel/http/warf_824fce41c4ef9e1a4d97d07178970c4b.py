@@ -50,7 +50,7 @@ class P(T):
         code, head, body, error, _ = curl.curl(arg)
         for waf in wafs:
             if wafs[waf][0] in head and re.search(wafs[waf][1],head,re.IGNORECASE):
-                output(waf,result,'note')
+                output(waf,result,'一般')
                 break
         del curl
         return result

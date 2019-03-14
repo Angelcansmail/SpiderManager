@@ -7,7 +7,7 @@ import spidertool.config as config
 import time
 # islocalwork=config.Config.islocalwork
 
-def storedata(ip='',port='',hackresults=None):
+def storedata(ip='',port='',disclosures=None):
     sqlTool = Sqldatatask.getObject()
     localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
     insertdata = []
@@ -20,14 +20,17 @@ def storedata(ip='',port='',hackresults=None):
 #         self.uploadwork.add_work(work)
 #     else:
 
+     # {'223.223.187.90:8080': [{'status': 200, 'url': '223.223.187.90:8080/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/%c0%ae%c0%ae/etc/passwd'}, {'status': 200, 'url': '223.223.187.90:8080/file/Placard/upload/Imo_DownLoadUI.php?cid=1&uid=1&type=1&filename=/../../../../etc/passwd'}, {'status': 200, 'url': '223.223.187.90:8080/resin-doc/resource/tutorial/jndi-appconfig/test?inputFile=/etc/passwd'}, {'status': 200, 'url': '223.223.187.90:8080/wp-config.php~'}, {'status': 200, 'url': '223.223.187.90:8080/'}]}
+    # 现在是依次遍历list集合拼接，是否可以直接返回list集合，像hackresults一样
     disclosure = ''
-    for ip_port in hackresults:
-    	disinfo_list = hackresults[ip_port]
-	for disinfo in disinfo_list:
-	    disclosure += str(disinfo) + '\\n '
+    # for ip_port in disclosures:
+    # 	disinfo_list = disclosures[ip_port]
+	# for disinfo in disinfo_list:
+	#     disclosure += str(disinfo) + '\\n '
 #	    disinfo_list.remove(disinfo)
-    disclosure = SQLTool.escapewordby(disclosure)
-#    hackresults = SQLTool.escapewordby(str(hackresults))
+
+    print "fuzzey detect callbackfuzz: ", type(disclosures), str(disclosures)   # a dict
+    disclosure = SQLTool.escapewordby(str(disclosures))
     extra=' on duplicate key update  disclosure=\''+disclosure+'\' , timesearch=\''+localtime+'\''
 
     insertdata.append((str(ip),port,disclosure,str(port)))
@@ -43,7 +46,7 @@ def storedata(ip='',port='',hackresults=None):
     from ..vuldect import pocsearchtask
     temp = pocsearchtask.getObject()
     # head,context,ip,port,productname,keywords,nmapscript,protocol
-    temp.add_work([(None,None,ip,port,None,None,hackresults,None)])
+    temp.add_work([(None,None,ip,port,None,None,disclosures,None)])
     print 'fuzz 数据存储调用'
     pass
 

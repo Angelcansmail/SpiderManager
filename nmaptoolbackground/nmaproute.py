@@ -234,7 +234,7 @@ def ipmain(request):
         response_data['result'] = '0' 
 
         # 从ip_maindata表中，根据条件过滤信息，表内容什么时候写入的?
-        if role=='1':
+        if role == '1':
             jobs, count, pagecount = jobcontrol.jobshow(username=username, taskid=jobid)
             print 'this is user, jobid=', jobid
         else:

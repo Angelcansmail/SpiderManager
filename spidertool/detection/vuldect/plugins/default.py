@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # encoding: utf-8
+
 from os.path import dirname, abspath, join, isdir
 from os import listdir
 from urlparse import urljoin
@@ -133,8 +134,8 @@ class PocController(object):
         self.__load_component_plugins(map(lambda module_info: module_info['module_name'], self.modules_list))
 	# self.logger.info('**************************vuldect loader done!!!**************************')
 
-    def env_init(self, head='',context='',ip='',port='',productname=None,keywords='',hackresults='',defaultpoc=''):
-        self.init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,defaultpoc=defaultpoc)
+    def env_init(self, head='',context='',ip='',port='',productname=None,keywords='',nmapscript='',defaultpoc=''):
+        self.init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,nmapscript=nmapscript,defaultpoc=defaultpoc)
 
     def __match_modules_by_poc(self,head='',context='',ip='',port='',productname=None,keywords='',defaultpoc=''):
         matched_modules = set()
@@ -148,12 +149,12 @@ class PocController(object):
 
         return matched_modules, othermodule
 
-    def init(self,  head='',context='',ip='',port='',productname=None,keywords='',hackresults='', defaultpoc='',**kw):
+    def init(self,  head='',context='',ip='',port='',productname=None,keywords='',nmapscript='', defaultpoc='',**kw):
         POCS = []
         modules_list = []
-        
-        if defaultpoc=='':
-            modules_list, _ = self.__match_modules_by_info(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults)
+
+        if defaultpoc == '':
+            modules_list, _ = self.__match_modules_by_info(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript)
         else:
             modules_list, _ = self.__match_modules_by_poc(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,defaultpoc=defaultpoc)
     	# set([('http', 'basemodel'), ('tomcat', 'middileware'), ('struts', 'component'), ('apache', 'middileware')])
@@ -162,31 +163,38 @@ class PocController(object):
             for item in self.components[conponent][modules]:
                 P = item()
                 try:
-		    # 没写，现在都返回true
-                    if self.__match_rules(pocclass=P,head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults, **kw):
+		            # 没写，现在都返回true
+                    if self.__match_rules(pocclass=P,head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript, **kw):
                         POCS.append(P)
                 except Exception,e:
                     self.logger.error('error: %s', e)
 #                self.logger.info('Init Plugin: %s', item)
-        self.logger.debug('要执行筛选的组件: %s', str(POCS))
-	# 执行每个组件下的verify函数，验证是否存在漏洞，区别在于payload不同
-        self.match_POC(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,POCS=POCS, **kw)
+        self.logger.debug('%s:%s 要执行筛选的组件: %s', ip, str(port), str(POCS))
+	    # 执行每个组件下的verify函数，验证是否存在漏洞，区别在于payload不同
+        self.match_POC(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords,
+                       nmapscript=nmapscript, POCS=POCS, **kw)
+        # email_msg = self.match_POC(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,nmapscript=nmapscript,POCS=POCS, **kw)
+        # if email_msg:
+        #     callbackresult.sendemail(email_msg)
 
     @classmethod
-    def match_POC(self,head='',context='',ip='',port='',productname=None,keywords='',hackresults='',POCS=None, **kw):
+    def match_POC(self,head='',context='',ip='',port='',productname=None,keywords='',nmapscript='',POCS=None, **kw):
         haveresult=False
         dataresult=[]
         result={}
         i=0
+        email_msg = ''
         for poc in POCS:
             try:
-                result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults)
+                result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript)
 #    		print('\033[1;36m ' + str(poc) + '::result->' + str(result) + '\033[0m')
     		# 默认result['result']=False
                 if isinstance(result, dict):
                     if result['result']:
                         i = 1
-                        dataresult.append(result)
+                        dataresult.append(result['VerifyInfo'])
+                        email_msg += """%s:%s存在%s %s 风险，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
+                        # callbackresult.sendemail(result['VerifyInfo']['level'], ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险，请及时处理!')
                         print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
                         # cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
                 else:
@@ -196,16 +204,19 @@ class PocController(object):
                 # self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
                 print str(poc) + ' verify failed!->' + str(e.message)
         if i==1:
+            callbackresult.sendemail(ip + ':' + port, email_msg)
+            # callbackresult.storeresult(result=dataresult)
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
             # callbackresult.storeresult(dataresult)
             pass
         else:
             cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')
         del POCS
+        # return email_msg
 
     @classmethod
     def __match_rules(self,pocclass=None,head='',context='',ip='',port='',productname=None,keywords='',hackresults='', **kw):
-	# 每个插件下的T类函数, 目前没有内容，只是返回true
+	# 每个插件下的T类函数, 目前没有内容，只是返回true, 可以提前对每个组件加一个规则过滤条件
         return pocclass.match_rule(head='',context='',ip='',port='',productname=productname,keywords='',hackresults='', **kw)
 
     def __match_modules_by_info(self,head='',context='',ip='',port='',productname=None,keywords='',hackresults=''):
@@ -215,12 +226,12 @@ class PocController(object):
 #             othermodule.extend(self.components[module_name].keys())
         if (productname is not None and productname.get('productname',None) is None):
             productname['productname']=''
-        if head ==None:
-            head=''
-        if hackresults ==None:
-            hackresults=''
+        if head == None:
+            head = ''
+        if hackresults == None:
+            hackresults = ''
 
-        kw=keywords#关键词(ssh.mysql,rsync.ftp)
+        kw = keywords#关键词(ssh.mysql,rsync.ftp)
         for module_name, module_info in self.keywords.items():
             modulekeywords = module_info[0]
             componentname = module_info[1]
@@ -237,28 +248,28 @@ class PocController(object):
                     matched_modules.add((module_name,componentname))
                     break
         for module_name, module_info in self.rules.items():
-            rules=module_info[0]
-            componentname=module_info[1]
+            rules = module_info[0]
+            componentname = module_info[1]
 #	    <function rules at 0x7fea340322a8>, componentname:component
 #	    print "__match_modules_by_info modulerules:%s, componentname:%s"%(str(rules), str(componentname))
             if not rules:
                 matched_modules.add((module_name,componentname))
+                self.logger.info('Match Rules: -> %s', module_name)
                 continue
-#	    相应组件关键词在context中/productname/head等内容中出现，则返回true
+#	    相应组件关键词在context中/productname/head等init函数中定义的规则满足，则返回true
             if rules(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=''):
                 self.logger.info('Match Rules: -> %s', keyword)
                 matched_modules.add((module_name,componentname))
         return matched_modules, othermodule
 
-    def detect(self, head='',context='',ip='',port='',productname={},keywords='',hackresults='',defaultpoc=''):
-        print ("detection::vuldetect::plugins::default()\n\nhead[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nhackresults[%s]\ndefaultpoc[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(hackresults),str(defaultpoc)))
+    def detect(self, head='',context='',ip='',port='',productname={},keywords='',nmapscript='',defaultpoc=''):
+        # print ("detection::vuldetect::plugins::default()\n\nhead[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nhackresults[%s]\ndefaultpoc[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(hackresults),str(defaultpoc)))
 #	形式components[componentname][module_name] = P()
 #	self.logger.info('now the source component: %s', self.components)
         if self.components=={} or self.keywords == {} or self.rules=={}:
             self.loader()
-        self.env_init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=hackresults,defaultpoc=defaultpoc)
+        self.env_init(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,nmapscript=nmapscript,defaultpoc=defaultpoc)
         return
 
 if __name__ == "__main__":
     a = PocController()
-    

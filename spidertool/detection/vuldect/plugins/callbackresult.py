@@ -4,6 +4,21 @@ from spidertool import Sqldatatask,Sqldata,SQLTool
 import spidertool.config as config
 
 import time
+import datetime
+import smtplib
+
+from email.mime.text import MIMEText
+from email.header import Header
+
+mail_host = "smtp.163.com"
+mail_user = "gangzhanhui"
+mail_pass = "Angel123"
+
+sender = "gangzhanhui@163.com"
+receivers = ['gangzhanhui@163.com']
+
+now_time = datetime.datetime.now().strftime('%Y-%m-%d')
+
 # islocalwork=config.Config.islocalwork
 
 def storedata(ip='',port='',hackresults=None):
@@ -20,32 +35,32 @@ def storedata(ip='',port='',hackresults=None):
                     
 #     else:
 
-    hackinfo = ' '
-    if isinstance(hackresults,str):
-	hackinfo = hackresults
-    else:
-    	for hack in hackresults:
-#    	    print '\n\nstoredata', type(hack), str(hack)
-    	    if isinstance(hack,dict):
-# 有的结果没有存储result，所以使用type进行归类
-		hacks = hack['VerifyInfo']
-		print '\n\nstoredata', hacks
-		if 'result' in hacks.keys() and len(hacks['result']) < 150:
-		    hackinfo += str({'level':hacks['level'], 'result': hacks['result']}) + '\\n'
-		else:
-		    hackinfo += str({'level':hacks['level'], 'result': hacks['type']}) + '\\n'
-	    else:
-	    	print '\n\nhack is a list but not a dict!!', type(hack)
-	        hackinfo += str({'level':'NOTE', 'result':str(hack)}) + '\\n'
-	print '\n\nhackinfo',hackinfo
-    hackinfo = SQLTool.escapewordby(hackinfo.strip('\\n'))
+    # hackinfo = ' '
+#     if isinstance(hackresults,str):
+# 	hackinfo = hackresults
+#     else:
+#     	for hack in hackresults:
+# #    	    print '\n\nstoredata', type(hack), str(hack)
+#     	    if isinstance(hack,dict):
+# # 有的结果没有存储result，所以使用type进行归类
+# 		hacks = hack["VerifyInfo"]
+# 		print '\n\nstoredata', hacks
+# 		if "result" in hacks.keys() and len(hacks["result"]) < 150:
+# 		    hackinfo += str({"level":hacks["level"], "result": hacks["result"]}) + '\\n'
+# 		else:
+# 		    hackinfo += str({"level":hacks["level"], "result": hacks["type"]}) + '\\n'
+# 	    else:
+# 	    	print '\n\nhack is a list but not a dict!!', type(hack)
+# 	        hackinfo += str({"level":"NOTE", "result":str(hack)}) + '\\n'
+# 	print '\n\nhackinfo',hackinfo
+#     hackinfo = SQLTool.escapewordby(hackinfo.strip('\\n'))
     hackresults = SQLTool.escapewordby(str(hackresults))
-    extra=' on duplicate key update hackinfo=\''+hackinfo+'\' , hackresults=\''+hackresults+'\' , timesearch=\''+localtime+'\''
+    extra=' on duplicate key update hackresults=\''+hackresults+'\' , timesearch=\''+localtime+'\''
 
-    insertdata.append((str(ip),port,hackinfo,hackresults,str(port)))
+    insertdata.append((str(ip),port,hackresults,str(port)))
 
     sqldatawprk=[]
-    dic={"table":config.Config.porttable,"select_params":['ip','port','hackinfo','hackresults','portnumber'],"insert_values":insertdata,"extra":extra}
+    dic={"table":config.Config.porttable,"select_params":['ip','port','hackresults','portnumber'],"insert_values":insertdata,"extra":extra}
 
     tempwprk=Sqldata.SqlData('inserttableinfo_byparams',dic)
     sqldatawprk.append(tempwprk)
@@ -59,6 +74,21 @@ def storeresult(result=None):
         print '位置:'+i['VerifyInfo']['URL']
         print '类型:'+i['VerifyInfo']['type']
         print 'payload:'+i['VerifyInfo']['payload']
-    
     return True
 
+# def sendemail(level, mail_msg=''):
+def sendemail(host_loc='', mail_msg=''):
+    message = MIMEText(mail_msg, 'html', 'utf-8')   # 内容, 格式, 编码
+    message['From'] = Header("资产探测系统", 'utf-8')
+    message['To'] =  Header('XX安全实验室', 'utf-8')
+    subject = now_time + ' ' + host_loc + ' 漏洞预警'
+    message['Subject'] = Header(subject, 'utf-8')
+
+    try:
+        smtpObj = smtplib.SMTP()
+        smtpObj.connect(mail_host, 25)
+        smtpObj.login(mail_user, mail_pass)
+        smtpObj.sendmail(sender, receivers, message.as_string())
+        print("Send Email Success.")
+    except smtplib.SMTPException as e:
+        print("Error: Send Email Failed.", e)

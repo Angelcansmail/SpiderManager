@@ -15,10 +15,10 @@ class schedulecontrol:
         self.scheduler.start()
 
     def addschedule(self,event, day_of_week='0-6', hour='23',minute='57' ,second='0',id='',type='cron',run_date='',args=None):
-        if id=='':
-            id=str(time.strftime("%Y-%m-%d %X", time.localtime()))
-	# 作业只会执行一次
-        if type=='date':
+        if id == '':
+            id = str(time.strftime("%Y-%m-%d %X", time.localtime()))
+        # 作业只会执行一次
+        if type == 'date':
             if run_date == '':
                 self.scheduler.add_job(event, args=args)
             else:

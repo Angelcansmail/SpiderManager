@@ -19,7 +19,7 @@ class P(T):
         code, head, res, errcode, final_url = curl.curl(arg)
         if code == 200 and 'db_id' in res and  'db_name' in res and 'db_pass' in res:
 	    cprint(arg + '存在db information Vul漏洞', 'yellow')
-            output(arg,result,'warning')
+            output(arg,result,'警告')
     
     
 

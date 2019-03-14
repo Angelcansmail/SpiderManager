@@ -91,7 +91,7 @@ class InfoDisScanner(InfoDisScannerBase):
             item = (url_description, _[1], _[2], _[3], _[4], _[5], _[0])
             url_queue.put(item)
 
-            
+
     @staticmethod
     def _decode_response_text(rtxt, charset=None):
         if charset:
@@ -145,7 +145,8 @@ class InfoDisScanner(InfoDisScannerBase):
                 # print ('======================fuzzdetect::_scan_worker()======================\n[c_status:%d]\n[headers:]\n%s\n[has_404:%d]\n[p_status:%d]\n[_status:%d]\n[html_doc type:%s]=================================================================================\n' % (c_status, headers, has_404, p_status, _status, type(html_doc)))
                 # print ('======================fuzzdetect::_scan_worker() [c_status:%s]\n[headers:%s]\n[html_doc:%s]======================' % (c_status, headers, html_doc))
                 # self.logger.info(str(status)+url)
-                if (c_status in [200, 301, 302, 303]) and (has_404 or c_status!=_status):
+                # if (c_status in [200, 301, 302, 303]) and (has_404 or c_status!=_status):
+                if (c_status in [200]) and (has_404 or c_status !=_status):
                     if p_status and c_status != p_status:
                         continue
                     if not p_status or html_doc.find(str(p_status)) >= 0:
@@ -157,17 +158,21 @@ class InfoDisScanner(InfoDisScannerBase):
                             results[prefix] = []
 			add_disclosure = {'status':c_status, 'url':'%s' % (url)}
 			if add_disclosure in results[prefix]:
+			# if add_disclosure in resultarray:
 			    continue
                         results[prefix].append(add_disclosure)
                         self._update_severity(severity)
 
                 if len(results) >= 30:
+                # if len(resultarray) >= 30:
                     self.logger.warning('More than 30 vulnerabilities found for [%s], could be false positive.', url)
             except Exception, e:
                 self.logger.error('[InfoDisScanner._scan_worker][2][%s] Exception %s' % (url, e))
 
+        # return a dict, this disclosure detect will be used in pocdetect's keywords
         if len(results) >= 1:
             return results
+            # return resultarray
 
     def check_404(self,url,protocal):
         """
@@ -198,7 +203,7 @@ class InfoDisScanner(InfoDisScannerBase):
             self._enqueue(url, tempqueue)
             dataresult = self._scan_worker(url_queue=tempqueue,protocal=protocal,_status=status,has_404=has404,ip=ip,port=port)
             if dataresult is not None:
-                callbackfuzz.storedata(ip=ip, port=port, hackresults=dataresult)
+                callbackfuzz.storedata(ip=ip, port=port, disclosures=dataresult)
                 pass
         else:
             pass

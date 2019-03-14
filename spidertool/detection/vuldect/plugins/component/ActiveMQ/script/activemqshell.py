@@ -14,7 +14,7 @@ import base64
 import traceback
 
 banner = u'''\
-# ActiveMQ的PUT 上传getshellExP CVE-2016-3088
+# ActiveMQ的PUT上传getshellExP CVE-2016-3088
 # Author:CF_HB
 # 时间：2016年6月8日
 # 漏洞参考地址: http://zone.wooyun.org/content/27737

@@ -56,7 +56,7 @@ class ConnectTool:
 		if type=='':
 			data = urllib.urlencode(params)
 		if type=='JSON':
-			data=json.dumps(params) 
+			data=json.dumps(params)
 		url=URL
 		if header is None:
 			header=self.__headers

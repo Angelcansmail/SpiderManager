@@ -46,7 +46,7 @@ class P(T):
             print target_url, "connect time out\n", traceback.print_exc()
 	    return result
 	if 'Advantech' in html_content:
-	    cprint(target_url + '可能存在漏洞(版本有待检测)', 'orange')
+	    cprint(target_url + '可能存在漏洞(版本有待检测)', 'yellow')
 	    info = target_url + " Advantech Webaccess"
 	    result['result']=True
 	    result['VerifyInfo'] = {}
@@ -54,7 +54,7 @@ class P(T):
 	    result['VerifyInfo']['URL'] = target_url
 	    result['VerifyInfo']['payload'] = 'Advantech Webaccess Vul'
 	    result['VerifyInfo']['result'] = info
-	    result['VerifyInfo']['level'] = 'hole'
+	    result['VerifyInfo']['level'] = '高危'
 	    return result
 	return result
 

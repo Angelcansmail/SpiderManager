@@ -15,13 +15,14 @@ class P(T):
         r=None
         try:
             r=requests.get(url=target_url,timeout=2)
-            if r.status_code==200:
-                result['result']=True
+            print "In elasticsearch_nodestate.py and get status code", r.status_code
+            if r.status_code == 200:
+                result['result'] = True
                 result['VerifyInfo'] = {}
-                result['VerifyInfo']['type']='Information Unclosed'
+                result['VerifyInfo']['type'] = 'Information Unclosed'
                 result['VerifyInfo']['URL'] =target_url
-                result['VerifyInfo']['payload']='IP:port/_nodes/stats'
-                result['VerifyInfo']['result'] =r.text
+                result['VerifyInfo']['payload'] = 'IP:port/_nodes/stats'
+                result['VerifyInfo']['result'] = r.text
                 result['VerifyInfo']['level'] = 'hole'
 		cprint(target_url + '存在信息泄漏风险', 'red')
             else:

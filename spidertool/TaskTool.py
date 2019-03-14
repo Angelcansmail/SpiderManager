@@ -8,7 +8,7 @@ class TaskTool:
 		self.threadtool = ThreadTool(isThread, deamon=deamon, needfinishqueue=needfinishqueue)
 		self.threadtool.add_task(self.task) #self.job = job self.task是一个方法，执行任务
 		self.log=log
-		self.threadtool.set_Thread_size(1)
+		self.threadtool.set_Thread_size(10)
 
 	def set_deal_num(self, num):
 		self.threadtool.set_Thread_size(num)

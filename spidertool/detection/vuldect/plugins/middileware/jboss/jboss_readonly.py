@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 '''
-CVE-2017-12149
+Created on Tue Oct 30 23:00:58 2018
+
+@author: zxf
+Info: CVE-2017-12149
 '''
 import sys
 import requests

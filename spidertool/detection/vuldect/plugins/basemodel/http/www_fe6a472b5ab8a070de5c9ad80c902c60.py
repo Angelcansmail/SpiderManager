@@ -49,7 +49,7 @@ class P(T):
         code2, head, res, errcode, _ = curl.curl2(target)
         flase_time=time.time()-start_time2
         if code1==200 and code2==200 and true_time<2 and flase_time>5:
-            output(target,result,'hole')
+            output(target,result,'高危')
         
         del curl
         return result

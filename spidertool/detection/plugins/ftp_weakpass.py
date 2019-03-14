@@ -26,7 +26,7 @@ def ftp_crack(host, user, pwd, port='21'):
         ftp.retrlines('LIST')
         ftp.quit()
         print '\n[+] 破解成功，用户名：' + user + ' 密码：' + pwd
-        return True,str({'level':'warning', 'reslut':'ftp password is '+user+':'+pwd})
+        return True, {'level':'warning', 'type': 'FTP Weak Passwd', 'URL': host + ':' + port, 'reslut':'ftp password is '+user+':'+pwd}
     except ftplib.all_errors:
         return False,''
 
@@ -37,7 +37,7 @@ def ftpdeal(ip='',port='21',name='',productname=''):
     keywords='ftp'
 
     if ftp_anon(ip,port):
-        hackresults=str({'level':'warning','result':'allow annoymous ftp'})
+        hackresults = {'level':'警告', 'type': 'FTP Annoymous Login.', 'URL': ip + ':' + port, 'result':'Allow Annoymous FTP.'}
         return head,ans,'ftp',hackresults
     else:
 #         userlist=['root','123456','admin','12345','111111','password','123123','1234','12345678','123456789','sa','test','Administrator','ftp']

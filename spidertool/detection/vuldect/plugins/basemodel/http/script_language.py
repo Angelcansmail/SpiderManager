@@ -64,13 +64,13 @@ class P(T):
         app_suffix = getScript(arg)
         if len(app_suffix) != 0:
 	    cprint(arg + ' detect language they use is ' + str(app_suffix), 'blue')
-            output(arg+' the language they use is '+ str(app_suffix),result,'note')
+            output(arg+' the language they use is '+ str(app_suffix),result,'一般')
         return result
 
 
 def output(url,result,label):
     info = url
-    result['result']=True
+    result['result']= True
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='Script language recognition'
     result['VerifyInfo']['URL'] =url

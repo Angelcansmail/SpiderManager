@@ -1,11 +1,15 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-'''
-Microsoft IIS在实现上存在文件枚举漏洞，攻击者可利用此漏洞枚举网络服务器根目录中的文件。
-修复方法：修改注册列表HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\NtfsDisable8dot3NameCreation的值为1，重启服务器。
-References：https://www.freebuf.com/articles/4908.html
-'''
-import urlparse
+"""
+@Time    : 2018/12/20 17:31
+@Author  : gzh
+@contact : k39aE465wlulvnkhT0i9MQ==@qq.com
+@Site    : https://www.freebuf.com/articles/4908.html
+@File    : iis_short_file.py
+@Desc    : Microsoft IIS在实现上存在文件枚举漏洞，攻击者可利用此漏洞枚举网络服务器根目录中的文件。修复方法：修改注册列表HKLM\SYSTEM\CurrentControlSet\Control\FileSystem\NtfsDisable8dot3NameCreation的值为1，重启服务器。
+@Software: PyCharm
+"""
+
 from ..miniCurl import Curl
 from ..t  import T
 

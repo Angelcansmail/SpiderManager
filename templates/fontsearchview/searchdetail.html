@@ -63,7 +63,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-12">
-                    <h1>Scan-T</h1>
+                    <h1>Scan-Eye</h1>
                     <p>稳定、快速、免费的主机搜索服务<br>
                         <span class="package-amount">共收录了 <strong>大量</strong> 主机指纹</span>
                     </p>
@@ -114,12 +114,12 @@
     <div class="container">
         <div class="row">
             <div class="about footer-col col-md-5 col-sm-12" id="about">
-                <h4>关于 Scan-T</h4>
-                <p> Scan-T 是 <a href="https://github.com/nanshihui/toolforspider" target="_blank">独立开发者</a>支持并维护的开源项目免费
-                    主机扫描服务，致力于成为 Bootstrap、jQuery、Angular 一样优秀的开源项目提供稳定、快速的免费主机扫描服务。Scan-T所收录的主机资源主要来源于
+                <h4>关于 Scan-Eye</h4>
+                <p> Scan-Eye 是 <a href="https://github.com/nanshihui/toolforspider" target="_blank">独立开发者</a>支持并维护的开源项目免费
+                    主机扫描服务，致力于成为 Bootstrap、jQuery、Angular 一样优秀的开源项目提供稳定、快速的免费主机扫描服务。Scan-Eye所收录的主机资源主要来源于
                     <a href="https://github.com/nanshihui/toolforspider" target="_blank">实时扫描</a> 仓库。</p>
                 <p></p>
-                <p>反馈或建议请发送邮件至：nanshihui@gmail.com</p>
+                <p>反馈或建议请发送邮件至：gangzhanhui@cics-cert.com</p>
             </div>
         </div>
     </div>
@@ -221,8 +221,7 @@
         var str = '';
         nowpage = currpage;
         str = 'content=' + content + '&page=' + number;
-	alert(["searchdetail", str]);
-
+	    alert(["searchdetail", str]);
         xmlhttp.open("POST", "/fontsearch/searchdetail", true);	// detailpage
         xmlhttp.onreadystatechange = callback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -234,14 +233,18 @@
 
     // 获取名字，去掉（）
     function cutitem(str) {
-        if (str[0]=='('&&str[str.length-1]==')'){
+        {#console.log("cutitem: ", str);#}
+        if (str == null) {
+            return '';
+        }
+        else if (str[0]=='('&&str[str.length-1]==')'){
             str = str.substring(1, str.length-1) ;
         }
         if (str.length==2) {
-	    if((str[0]=='{'&&str[str.length-1]=='}')||(str[0]=='['&&str[str.length-1]==']')){
-		str = '';
+            if((str[0]=='{'&&str[str.length-1]=='}')||(str[0]=='['&&str[str.length-1]==']')){
+                str = '';
+	        }
 	    }
-	}
         return str;
     }
 
@@ -274,6 +277,7 @@
     function searchresult(a) {
         var data2 = JSON.parse(a);
         clinckdata = data2;
+        {#console.log(data2);#}
         var Active = '';
 
         if (data2.result == '0') {
@@ -288,17 +292,42 @@
             currpage = Number(nowpage) + 1;
             var bodyhtml = "";
 
+            {#console.log('datalength:' + datalength + ' pagesize:' + pagesize);#}
             for (var i = 0; i < datalength; i++) {
-	    	var geoinfo = ports[i].keywords;
-	    	// var geoinfo = JSON.parse(ports[i].keywords);
+	    	    var geoinfo = ports[i].geoinfo;
                 var potocalname = '';
-		disclosure = ports[i].disclosure;
-		hackinfo = ports[i].hackinfo;
-		console.log(disclosure + '----' + hackinfo);
-		// disclosure = disclosure == '' ? '' : JSON.parse(disclosure);
-		// console.log(typeof ports[i].keywords + '----' + ports[i].disclosure + '----' + typeof ports[i].disclosure + '----' + JSON.parse(ports[i].disclosure));
-                // alert(["searchresult port_name:", ports[i].name, "port:", ports[i].port]);
-                // alert(ports[i].hackinfo);
+                var hackresults = ports[i].hackresults; // list
+                var disclosures = ports[i].disclosure;  // dict
+                var hackinfo = '', disclosure = '', diss = '';
+                var h_flag = false, d_flag = false;
+                {#console.log(i + '-->');#}
+                {#console.log(ports[i]);#}
+                hackresults = hackresults == null ? '': hackresults;
+                disclosures = disclosures == null ? '': disclosures;
+
+                console.log('hackresults:', hackresults, 'disclosure:', disclosures);
+                if (hackresults != '') {
+                    var l_hack = hackresults.length;
+
+                    for (var j = 0; j < l_hack; j++) {
+                        hackinfos = hackresults[j];
+                        hackinfo += '类型: ' + cutitem(hackinfos['type']) + ' 等级: ' + cutitem(hackinfos['level']) + ' 链接: ' + cutitem(hackinfos['URL']) + '\n';
+                    }
+                    h_flag = true;
+                }
+
+                if (disclosures != '') {
+                    prefix = ports[i].ip + ':' + ports[i].port;
+                    var l_dis = disclosures[prefix].length;
+
+                    for (var j = 0; j < l_dis; j++) {
+                        diss = disclosures[prefix][j];
+                        disclosure += '状态码:' + cutitem(diss['status']) + ' 链接:' + cutitem(diss['url']) + '\n';
+                    }
+                    d_flag = true;
+                }
+
+                {#console.log(ports[i].script + '---' + cutitem(ports[i].head));#}
                 // if (ports[i].name == null) {
                     switch (ports[i].port) {
                         case '443':
@@ -319,7 +348,7 @@
                 bodyhtml += "<div class=\"package list-group-item\" data-library-name=\"bootstrap\" target=\"_blank\" ><div class=\"row\"><div class=\"col-md-3\">" +
                         "<p><a  target=\"_black\" title=\"查看该主机\" href=\"/fontsearch/searchmain?page=0&searchcontent=%22ip%22:%22" + (ports[i].ip == null ? '' : ports[i].ip) + "%22" + "\"<h4 class=\"package-name\">" + (ports[i].ip == null ? '' : ports[i].ip) + "</h4></a>&nbsp;&nbsp;" ;
                var titleweb = ports[i].webtitle == 'None' ? '': utf8to16(decode64(ports[i].webtitle));
-               console.log(titleweb+'------'+titleweb.charCodeAt(0)+'------title'+titleweb.charCodeAt(1)+'----'+cutitem(titleweb)+'--------------'+ports[i].ip);
+               {#console.log(titleweb+'------'+titleweb.charCodeAt(0)+'------title'+titleweb.charCodeAt(1)+'----'+cutitem(titleweb)+'--------------'+ports[i].ip);#}
 
                if((potocalname!='http'&& potocalname!='https'&&potocalname!='tcpwrapped'&&potocalname!='None')||(titleweb.charCodeAt()==0||cutitem(titleweb)==''||titleweb == ' ' || titleweb ==''||titleweb=='None')){
                     bodyhtml += "<a  target=\"_black\" href=\"" + potocalname + "://" + ports[i].ip + ':' + ports[i].port +
@@ -335,21 +364,22 @@
                         "<p><span class=\"subtext\">端口名:" + (ports[i].name == 'None' ? '' : ports[i].name) + "</span></p>" +
                         "<p><span class=\"subtext\">端口产品:" + (ports[i].product == 'None' ? '' : ports[i].product) + "</span></p>" +
                         "<p><span class=\"subtext\">端口版本:" + (ports[i].version == 'None' ? '' : ports[i].version) + "</span></p>" +
-                        "<p><span id=\"" + ports[i].ip + "\" class=\"subtext\">主机位置:  "  + "</span><img id=\"flag\" src=\"/static/fontsearch/flag/"+(geoinfo['geoip']?geoinfo['geoip']['country']['code']:"CN")+"@2x.png\" width=\"10%\" height=\"2%\" /><span> </span><a href=\""+"/fontsearch/detailmapview?ip="+ports[i].ip+"\" target=\"_blank\" ><span>"+ ((ports[i].city == null || ports[i].city == '0' )&&ports[i].keywords['geoip']? ports[i].keywords['geoip']['country']['name'] : ports[i].city) +"</span> <span>"+(ports[i].keywords['geoip']?ports[i].keywords['geoip']['city']['name']:"unknow")+" "+"</span><span><i class=\"fa fa-external-link-square\"></i></span></a> </p>" +
+                        "<p><span id=\"" + ports[i].ip + "\" class=\"subtext\">主机位置:  "  + "</span><img id=\"flag\" src=\"/static/fontsearch/flag/"+(geoinfo['geoip']?geoinfo['geoip']['country']['code']:"CN")+"@2x.png\" width=\"10%\" height=\"2%\" /><span> </span><a href=\""+"/fontsearch/detailmapview?ip="+ports[i].ip+"\" target=\"_blank\" ><span>"+ ((ports[i].city == null || ports[i].city == '0' )&&geoinfo['geoip']? geoinfo['geoip']['country']['name'] : ports[i].city) +"</span> <span>"+(geoinfo['geoip']?geoinfo['geoip']['city']['name']:"unknow")+" "+"</span><span><i class=\"fa fa-external-link-square\"></i></span></a> </p>" +
                         "<span class=\"subtext\">更新时间:" + (ports[i].timesearch == 'None' ? '' : ports[i].timesearch) + "</span></p>" +
                         "</div><div class=\"col-md-9 \">" +
                         "<p class=\"package-description\">概要信息：</p>";
 
                       // if (data2.username == 'admin') {
                       if (data2.userrole == '3') {
-                          // bodyhtml += "<div class=\"box\"><pre>" + '脚本内容:\n ' + utf8to16(decode64(ports[i].script)) + '\n攻击信息:\n ' + ports[i].hackinfo + ' \n漏洞网址:\n ' + ports[i].disclosure + "</pre></div>" +
-			  // bodyhtml += "<div class=\"box\"><pre>" + (cutitem(ports[i].head) == '' && ports[i].detail == 'None' ? '无' : (cutitem(ports[i].head) == '' ? cutitem(ports[i].detail).toString() : encodeHtml(cutitem(ports[i].head) + '\nDETAIL\n' + cutitem(ports[i].detail)).toString())) + "</pre></div></div></div></div>";
-			  // bodyhtml += "<div class=\"box\"><pre>" + (cutitem(ports[i].disclosure) == 'None' && cutitem(ports[i].hackinfo) == 'None' ? '安全' : '\n漏洞网址:\n' + ports[i].hackinfo + '\n攻击信息:\n' + ports[i].disclosure) + "</pre></div></div></div></div>";
+              {#            bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ?  cutitem(encodeHtml(ports[i].head)) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitem(encodeHtml(ports[i].head)))  + "</pre></div>" +#}
+              {#                // "<div class=\"col-md-9 \">" +#}
+              {#                "<p class=\"package-description\">风险信息：</p>";#}
+			  {#bodyhtml += "<div class=\"box\"><pre>" + (ports[i].disclosure == '' && cutitem(ports[i].hackresults) == '' ? '安全' : (ports[i].disclosure == '' ? '\n漏洞网址:\n' + cutitem(ports[i].hackresults).toString() : '\n攻击信息:\n' + cutitem(ports[i].disclosure).toString() + '\n漏洞网址:\n' + cutitem(ports[i].hackresults).toString())) + "</pre></div></div></div></div>";#}
 
-                          bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ?  cutitem(encodeHtml(ports[i].head)) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitem(encodeHtml(ports[i].head)))  + "</pre></div>" +
-                              // "<div class=\"col-md-9 \">" +
-                              "<p class=\"package-description\">风险信息：</p>";
-			  bodyhtml += "<div class=\"box\"><pre>" + (ports[i].disclosure == 'None' && cutitem(ports[i].hackinfo) == '' ? '安全' : (ports[i].disclosure == 'None' ? '\n漏洞网址:\n' + cutitem(ports[i].hackinfo).toString() : '\n攻击信息:\n' + cutitem(ports[i].disclosure).toString() + '\n漏洞网址:\n' + cutitem(ports[i].hackinfo).toString())) + "</pre></div></div></div></div>";
+                          bodyhtml += "<div class=\"box\"><pre>" + (cutitem(ports[i].script) == '' && cutitem(ports[i].head) == '' ? '无' : (ports[i].script == '' ?  cutitem(encodeHtml(ports[i].head)) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitem(encodeHtml(ports[i].head))))  + "</pre></div>" +
+                              "<p class=\"package-description\">预警信息：</p>";
+
+                          bodyhtml += "<div class=\"box\"><pre>" + (!h_flag && !d_flag ? '安全' : (h_flag && d_flag ? ('\n漏洞描述\n' + hackinfo.toString() + '\n风险信息:\n' + cutitem(disclosure).toString()) : (h_flag ? ('\n漏洞描述\n' + hackinfo.toString()) : '\n风险信息:\n' + cutitem(disclosure).toString()))) + "</pre></div></div></div></div>";
                       }
                       else {
                           bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' && cutitem(ports[i].head) == '' ? '暂无' : ports[i].script == '' ? cutitem(encodeHtml(ports[i].head)) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitem(encodeHtml(ports[i].head)))  + "</pre></div></div></div></div>";

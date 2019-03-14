@@ -8,7 +8,7 @@ limitpage=15
 DBhelp=None
 
 # searchroute::detailpage传入page, extra, command='or'
-def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',page='0',extra='',command='and',head='',city='',hackinfo='',hackresults='',disclosure=''):
+def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',page='0',extra='',command='and',head='',city='',hackresults='',disclosure=''):
     localconfig = config.Config()
     port_table = localconfig.porttable   #snifferdata
     ip_table = localconfig.iptable   #ip_maindata
@@ -76,7 +76,7 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
     if pagecount>0:
         limit = ' limit '+str(int(page)*limitpage)+','+str(limitpage)
         try:
-            result, content, count, col = DBhelp.searchtableinfo_byparams([port_table + ' left join ' + ip_table + ' on ' + port_table + '.ip=' + ip_table + '.ip'], [port_table+'.ip','port','timesearch',port_table+'.'+'state','name','product','version','script','detail','head','city','hackinfo','hackresults','disclosure'], request_params, values_params,limit=limit,order=port_table+'.'+'port',extra=extra,command=command)
+            result, content, count, col = DBhelp.searchtableinfo_byparams([port_table + ' left join ' + ip_table + ' on ' + port_table + '.ip=' + ip_table + '.ip'], [port_table+'.ip','port','timesearch',port_table+'.'+'state','name','product','version','script','detail','head','city','hackresults','disclosure'], request_params, values_params,limit=limit,order=port_table+'.'+'port',extra=extra,command=command)
         except Exception,e:
             print "portcontrol::portabstractshow() 81::", str(e)
             if DBhelp is not None:
@@ -92,7 +92,7 @@ def portabstractshow(ip='',port='',timesearch='',state='',name='',product='',ver
             validresult=True
             import  base64
             for temp in result :
-                aport=ports.Port(ip=temp['ip'],port=temp['port'],timesearch=temp['timesearch'],state=temp['state'],name=temp['name'],product=temp['product'],version=temp['version'],script=base64.b64encode(SQLTool.getdecodeproperty(temp,'script')),detail=SQLTool.getdecodeproperty(temp,'detail'),head=SQLTool.getdecodeproperty(temp,'head'),city=temp['city'],hackinfo=SQLTool.getdecodeproperty(temp,'hackinfo'),hackresults=SQLTool.getdecodeproperty(temp,'hackresults'),disclosure=SQLTool.getdecodeproperty(temp,'disclosure'))
+                aport=ports.Port(ip=temp['ip'],port=temp['port'],timesearch=temp['timesearch'],state=temp['state'],name=temp['name'],product=temp['product'],version=temp['version'],script=base64.b64encode(SQLTool.getdecodeproperty(temp,'script')),detail=SQLTool.getdecodeproperty(temp,'detail'),head=SQLTool.getdecodeproperty(temp,'head'),city=temp['city'],hackresults=SQLTool.getdecodeproperty(temp,'hackresults'),disclosure=SQLTool.getdecodeproperty(temp,'disclosure'))
 
 #                 aport=ports.Port(ip=temp[0],port=temp[1],timesearch=temp[2],state=temp[3],name=temp[4],product=temp[5],version=temp[6],script=temp[7])
                 portarray.append(aport)
@@ -171,7 +171,7 @@ def portshow(ip='',port='',timesearch='',state='',name='',product='',version='',
     if pagecount > 0:
         limit = ' limit ' + str(int(page)*limitpage) + ',' + str(limitpage)
         try:
-            result, content, count, col=DBhelp.searchtableinfo_byparams([port_table], ['ip','port','timesearch','state','name','product','version','script','detail','head','hackinfo','hackresults'], request_params, values_params,limit,order=order,extra=extra,command=command)
+            result, content, count, col=DBhelp.searchtableinfo_byparams([port_table], ['ip','port','timesearch','state','name','product','version','script','detail','head','hackresults'], request_params, values_params,limit,order=order,extra=extra,command=command)
         except Exception,e:
             print str(e) + ' portcontrol 69'
             if DBhelp is not None:
@@ -185,7 +185,7 @@ def portshow(ip='',port='',timesearch='',state='',name='',product='',version='',
         if count > 0:
             validresult=True
             for temp in result :
-                aport = ports.Port(ip=SQLTool.getdecodeproperty(temp,'ip'),port=temp['port'],timesearch=temp['timesearch'],state=temp['state'],name=temp['name'],product=temp['product'],version=temp['version'],script=SQLTool.getdecodeproperty(temp,'script'),detail=SQLTool.getdecodeproperty(temp,'detail'),head=SQLTool.getdecodeproperty(temp,'head'),hackinfo=temp['hackinfo'],hackresults=temp['hackresults'])
+                aport = ports.Port(ip=SQLTool.getdecodeproperty(temp,'ip'),port=temp['port'],timesearch=temp['timesearch'],state=temp['state'],name=temp['name'],product=temp['product'],version=temp['version'],script=SQLTool.getdecodeproperty(temp,'script'),detail=SQLTool.getdecodeproperty(temp,'detail'),head=SQLTool.getdecodeproperty(temp,'head'),hackresults=temp['hackresults'])
 #                 aport=ports.Port(ip=temp[0],port=temp[1],timesearch=temp[2],state=temp[3],name=temp[4],product=temp[5],version=temp[6],script=temp[7])
                 portarray.append(aport)
         return portarray, count, pagecount

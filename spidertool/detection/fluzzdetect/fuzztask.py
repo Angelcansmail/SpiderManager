@@ -41,9 +41,9 @@ class FuzzTask(TaskTool):
         nmapscript='' if req[6] is None else req[6]
         protocol='' if req[7] is None else req[7]
         # print "fuzztask::task() req:", req
-        print 'Fuzztask   未启动内存增长状况'
+        # print 'Fuzztask   未启动内存增长状况'
         gc.collect()
-        objgraph.show_growth()
+        # objgraph.show_growth()
         # 后续补
         # temp = default.PocController(logger=logger)
         self.logger and self.logger.debug('FUZZ检测:   %s:%s,%s',ip,port,protocol)
@@ -51,9 +51,9 @@ class FuzzTask(TaskTool):
 
 #        self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords, hackresults=nmapscript)
         self.logger and self.logger.debug('%sFUZZ检测任务结束%s', threadname,str(datetime.datetime.now()))
-        print 'Fuzztask   内存增长状况'
+        # print 'Fuzztask   内存增长状况'
         gc.collect()
-        objgraph.show_growth()
+        # objgraph.show_growth()
 #         print 'objgraph.by_type:',objgraph.by_type('dict')
 #         chain =objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
 #         objgraph.show_chain(chain,filename='chain.png')

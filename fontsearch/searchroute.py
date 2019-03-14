@@ -50,8 +50,8 @@ def detailpage(request):
     try:
         jsonmsg = '{' + content + '}'
         jsoncontent = json.loads(jsonmsg)
-    except Exception,e:
-        logger.error(e)
+    except Exception, e:
+        logger.error(str(traceback.print_exc()))
         pass
 
     logger.debug('Search %s', str(jsoncontent))
@@ -68,7 +68,7 @@ def detailpage(request):
                 redisresult = redistool.get(str(item))
 
                 if redisresult:
-		    logger.debug('Get data from redis.')
+                    logger.debug('Get data from redis.')
                     try:
                         response_data['ports'] = redisresult['ports']
                         response_data['portslength'] = redisresult['portslength']
@@ -114,8 +114,8 @@ def detailpage(request):
                     response_data['portspagecount'] = portpagecount
                     response_data['portspage'] = page
             except Exception,e:
-                # 连接失败/
-	    	logger.warning('EL Search Error:%s. Use Fuzzy search in DB', str(traceback.print_exc()))
+                # 连接失败
+                logger.warning('EL Search Error:%s. Use Fuzzy search in DB', str(traceback.print_exc()))
                 try:
                     # 模糊检索 match against
                     extra = ' where match(version,product,head,detail,script,hackinfo,hackresults,disclosure,keywords,name,webkeywords,webtitle) against(\'' + content + '\' in Boolean mode) '
@@ -126,7 +126,7 @@ def detailpage(request):
                     response_data['portspagecount'] = portpagecount
                     response_data['portspage'] = page
                 except Exception,e:
-                    print e
+                    logger.error("detailpage Normal EL search Error:%s", str(traceback.print_exc()))
             logger.debug('Finish Search %s.', content)
             response_data['result'] = '1'
             response_data['keywords'] = content.split()
@@ -186,7 +186,7 @@ def detailpage(request):
                         redisdic['portspage'] = page
                         redistool.set(item, redisdic)
                         redistool.expire(item, timeout)
-		else :
+                else:
                     logger.debug('Get data from EL.')
                     import sys
                     sys.path.append("..")
@@ -204,7 +204,7 @@ def detailpage(request):
                     redisdic['portspagecount'] = portpagecount
                     redisdic['portspage'] = page
 
-                    logger.debug('Save %s search results to redis.', content)
+                    logger.debug('Save %s search results to redis.'%content)
 
                     redistool.set(item, redisdic)
                     redistool.expire(item, timeout)
@@ -212,7 +212,7 @@ def detailpage(request):
                     logger.debug('Save to redis Done.')
 
             except Exception,e:
-                logger.error("detailpage condition search Error:%s", str(traceback.print_exc()))
+                logger.error("detailpage condition search Error:%s"%str(traceback.print_exc()))
                 ports, portcount, portpagecount = getattr(portcontrol, 'portabstractshow', 'portabstractshow')(**jsoncontent)
                 response_data['ports']=ports
                 response_data['portslength']=portcount

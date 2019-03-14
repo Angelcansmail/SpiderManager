@@ -26,7 +26,7 @@ def rsync(ip='',port='',name='',productname=''):
     except commandtool.TimeoutError,e:  
         hackresults=str(e) 
     else:  
-        hackresults=str({'level':'warning', 'result':'command:'+usecommand+'\nresult:'+result})
+        hackresults=str({'level':'warning', 'type': 'RSYNC Command.', 'URL': ip + ':' + port, 'result':'command:'+usecommand+'\nresult:'+result})
         keywords='rsync'
     return head,ans,keywords,hackresults
 

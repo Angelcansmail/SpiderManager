@@ -4,10 +4,12 @@ import subprocess
 import signal  
 import time  
 import datetime
+from termcolor import cprint
+
 class TimeoutError(Exception):  
     pass  
   
-def command(cmd, timeout=10000):
+def command(cmd, timeout=100000):
     """Run command and return the output 
     cmd - the command to run 
     timeout - max seconds to wait for 
@@ -24,12 +26,15 @@ def command(cmd, timeout=10000):
         if p.poll() is not None:  
             break  
         seconds_passed = time.time() - t_beginning 
-        if timeout and seconds_passed > timeout:  
+        if timeout and seconds_passed > timeout:
+	    cprint(cmd + "TimeoutError!", 'red')
+	    '''
             if is_linux:  
                 os.killpg(p.pid, signal.SIGTERM)  
             else:  
                 p.terminate()  
             raise TimeoutError(cmd, timeout)  
+	    '''
         time.sleep(0.1)  
     return p.stdout.read()
 

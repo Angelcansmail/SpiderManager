@@ -52,9 +52,7 @@ class P(T):
                 res.close()
             del upload_jar
             del vul_test
-            
 
-           
 
 if __name__ == '__main__':
     print P().verify(ip='1.202.164.105',port='8080')      

@@ -14,13 +14,13 @@ class Location(object):
         if redisresult:
             self.data = redisresult
         else:
-            keyword=''
+            geoipinfo=''
             try:
-                keyword = getgeoipinfo.getGeoipinfo(ip)
+                geoipinfo = getgeoipinfo.getGeoipinfo(ip)
             except:
                 pass
-            redistool.set(ip, keyword)
-            self.data=keyword
+            redistool.set(ip, geoipinfo)
+            self.data = geoipinfo
 
     def getData(self):
         return self.data

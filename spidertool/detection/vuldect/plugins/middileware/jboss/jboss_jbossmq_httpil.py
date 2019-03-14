@@ -34,13 +34,13 @@ class P(T):
             info = vul_url + " CVE-2017-7504 Vul"
             result['result']=True
             result['VerifyInfo'] = {}
-            result['VerifyInfo']['type'] = 'Java de serialization.'
+            result['VerifyInfo']['type'] = 'Java serialization.'
             result['VerifyInfo']['URL'] = target_url
             result['VerifyInfo']['payload'] = vul_url
             result['VerifyInfo']['result'] = info
             result['VerifyInfo']['level'] = 'hole'
         return result
-   
+
 
 if __name__ == '__main__':
     print P().verify(sys.argv[1], sys.argv[2])      
