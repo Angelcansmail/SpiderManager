@@ -9,7 +9,7 @@ def text():
     print('Tick! The time is: %s' % datetime.now())
 
 def tick():
-    if sniffertask.getObject().get_length() > 30:
+    if sniffertask.getObject().get_length() > 50:
         print('too much work: %s' % datetime.now())
         pass
     else:

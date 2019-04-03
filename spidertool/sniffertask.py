@@ -25,7 +25,7 @@ class snifferTask(TaskTool):
         TaskTool.__init__(self,isThread)
         # DEBUG
         self.logger = initLog('logs/sniffertask.log', 1, False,'sniffertask')
-        self.sqlTool = Sqldatatask.getObject()
+        self.sqlTool = Sqldatatask.getObject()  # 设置线程数
         # 获取nmap的参数
         self.sniffer = sniffertool.SniffrtTool(logger=self.logger)
         self.config = config.Config

@@ -45,7 +45,7 @@ class P(T):
                 result['VerifyInfo']['type'] = 'Remote Code Execution Vul.'
                 result['VerifyInfo']['URL'] = target_url
                 result['VerifyInfo']['payload'] = "CVE-2015-1635 HTTP.SYS远程代码执行漏洞（ms15-034）"
-                result['VerifyInfo']['level']='hole'
+                result['VerifyInfo']['level'] = 'hole'
                 result['VerifyInfo']['result'] = r.content
         except Exception,e:
             print e.text

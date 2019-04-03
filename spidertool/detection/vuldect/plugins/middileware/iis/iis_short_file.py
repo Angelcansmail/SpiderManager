@@ -19,9 +19,9 @@ class P(T):
 
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
         if int(port) == 443:
-            arg = 'https://'+ip+':'+port+'/'
+            arg = 'https://'+ip+':'+port
         else:
-            arg = 'http://' + ip + ':' + port + '/'
+            arg = 'http://' + ip + ':' + port
 
         curl = Curl()
         result = {}
