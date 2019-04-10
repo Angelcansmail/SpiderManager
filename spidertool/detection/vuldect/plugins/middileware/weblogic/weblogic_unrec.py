@@ -1,4 +1,5 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 from ..t import T
 import socket
@@ -216,7 +217,7 @@ class P(T):
             result['VerifyInfo']['URL'] = target_url
             result['VerifyInfo']['payload'] = ''
             result['VerifyInfo']['result'] = msg
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
         return result
 
 

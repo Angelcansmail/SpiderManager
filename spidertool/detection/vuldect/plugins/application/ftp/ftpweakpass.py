@@ -47,25 +47,34 @@ class P(T):
 
             result['result']=True
             result['VerifyInfo'] = {}
-            result['VerifyInfo']['type']='Axis Weak password'
-            result['VerifyInfo']['URL'] =target_url
-            result['VerifyInfo']['payload']='application ftpweakpass payload!'	#login_url
-            result['VerifyInfo']['result'] =info
+            result['VerifyInfo']['type']='Axis Annoymous'
+            result['VerifyInfo']['URL'] = target_url
+            result['VerifyInfo']['payload']='application annoymous payload!'	#login_url
+            result['VerifyInfo']['result'] = info
+            result['VerifyInfo']['level'] = "高危(HOLE)"
 
-            return result
+            return head,None,keywords,result
         else:
-	    ans = None
+            ans = None
             userlist=['root','123456','admin','12345','111111','password','123123','1234','12345678','123456789','sa','test','Administrator','ftp']
             passlist=['root','123456','admin','','12345','111111','password','123123','1234','12345678','123456789','sa','ftp',
             'abc123','qwerty','test','','123']
             for user in userlist:
                 for pwd in passlist:
-                    print 'ftp尝试'+user+':'+pwd
+                    # print 'ftp尝试'+user+':'+pwd
                     result,hackresults=ftp_crack(ip, user, pwd,port)
+                    
                     if result:
-                        return head,ans,keywords,hackresults
+                        result['result']=True
+                        result['VerifyInfo'] = {}
+                        result['VerifyInfo']['type']='Axis Weak password'
+                        result['VerifyInfo']['URL'] =target_url
+                        result['VerifyInfo']['payload']='application ftpweakpass payload!'	#login_url
+                        result['VerifyInfo']['result'] = hackresults
+                        result['VerifyInfo']['level'] = "高危(HOLE)"
+
+                        return head,ans,keywords,result
 	    return result
-#            return head,ans,keywords,hackresults
 
 if __name__ == '__main__':
     print P().verify(ip='218.246.86.195', port='21')

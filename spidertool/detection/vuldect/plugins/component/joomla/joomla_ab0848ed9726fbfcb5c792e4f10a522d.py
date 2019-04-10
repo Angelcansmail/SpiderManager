@@ -1,7 +1,8 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 #-*- encoding:utf-8 -*-
+
+from ..miniCurl import Curl
+from ..t  import T
 
 import re
 
@@ -19,7 +20,7 @@ class P(T):
         url = arg + payload 
         code, head, res, errcode, _ = curl.curl(url )
         if code==200 and '0x2334171512353333>' in res:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
         
 
         del curl

@@ -1,10 +1,12 @@
-from ..miniCurl import Curl
-from ..t  import T
-#!/usr/bin/env python
+# !/usr/bin/env python
 # -*- coding: utf-8 -*-
 #__Author__ = fyxy
 #_PlugName_ = Joomla Shape 5 MP3 Player 2.0 Plugin LFD
 #__Refer___ = http://0day.today/exploits/24724
+
+from ..miniCurl import Curl
+from ..t  import T
+
 import re
 
 class P(T):
@@ -21,7 +23,7 @@ class P(T):
         
         code, head, res, errcode, _ = curl.curl2(target);
         if code == 200 and "public $ftp_pass" in res and "class JConfig {" in res:
-            output(target,result,'hole')
+            output(target,result,'高危(HOLE)')
 
         del curl
         return result

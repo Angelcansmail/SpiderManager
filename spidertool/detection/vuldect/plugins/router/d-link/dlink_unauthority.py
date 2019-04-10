@@ -32,12 +32,12 @@ class P(T):
         
         code, head,res, errcode, _ = curl.curl2(url1)
         if  code==200 and 'Wi-Fi Protected' in res and 'WEP Key' in res:
-            output(url1,result,'hole')
+            output(url1,result,'高危(HOLE)')
  
         url2 = arg + payload[1]
         code, head,res, errcode, _ = curl.curl2(url2)
         if  code==200 and 'MAC' in res and 'SSID' in res:
-            output(url2,result,'hole')
+            output(url2,result,'高危(HOLE)')
         del curl
         return result
 

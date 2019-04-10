@@ -31,7 +31,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']='IP:port/dfshealth.jsp'
                 result['VerifyInfo']['result'] =r.text
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
             else:
                 pass
         except Exception,e:

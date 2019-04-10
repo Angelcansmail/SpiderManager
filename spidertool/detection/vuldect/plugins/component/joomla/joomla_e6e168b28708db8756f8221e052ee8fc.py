@@ -23,7 +23,7 @@ class P(T):
         code, head, res, errcode, _ = curl.curl(url)
         if code == 200 and 'class JConfig' in res:#the joomla configuration.php contain the words "class JConfig"
 	    cprint(url + '存在joomla Vul漏洞', 'yellow')
-	    output(url,result,'warning')
+	    output(url,result,'中危(WARNING)')
     
 
         del curl

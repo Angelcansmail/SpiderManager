@@ -23,7 +23,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload'] = 'IP:port/_nodes/stats'
                 result['VerifyInfo']['result'] = r.text
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
 		cprint(target_url + '存在信息泄漏风险', 'red')
             else:
                 pass

@@ -30,7 +30,7 @@ class P(T):
         code, head, res, errcode, _ = curl.curl2(poc,cookie=cookie)
     	print ("code:%s\nhead:%s\nerrcode:%s"%(code, head, errcode))
         if 'fb0b32aeafac4591c7ae6d5e58308344' in res:
-            output("Joomla has vul, please upgrade:"+poc,result,'hole')
+            output("Joomla has vul, please upgrade:"+poc,result,'高危(HOLE)')
 
         del curl
         return result

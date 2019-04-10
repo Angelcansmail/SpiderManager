@@ -20,7 +20,7 @@ def grab(plugin,host,port,result):
         "Host: %s\n\n" % (plugin, fpath, host))
     file = s.recv(2048)
     if "HTTP/1.0 200 OK" in file and 'root' in file:
-        output('CVE-2015-3337',result,'hole')
+        output('CVE-2015-3337',result,'高危(HOLE)')
 
 class P(T):
     def __init__(self):

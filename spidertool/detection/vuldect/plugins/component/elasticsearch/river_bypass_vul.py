@@ -23,7 +23,7 @@ class P(T):
         url = 'http://' +arg + ':'+port+  payload
         code, head, res, errcode, _ = curl.curl('"%s"' % url)
         if code == 200 and '_river' in res and 'type' in res:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
 
         del curl
         return result

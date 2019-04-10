@@ -79,9 +79,9 @@ def storeresult(result=None):
 # def sendemail(level, mail_msg=''):
 def sendemail(host_loc='', mail_msg=''):
     message = MIMEText(mail_msg, 'html', 'utf-8')   # 内容, 格式, 编码
-    message['From'] = Header("资产探测系统", 'utf-8')
+    message['From'] = Header("网络资产安全性探测系统", 'utf-8')
     message['To'] =  Header('XX安全实验室', 'utf-8')
-    subject = now_time + ' ' + host_loc + ' 漏洞预警'
+    subject = now_time + ' ' + host_loc + ' 风险预警'
     message['Subject'] = Header(subject, 'utf-8')
 
     try:

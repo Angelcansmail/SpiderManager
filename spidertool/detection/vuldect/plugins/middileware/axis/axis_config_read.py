@@ -40,7 +40,7 @@ class P(T):
                         result['VerifyInfo']['URL'] =target_url
                         result['VerifyInfo']['payload']=payload
                         result['VerifyInfo']['result'] =info
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
         except Exception,e:
             print e.text
         finally:

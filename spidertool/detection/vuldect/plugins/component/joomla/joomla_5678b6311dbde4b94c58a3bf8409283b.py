@@ -1,9 +1,10 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+#__author__ = '2chuizi'
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#__author__ = '2chuizi'
-
 
 class P(T):
     def __init__(self):
@@ -20,7 +21,7 @@ class P(T):
             scanurl = '%s/index.php?option=%s' % (arg, plugin)
             code, _, body, _, _, = curl.curl(scanurl)
             if code == 200 and body != body_err:
-                output('%s :%s' % (plugin, arg),result,'note')
+                output('%s :%s' % (plugin, arg),result,'低危(NOTE)')
     
 
         del curl

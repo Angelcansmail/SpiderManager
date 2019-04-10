@@ -57,7 +57,7 @@ class P(T):
 
 		    p = re.findall('\\$Proxy[0-9]+', res, re.S)
 		    if (len(p)) > 0:
-		    	output(url, result, 'hole')
+		    	output(url, result, '高危(HOLE)')
 			cprint(url + '存在weblogic CVE-2018-2628漏洞','red')
 	    except Exception, e:
 	    	print 'weblogic_2628 请求频繁，请稍后自行单独测试...'%str(server_address)

@@ -23,7 +23,7 @@ class P(T):
         url = arg + payload
         code, head, res, errcode, _url = curl.curl2(url)
         if code == 200 and 'qbjvqWYpmssIWtHWZoUShNMKpPjKCoxZxguWgBgRDutDhqvkbq' in res:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
                 
         
 

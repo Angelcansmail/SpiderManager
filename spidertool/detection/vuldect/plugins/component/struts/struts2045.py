@@ -48,6 +48,7 @@ class P(T):
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=payload
             result['VerifyInfo']['result'] =info
+            result['VerifyInfo']['level'] = '高危(HOLE)'
             return result
         return result
 

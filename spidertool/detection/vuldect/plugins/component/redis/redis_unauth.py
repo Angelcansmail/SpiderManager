@@ -31,7 +31,7 @@ class P(T):
             s.send(payload)
             recvdata = s.recv(1024)
             if recvdata and 'redis_version' in recvdata:
-                output(ip + ':' + str(port), result, 'hole')
+                output(ip + ':' + str(port), result, '高危(HOLE)')
             s.close()
         except Exception, e:
     	    cprint(str(e).upper(), 'grey')

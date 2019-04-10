@@ -1,5 +1,6 @@
-#coding:utf-8
-#author:wolf@future-sec
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+# author:wolf@future-sec
 
 import urllib2
 import base64,re
@@ -69,11 +70,11 @@ class P(T):
                         result['VerifyInfo']['URL'] =target_url
                         result['VerifyInfo']['payload']=login_url
                         result['VerifyInfo']['result'] =info
-                        result['VerifyInfo']['level'] = 'hole'
-                        return result             
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
+                        return result
                 return result
         return result
 
 
 if __name__ == '__main__':
-    print P().verify(ip='113.105.74.144',port='80')      
+    print P().verify(ip='113.105.74.144',port='80')

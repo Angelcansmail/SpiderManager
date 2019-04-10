@@ -21,7 +21,7 @@ class P(T):
         code, head, res, errcode,finalurl =  curl.curl(url)
 
         if res.find('file_get_contents') != -1 :
-            output('Verify url: ' + url,result,'hole')
+            output('Verify url: ' + url,result,'高危(HOLE)')
         del curl
         return result
 

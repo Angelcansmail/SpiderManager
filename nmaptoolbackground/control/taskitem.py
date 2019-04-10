@@ -1,11 +1,11 @@
 # !/usr/bin/env python
 # -*- coding:utf-8 -*-
-from spidertool import zmaptool,iptask,sniffertask,SQLTool
+from spidertool import masscantool,zmaptool,iptask,sniffertask,SQLTool
 import random
 from datetime import datetime
 import taskscontrol, jobcontrol
 import objgraph
-operator = {'6':'3306','1':'80','2':'8080','3':'443','4':'22','5':'21','7':'873','8':'9200'}
+operator = {'1':'80','2':'8080','3':'443','4':'22','5':'21', '6': '3306', '7':'873', '8':'7547', '9':'9200'}
 
 def test():
     print('Tick! The time is: %s' % datetime.now())
@@ -16,14 +16,16 @@ def tick():
         print('too much work: %s' % datetime.now())
         pass
     else:
-        num = random.randint(1,1)
-        temp = zmaptool.getObject()
+        num = random.randint(1,9)
+#        temp = zmaptool.getObject()
+        temp = masscantool.getObject()
         temp.do_scan(port=operator.get(str(num)),num='50',needdetail='1')
     print('Tick! The time is: %s' % datetime.now())
 
 def ticknormal():
     num=random.randint(1, 1)
     temp=zmaptool.getObject()
+    # temp=masscantool.getObject()
     temp.do_scan(port=operator.get(str(num)),num='30')
 
 def gchelp():

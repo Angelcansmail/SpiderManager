@@ -29,7 +29,7 @@ class P(T):
         #修正正则，可匹配非中文情况
         m = re.search(r'</th><td>[(&nbsp;)]*(.+)\\testvulxxxxxxxxxxxxxxxxxxxx',body)
         if m:
-            output(m.group(1),result,'info')
+            output(m.group(1),result,'低危(INFO)')
         del curl
         return result
 

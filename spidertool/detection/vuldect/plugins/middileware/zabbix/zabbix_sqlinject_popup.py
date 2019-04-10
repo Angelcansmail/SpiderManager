@@ -30,7 +30,7 @@ class P(T):
         if code == 200:
             m = re.search("202cb962ac59075b964b07152d234b70",res)
             if m:
-                output('zabbix popup.php sql injection exists.',result,'hole')
+                output('zabbix popup.php sql injection exists.',result,'高危(HOLE)')
     
         del curl
         return result

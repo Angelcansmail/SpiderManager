@@ -35,7 +35,7 @@ class Zmaptool:
         path = os.getcwd()
         locate = os.path.split(os.path.realpath(__file__))[0]
 #         p= Popen(" ./zmap -B  4M -p "+port+" -N "+num+"   -q -O json", stdout=PIPE, shell=True,cwd=path+'/zmap-2.1.0/src')
-	cmd = "zmap -w "+locate+"/iparea.json -B 10M -p "+port+" -q -O json"
+	cmd = "zmap -w "+locate+"/iparea.json -B 50M -p "+port+" -q -O json"
         # cmd = "zmap -w "+locate+"/iparea.json -B 1M -p "+port+" -o results.csv -N "+num+"   -q -O json"
         # p= Popen(" zmap -w /root/github/Scan-T/spidermanage/spidertool/iparea.json -B  1M -p "+port+" -N "+num+"   -q -O json", stdout=PIPE, shell=True)
 

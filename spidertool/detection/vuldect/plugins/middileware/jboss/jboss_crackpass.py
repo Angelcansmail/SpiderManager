@@ -1,4 +1,6 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from ..t import T
 import base64
 import re
@@ -64,7 +66,7 @@ class P(T):
                         result['VerifyInfo']['URL'] =target_url
                         result['VerifyInfo']['payload']=target_url+'/jmx-console'
                         result['VerifyInfo']['result'] =info
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
                         return result
         for user in user_list:
             for password in pass_list:
@@ -105,7 +107,7 @@ class P(T):
                         result['VerifyInfo']['URL'] =target_url
                         result['VerifyInfo']['payload']=target_url+'/console/App.html'
                         result['VerifyInfo']['result'] =info
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
                         return result
         for user in user_list:
             for password in pass_list:
@@ -127,7 +129,7 @@ class P(T):
                             result['VerifyInfo']['URL'] =target_url
                             result['VerifyInfo']['payload']=target_url+'/admin-console/login.seam'
                             result['VerifyInfo']['result'] =info
-                            result['VerifyInfo']['level'] = 'hole'
+                            result['VerifyInfo']['level'] = '高危(HOLE)'
                 except:
                     return result
                 finally:

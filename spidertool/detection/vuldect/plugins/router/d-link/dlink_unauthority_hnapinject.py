@@ -28,7 +28,7 @@ class P(T):
         code, head, res, errcode, finalurl = curl.curl2(url,method='POST',header=header)
         if code == 200 and "xmlns:soap" in res:
             cprint(url + '存在unauthenticated Vul漏洞', 'yellow')
-            output("D_link /HANP1 unauthenticated remote query information " + url,result,'warning')
+            output("D_link /HANP1 unauthenticated remote query information " + url,result,'中危(WARNING)')
     
 
         del curl

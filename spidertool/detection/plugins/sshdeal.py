@@ -18,32 +18,32 @@ def ssh2(ip='',port='22',name='',productname=''):
     for username in userlist:
         for i in passwd:
             try:
-	    	# 创建SSH对象
+				# 创建SSH对象
                 ssh = paramiko.SSHClient()
-    		# 允许连接不在know_hosts文件中的主机
+				# 允许连接不在know_hosts文件中的主机
                 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-                print ("try ssh username:%s password:%s"%(username, i))
-		# 连接服务器
+                # print ("try ssh username:%s password:%s"%(username, i))
+				# 连接服务器
                 ssh.connect(ip,int(port),username,i,timeout=10)
 
-                hackresults = {'level':'警告', 'type':'SSH Weakness', 'result':'ssh the password is '+username+':'+i}
-                print ip+hackresults
+                hackresults = {'level':'高危(HOLE)', 'type':'SSH Weakness', 'result':'ssh the password is '+username+':'+i}
+                # print ip+hackresults
                 keywords='ssh'
                 break
             except Exception,e:
                 keywords='ssh'
-                hackresults = {'level': '警告', 'type': 'SSH Error', 'URL': ip + ':' + port, 'result': str(e)}
-                print "Exception:", e[0]
+                hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error', 'URL': ip + ':' + port, 'result': str(e)}
+                # print "Exception:", e[0]
                 if e[0] is None:
                     msg=None
                     break
                 if e[0]==111:
-                    hackresults = {'level': '警告', 'type': 'SSH Error 111', 'URL': ip + ':' + port, 'result': str(e)}
+                    hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 111', 'URL': ip + ':' + port, 'result': str(e)}
                     keywords='ssh'
-                    print ip+'  key is not '+i
+                    # print ip+' passwd is not '+i
                     continue
                 if e[0]==113:
-                    hackresults = {'level': '警告', 'type': 'SSH Error 113', 'URL': ip + ':' + port, 'result': str(e)}
+                    hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 113', 'URL': ip + ':' + port, 'result': str(e)}
                     keywords=' '
                     break
                 if e[0] in 'Authentication failed.':

@@ -25,7 +25,7 @@ class P(T):
 	    # 其实这么测试，只是测试是否可以访问这个连接，并没有真正的判断是否开放端口？
         if code == 200 and 'weblogic.uddi.client.structures.exception.XML_SoapException: no protocol: operator=10.301.0.0:80' in res:
 	    cprint(arg + '存在weblogic SSRF漏洞', 'yellow')
-            output(arg,result,'warning')
+            output(arg,result,'中危(WARNING)')
         del curl
         return result
 

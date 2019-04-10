@@ -1,4 +1,5 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import requests
 from bs4 import BeautifulSoup
@@ -61,7 +62,7 @@ class P(T):
                         result['VerifyInfo']['type'] = 'zabbix Weak password'
                         result['VerifyInfo']['URL'] = target_url
                         result['VerifyInfo']['result'] = info
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
         except Exception, e:
             print e
         finally:

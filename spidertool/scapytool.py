@@ -15,6 +15,7 @@ username_list = ['user','username','ddddd','barcode','id']
 ipinsertdataset=set()
 insertdataset=set()
 passwd_list = ['passwd','password','pwd','upass']
+
 def monitor_callback(pkt):
     global sqlTool
 #     print pkt.sprintf("{IP:%IP.src% -> %IP.dst%\n}{Raw:%Raw.load%\n}")
@@ -158,10 +159,12 @@ def save_data(ip,cookie,data,host,path,username,passwd,http_method):
         conn.close()
     except MySQLdb.Error,e:
         print "[-]MySQLdb Error %d: %s"%(e.args[0],e.args[1])
+
 def initsniffer():
     global sqlTool
     sqlTool=Sqldatatask.getObject()
     sniff(prn=monitor_callback,filter='ip', store=0)
+
 if __name__ == '__main__':                
     initsniffer()
 #     sniff(prn=monitor_callback, store=0)

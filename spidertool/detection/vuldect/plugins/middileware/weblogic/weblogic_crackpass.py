@@ -1,4 +1,5 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import urllib2
 
@@ -59,7 +60,7 @@ class P(T):
                         result['VerifyInfo']['URL'] =target_url
                         result['VerifyInfo']['payload']=target_url+"/console/login/LoginForm.jsp"
                         result['VerifyInfo']['result'] =info
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
                         return result
         return result
 

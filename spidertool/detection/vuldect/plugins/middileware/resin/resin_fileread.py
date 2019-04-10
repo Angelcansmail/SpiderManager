@@ -1,4 +1,6 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 import urllib2
 
 from ..t import T
@@ -30,7 +32,7 @@ class P(T):
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=vul_url
             result['VerifyInfo']['result'] =info
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
             return result
         return result
 

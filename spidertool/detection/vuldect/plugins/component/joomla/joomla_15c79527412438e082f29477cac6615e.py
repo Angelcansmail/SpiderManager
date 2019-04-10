@@ -1,8 +1,8 @@
+# !/usr/bin/env python
+# -*- encoding:utf-8 -*-
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-#-*- encoding:utf-8 -*-
-
 import re
 
 
@@ -20,10 +20,10 @@ class P(T):
         code, head, res, errcode, _ = curl.curl(url )
         m = re.search('in <b>([^<]+)</b> on line <b>', res)
         if code == 200 and m:
-            output(m.group(1),result,'info')
+            output(m.group(1),result,'低危(INFO)')
     
         if code==200 and 'c4ca4238a0b923820dcc509a6f75849b' in res:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
         
 
         del curl

@@ -68,7 +68,7 @@ class P(T):
         if res.find(':',start,end) != -1 and code == 200:
             m = re.search(r"(\w+):(\w+)", res)
             if m:
-                output('/var/etc/httpasswd:' + m.group(0),result,'hole')
+                output('/var/etc/httpasswd:' + m.group(0),result,'高危(HOLE)')
 
         del curl
         return result

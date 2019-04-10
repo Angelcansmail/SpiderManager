@@ -55,7 +55,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =ip+':'+port
                 result['VerifyInfo']['payload']='Java Debug Wire Protocol poc'
                 result['VerifyInfo']['result'] =msgresult
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
             else:
                 pass
         except Exception,e:

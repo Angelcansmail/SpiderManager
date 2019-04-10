@@ -32,13 +32,13 @@ class P(T):
             m = re.search(r"if\('1' == '0' \|\| '([\S]*)' == '([\S]*)'", res)
             if m:
                 cprint(url + '存在Admin Password Disclosure漏洞', 'red')
-                output('Admin Password Disclosure {username}:{password}'.format(username=m.group(2),password=m.group(1)),result,'hole')
+                output('Admin Password Disclosure {username}:{password}'.format(username=m.group(2),password=m.group(1)),result,'高危(HOLE)')
         #Reflected xss
         url = arg + 'error_page.htm?flag=%27%2balert(%27XSS%27)%2b%27'
         code, head, res, errcode, _ = curl.curl2(url)
         if code == 200 and "casenum = ''+alert('XSS')+'';" in res:
             cprint(url + '存在reflected xss 漏洞', 'yellow')
-            output(url + ' reflected xss',result,'warning')
+            output(url + ' reflected xss',result,'中危(WARNING)')
         else:
             pass
 

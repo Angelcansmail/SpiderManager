@@ -32,7 +32,7 @@ class P(T):
                 if reques.status_code == 200 and e not in reques.text:
                     pd = '[+]debug url:{}'.format(url)
 		    cprint(url + '存在weblogic CVE-2018-2894漏洞', 'red')
-		    output(url, result, 'hole')
+		    output(url, result, '高危(HOLE)')
 		    break
 	    return result
         except Exception, e:

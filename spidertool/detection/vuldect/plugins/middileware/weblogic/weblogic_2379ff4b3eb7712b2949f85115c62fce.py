@@ -25,7 +25,7 @@ class P(T):
         m = re.search('weblogic.uddi.client.structures.exception.XML_SoapException', res)
         if m:
 	    cprint(arg + '存在weblogic SSRF and XSS漏洞', 'orange')
-            output(arg, result, 'warning')
+            output(arg, result, '中危(WARNING)')
         del curl
         return result
 

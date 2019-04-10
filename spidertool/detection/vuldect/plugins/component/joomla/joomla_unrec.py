@@ -35,7 +35,7 @@ class P(T):
                 result['VerifyInfo']['type'] = 'joomla unrec'
                 result['VerifyInfo']['URL'] = ip + ':' + port
                 result['VerifyInfo']['payload'] = ua
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
 
 
         except Exception,e:

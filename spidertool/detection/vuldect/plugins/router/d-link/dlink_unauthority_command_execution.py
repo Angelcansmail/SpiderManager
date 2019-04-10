@@ -49,7 +49,7 @@ class P(T):
 		code, head, res, errcode, _ = curl.curl2(arg + url, payload)
 
 		if code == 200 and '<report>OK' in res:
-			output('dlink unauthenticated command injection ' + arg + url, result, 'hole')
+			output('dlink unauthenticated command injection ' + arg + url, result, '高危(HOLE)')
 
 		del curl
 		return result

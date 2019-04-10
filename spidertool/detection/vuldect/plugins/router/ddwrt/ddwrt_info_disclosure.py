@@ -32,7 +32,7 @@ class P(T):
         payload = arg + 'Info.live.htm'
         code, head, res, err, _ = curl.curl2(payload)
         if code == 200 and 'lan_mac' in res:
-            output('information disclosure: ' + payload,result,'info')
+            output('information disclosure: ' + payload,result,'低危(INFO)')
 
         del curl
         return result

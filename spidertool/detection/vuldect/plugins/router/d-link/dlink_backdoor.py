@@ -37,7 +37,7 @@ def doGet(host,port):
         s.send(payload)
         data=s.recv(1024)
         if 'Home/h_wizard.htm' in data:
-            output('D-Link Router Backdoor: http://%s/'%(host_port),result,'hole')
+            output('D-Link Router Backdoor: http://%s/'%(host_port),result,'高危(HOLE)')
     except Exception,e:
         pass
     finally:

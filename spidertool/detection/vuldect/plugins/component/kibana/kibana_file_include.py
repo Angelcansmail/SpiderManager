@@ -42,7 +42,7 @@ class P(T):
 
             if LooseVersion(version) > LooseVersion('5.0') and LooseVersion(version) < LooseVersion('5.6.13') or LooseVersion(version) > LooseVersion('6.0') and LooseVersion(version) < LooseVersion('6.4.3'):
                 cprint(url + "存在信息泄漏风险", "red")
-                output(url, result, "高危")
+                output(url, result, "高危(HOLE)")
         # del curl
         return result
 

@@ -34,10 +34,10 @@ class P(T):
                     if x[1] in noexistbody:
                         continue
                     if x[0]=='php':
-                        output(addr,result,'hole')
+                        output(addr,result,'高危(HOLE)')
                         break
                     if '$' in x[1] or 'include' in x[1]:
-                        output(addr,result,'hole')
+                        output(addr,result,'高危(HOLE)')
                         break
         del curl
         return result

@@ -1,9 +1,9 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+# Refer https://cxsecurity.com/issue/WLB-2015110194
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#Refer https://cxsecurity.com/issue/WLB-2015110194
-
 
 class P(T):
     def __init__(self):
@@ -18,7 +18,7 @@ class P(T):
         url = arg + payload
         code, head, res, errcode, _ = curl.curl2(url)
         if code == 200 and 'Upload files' in res and 'P3P: CP="NOI ADM DEV PSAi COM NAV OUR OTRo STP IND DEM"' in head:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
     
     
 

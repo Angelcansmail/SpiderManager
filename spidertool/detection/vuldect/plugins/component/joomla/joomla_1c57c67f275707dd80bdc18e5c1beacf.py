@@ -22,7 +22,7 @@ class P(T):
         target_url=arg + payload
         code, head, res, _, _ = curl.curl("%s" % target_url)
         if code==200 and '4beed3b9c4a886067de0e3a094246f78' in res :
-            output(target_url,result,'hole')
+            output(target_url,result,'高危(HOLE)')
 
         del curl
         return result

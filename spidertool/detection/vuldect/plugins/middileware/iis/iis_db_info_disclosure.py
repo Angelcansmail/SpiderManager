@@ -63,7 +63,7 @@ class P(T):
             url = arg + payload
             code, head, body, error, _ = curl.curl('--max-filesize 1024000 '+url)
             if code == 200 and 'Standard Jet DB' in body:
-                output(url,result,'hole')
+                output(url,result,'高危(HOLE)')
                 break
     
         del curl

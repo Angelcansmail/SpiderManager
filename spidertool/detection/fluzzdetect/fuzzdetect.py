@@ -63,9 +63,9 @@ class InfoDisScanner(InfoDisScannerBase):
             if not path: path = '/'
             conn_fuc = httplib.HTTPSConnection if protocal == 'https' else httplib.HTTPConnection
             conn = conn_fuc(url, timeout=timeout)
-            conn.request(method='GET', url=path,
-                         headers={'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/38.0.2125.111 Safari/537.36 BBScan/1.0'}
-            )
+            conn.request(method='GET', url=path)
+                         # headers={'User-Agent': 'Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30'}
+            # )
             resp = conn.getresponse()
             resp_headers = dict(resp.getheaders())
             status = resp.status

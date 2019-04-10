@@ -37,21 +37,24 @@ def ftpdeal(ip='',port='21',name='',productname=''):
     keywords='ftp'
 
     if ftp_anon(ip,port):
-        hackresults = {'level':'警告', 'type': 'FTP Annoymous Login.', 'URL': ip + ':' + port, 'result':'Allow Annoymous FTP.'}
+        hackresults = {'level':'高危(HOLE)', 'type': 'FTP Annoymous Login.', 'URL': ip + ':' + port, 'result':'Allow Annoymous FTP.'}
         return head,ans,'ftp',hackresults
     else:
-#         userlist=['root','123456','admin','12345','111111','password','123123','1234','12345678','123456789','sa','test','Administrator','ftp']
-# 
-# 
-#         passlist=['root','123456','admin','','12345','111111','password','123123','1234','12345678','123456789','sa','ftp',
-#             'abc123','qwerty','test','','123']
-        userlist=['admin','test']
-        passlist=['admin','test']
+        userlist=['root','123456','admin','12345','111111','password','123123','1234','12345678','123456789','sa','test','Administrator','ftp']
+        passlist=['root','123456','admin','','12345','111111','password','123123','1234','12345678','123456789','sa','ftp',
+            'abc123','qwerty','test','','123']
 
         for user in userlist:
             for pwd in passlist:
-                print 'ftp尝试'+user+':'+pwd
                 result, hackresults = ftp_crack(ip, user, pwd,port)
                 if result:
+                    result['result']=True
+                    result['VerifyInfo'] = {}
+                    result['VerifyInfo']['type']='Axis Weak password'
+                    result['VerifyInfo']['URL'] =target_url
+                    result['VerifyInfo']['payload']='application ftpweakpass payload!'
+                    result['VerifyInfo']['result'] = hackresults
+                    result['VerifyInfo']['level'] = "高危(HOLE)"
+
                     return head,ans,keywords,hackresults
         return head,ans,keywords,hackresults

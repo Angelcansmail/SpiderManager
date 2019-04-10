@@ -27,7 +27,7 @@ class P(T):
                     result['VerifyInfo']['payload'] = 'IP/plugins/weathermap/editor.php'
                     result['VerifyInfo']['result'] = r.text
                     result['VerifyInfo']['shellurl'] ='plugins/weathermap/configs/test.php  pass is 0'
-                    result['VerifyInfo']['level'] = 'hole'
+                    result['VerifyInfo']['level'] = '高危(HOLE)'
                 
             else:
                 target_url = "http://"+ip+":"+str(port)+"/cacti/plugins/weathermap/editor.php"
@@ -46,7 +46,7 @@ class P(T):
                         result['VerifyInfo']['URL'] = ip + "/cacti/plugins/weathermap/editor.php"
                         result['VerifyInfo']['payload'] = 'IP/cacti/plugins/weathermap/editor.php'
                         result['VerifyInfo']['result'] = r.text
-                        result['VerifyInfo']['level'] = 'hole'
+                        result['VerifyInfo']['level'] = '高危(HOLE)'
         except Exception,e:
             print e.text
         finally:

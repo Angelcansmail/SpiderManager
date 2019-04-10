@@ -35,7 +35,7 @@ class P(T):
                     code, head, res, errcode, _ = curl.curl(arg + '%2Fabcd*~1.*%2Fx.aspx')
                     # 输入不存在的字母，ooxx则会出现400错误
                     if code == 400:
-                        output(arg, result, 'warning')
+                        output(arg, result, '中危(WARNING)')
         except Exception,e:
             print e
         del curl

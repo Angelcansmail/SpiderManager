@@ -16,8 +16,8 @@ def mysql(ip='',port='3306',name='',productname=''):
     for i in passwd:
         try:
             con= MySQLdb.connect(host=ip,port=int(port),user='root',passwd=i)
-            hackresults = {'level':'警告', 'type': 'Mysql Weekness Passwd.', 'URL': ip + ':' + port, 'result':'the password is root:'+i}
-            print ip+hackresults
+            hackresults = {'level':'高危(HOLE)', 'type': 'Mysql Weekness Passwd.', 'URL': ip + ':' + port, 'result':'the password is root:'+i}
+            # print ip+hackresults
             keywords='mysql'
             break;
         except Exception,e:
@@ -26,12 +26,12 @@ def mysql(ip='',port='3306',name='',productname=''):
                 print e,e[0]
                 break
             if e[0]==1045:	#Access denied
-                print ip+'  key is not '+i
+                # print ip+' passwd is not '+i
                 keywords='mysql'
                 continue
             else:
                 keywords='mysql'
-                hackresults={'level':'警告', 'type': 'Mysql Connect Error.', 'URL': ip + ':' + port, 'result': 'Mysql Connect Error.'}
+                hackresults={'level':'高危(HOLE)', 'type': 'Mysql Connect Error.', 'URL': ip + ':' + port, 'result': 'Mysql Connect Error.'}
                 print e,e[0]
                 break;
 
@@ -50,5 +50,6 @@ def empty(ip='',port='',name='',productname=''):
     
     return head,ans,keywords,hackresults
  
+
 
 

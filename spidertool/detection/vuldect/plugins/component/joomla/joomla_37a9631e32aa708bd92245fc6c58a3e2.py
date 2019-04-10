@@ -22,7 +22,7 @@ class P(T):
     
         code, head, res, errcode, _ = curl.curl2(target)
         if code == 200 and "<?php" in res:
-            output(target,result,'note')
+            output(target,result,'低危(NOTE)')
 
         del curl
         return result

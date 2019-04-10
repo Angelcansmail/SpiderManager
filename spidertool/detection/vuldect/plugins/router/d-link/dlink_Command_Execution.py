@@ -24,7 +24,7 @@ class P(T):
         postpayload='cmd=ifconfig'
         code,head,res,errcode,_ = curl.curl2(url,postpayload)
         if code==200 and "Ethernet  HWaddr" in res:
-            output('Find Command_Execution:' + url,result,'hole')
+            output('Find Command_Execution:' + url,result,'高危(HOLE)')
 
         del curl
         return result

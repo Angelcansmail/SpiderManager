@@ -22,7 +22,7 @@ class P(T):
     	verify_url = url + payload
     	code, head, res, _, _ = curl.curl2(verify_url)
     	if code == 200 and 'root:' in res:
-    		output(url + 'D-Link DCS-2103 /cgi-bin/sddownload.cgi 任意文件下载漏洞',result,'hole')
+    		output(url + 'D-Link DCS-2103 /cgi-bin/sddownload.cgi 任意文件下载漏洞',result,'高危(HOLE)')
         del curl
         return result
 

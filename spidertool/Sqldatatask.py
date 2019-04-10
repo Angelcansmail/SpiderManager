@@ -24,9 +24,9 @@ class SqlDataTask(TaskTool):
 		self.sqlhelp.connectdb()
 
 	def task(self, req, threadname):
-		print threadname + '数据库任务　执行任务中' + str(datetime.datetime.now())
-# 		self.sqlhelp.connectdb()
-	        # 获取存入的数据库操作方法，如getLocationIpInfo中的func:inserttableinfo_params;Dic:对应该操作函数的对应参数字典
+		# print threadname + '数据库任务　执行任务中' + str(datetime.datetime.now())
+		# self.sqlhelp.connectdb()
+	    # 获取存入的数据库操作方法，如getLocationIpInfo中的func:inserttableinfo_params;Dic:对应该操作函数的对应参数字典
 		func = req.getFunc()
 		Dic = req.getDic()
 		# print ("\n======================func:%s, Dic:%s======================\n"%(func,Dic))
@@ -40,9 +40,9 @@ class SqlDataTask(TaskTool):
 # 			调用elastictool中的func函数，参数通过Dic传过去
 			ans = getattr(elastictool, func, 'default')(**Dic)
 		except Exception,e:
-			print 'error in elasticsearch', e, traceback.print_exc()
+			print 'Error in Sqldatatask::elasticsearch task:', e, traceback.print_exc()
 		del Dic
-		print threadname+'数据库任务　结束' + str(datetime.datetime.now())
+		# print threadname+'数据库任务　结束' + str(datetime.datetime.now())
 
 # 		self.sqlhelp.closedb()
 		return ans

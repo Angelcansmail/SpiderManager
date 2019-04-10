@@ -46,7 +46,7 @@ class P(T):
         if code == 200:
             # md5(3.1415)
             if '63e1f04640e83605c1d177544a5a0488' in res:
-                output(url,result,'hole')
+                output(url,result,'高危(HOLE)')
         pass
 
         del curl

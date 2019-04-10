@@ -32,7 +32,7 @@ class P(T):
             # md5(123)
             m = re.search("202cb962ac59075b964b07152d234b70",res)
             if m:
-                output('zabbix httpmon.php sql injection exists.',result,'hole')
+                output('zabbix httpmon.php sql injection exists.',result,'高危(HOLE)')
     
         del curl
         return result

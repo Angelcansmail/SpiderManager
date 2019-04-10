@@ -1,9 +1,11 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-#refer:https://cxsecurity.com/issue/WLB-2015090123
+
+from ..miniCurl import Curl
+from ..t  import T
+
 import re,time
+# refer:https://cxsecurity.com/issue/WLB-2015090123
 
 class P(T):
     def __init__(self):
@@ -19,7 +21,7 @@ class P(T):
         url=arg + payload
         code, head, res, _, _ = curl.curl("%s" % url)
         if code==200 and '4beed3b9c4a886067de0e3a094246f78' in res :
-            output('UNION query %s' % url,result,'hole')
+            output('UNION query %s' % url,result,'高危(HOLE)')
     
 
         del curl

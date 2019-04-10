@@ -53,7 +53,7 @@ class P(T):
 					s.send(authpadload)
 					data = s.recv(1024)
 					if 'OK' in data:
-						output('password :' + p, result, 'hole')
+						output('password :' + p, result, '高危(HOLE)')
 						break
 			s.close()
 		except:

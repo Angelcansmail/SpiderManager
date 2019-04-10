@@ -13,7 +13,6 @@ class P(T):
 
     # extends?
     def verify(self,head='',context='',ip='',port='',productname={},keywords='',hackresults=''):
-	print "rsync.py\'s verify"
         result = {}
         result['result']=False
         s=None
@@ -43,6 +42,7 @@ class P(T):
                 result['VerifyInfo']['URL'] = ip
                 result['VerifyInfo']['Port'] = port
                 result['VerifyInfo']['result'] = str(modulelist)
+                result['VerifyInfo']['level'] = "高危(HOLE)"
         except Exception,e:
             print e.text, traceback.print_exc()
         finally:

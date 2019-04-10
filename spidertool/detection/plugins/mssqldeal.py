@@ -13,13 +13,13 @@ def mssql(ip='',port='1433',name='',productname=''):
     for i in passwd:
         try:
             con = pymssql.connect(host=ip,user='sa',password=i,login_timeout=5)  
-            hackresults = {'level':'警告', 'type': 'Mssql Connect Error.', 'URL': ip + ':' + port, 'result': ' the password is :'+i}
-            print ip+hackresults
+            hackresults = {'level':'高危(HOLE)', 'type': 'Mssql Connect Error.', 'URL': ip + ':' + port, 'result': ' the password is :'+i}
+            # print ip+hackresults
             keywords='mssql'
             break;
         except Exception,e:
             keywords='mssql'
-            hackresults = {'level':'警告', 'type': 'Mssql Connect Error.', 'URL': ip + ':' + port, 'result': str(e)}
+            hackresults = {'level':'高危(HOLE)', 'type': 'Mssql Connect Error.', 'URL': ip + ':' + port, 'result': str(e)}
             if 'sa' in hackresults:
                 print 'yes'
             chardit1 = chardet.detect(hackresults)

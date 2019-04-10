@@ -89,7 +89,7 @@ class P(T):
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=poc_url
             result['VerifyInfo']['result'] =info
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
             return result
         return result
 

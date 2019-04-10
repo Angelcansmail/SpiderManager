@@ -30,7 +30,7 @@ class P(T):
         if code == 200:
             m = re.search("ESTABLISHED|已连接",res)
             if m:
-                output(arg[:-1]+payload,result,'hole')
+                output(arg[:-1]+payload,result,'高危(HOLE)')
 
         del curl
         return result

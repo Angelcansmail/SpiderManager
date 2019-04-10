@@ -1,4 +1,6 @@
-#coding:utf-8
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from ..t import T
 import urllib2
 import socket
@@ -63,7 +65,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']=webshell_url
                 result['VerifyInfo']['result'] =info
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
         except Exception,e:
             print e
 

@@ -157,8 +157,9 @@ class PocController(object):
             modules_list, _ = self.__match_modules_by_info(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript)
         else:
             modules_list, _ = self.__match_modules_by_poc(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,defaultpoc=defaultpoc)
-    	# set([('http', 'basemodel'), ('tomcat', 'middileware'), ('struts', 'component'), ('apache', 'middileware')])
-        self.logger.debug('%s:%s 匹配到的可能组件:%s', ip, str(port), str(modules_list))
+        # set([('http', 'basemodel'), ('tomcat', 'middileware'), ('struts', 'component'), ('apache', 'middileware')])
+        if len(modules_list) > 0:
+            self.logger.debug('%s:%s 匹配到的可能组件:%s', ip, str(port), str(modules_list))
         for modules, conponent in modules_list:
             for item in self.components[conponent][modules]:
                 P = item()
@@ -169,7 +170,7 @@ class PocController(object):
                 except Exception,e:
                     self.logger.error('error: %s', e)
 #                self.logger.info('Init Plugin: %s', item)
-        self.logger.debug('%s:%s 要执行筛选的组件: %s', ip, str(port), str(POCS))
+#        self.logger.debug('%s:%s 要执行筛选的组件: %s', ip, str(port), str(POCS))
 	    # 执行每个组件下的verify函数，验证是否存在漏洞，区别在于payload不同
         self.match_POC(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords,
                        nmapscript=nmapscript, POCS=POCS, **kw)
@@ -187,30 +188,32 @@ class PocController(object):
         for poc in POCS:
             try:
                 result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript)
-#    		print('\033[1;36m ' + str(poc) + '::result->' + str(result) + '\033[0m')
-    		# 默认result['result']=False
+                # print('\033[1;36m ' + str(poc) + '::result->' + str(result) + '\033[0m')
+                # 默认result['result']=False
                 if isinstance(result, dict):
                     if result['result']:
                         i = 1
                         dataresult.append(result['VerifyInfo'])
-                        email_msg += """%s:%s存在%s %s 风险，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
+                        if (level in result['VerifyInfo']['level'] for level in ["HOLE", "WARNING", "NOTE", "INFO"]):
+                            i = 2
+                            email_msg += """%s:%s存在%s风险，预警等级【%s】，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
                         # callbackresult.sendemail(result['VerifyInfo']['level'], ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险，请及时处理!')
-                        print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
+                        # print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
                         # cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
                 else:
-                    cprint('<<<<' + str(result) + '>>>>', 'grey')
+                    # cprint('<<<<' + str(result) + '>>>>', 'grey')
                     pass
             except Exception, e:
                 # self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
                 print str(poc) + ' verify failed!->' + str(e.message)
-        if i==1:
-            callbackresult.sendemail(ip + ':' + port, email_msg)
+        if i > 0:
             # callbackresult.storeresult(result=dataresult)
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
-            # callbackresult.storeresult(dataresult)
+            if i == 2:
+                callbackresult.sendemail(ip + ':' + port, email_msg)
             pass
-        else:
-            cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')
+        # else:
+        #    cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')
         del POCS
         # return email_msg
 

@@ -59,7 +59,7 @@ class P(T):
                     result['VerifyInfo']['URL'] =ip+':'+port+"/cgi-bin/test-cgi"
                     result['VerifyInfo']['payload']=usecommand
                     result['VerifyInfo']['result'] =msgresult
-                    result['VerifyInfo']['level'] = 'hole'
+                    result['VerifyInfo']['level'] = '高危(HOLE)'
                     break
                 else:
                     if 'not found' in msgresult:

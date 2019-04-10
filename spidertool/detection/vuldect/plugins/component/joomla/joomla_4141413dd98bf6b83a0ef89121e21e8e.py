@@ -1,7 +1,8 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 """
 #__Author__ = luca
@@ -28,7 +29,7 @@ class P(T):
             url = arg + payload
             code, head, res, errcode, _ = curl.curl('"%s"' % url)
             if code == 200 and "63e1f04640e83605c1d177544a5a0488" in res:
-                output(url,result,'hole')
+                output(url,result,'高危(HOLE)')
     
 
         del curl

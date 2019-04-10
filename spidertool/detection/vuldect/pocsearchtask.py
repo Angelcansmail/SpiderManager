@@ -56,21 +56,21 @@ class PocsearchTask(TaskTool):
         productinfo['productname'] = productname
         productinfo['protocol'] = protocol
 
-        print 'POC   未启动内存增长状况'
+        # print 'POC   未启动内存增长状况'
         gc.collect()
-        objgraph.show_growth()
+        # objgraph.show_growth()
     	# 已经初始化了为啥还要执行？
 	    # temp = default.PocController(logger=logger)
     	# 为传入defaultpoc参数？
         self.pocscan.detect(head=head, context=context, ip=ip, port=port, productname=productinfo, keywords=keywords, nmapscript=nmapscript)
 
         print threadname+'POC检测任务结束'+str(datetime.datetime.now())
-        print 'POC   内存增长状况'
+        # print 'POC   内存增长状况'
         gc.collect()
-        objgraph.show_growth()
-#         print 'objgraph.by_type:',objgraph.by_type('dict')
-#         chain = objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
-#         objgraph.show_chain(chain,filename='chain.png')
+        # objgraph.show_growth()
+		# print 'objgraph.by_type:',objgraph.by_type('dict')
+		# chain = objgraph.find_backref_chain(objgraph.by_type('dict')[-1],inspect.ismodule)
+		# objgraph.show_chain(chain,filename='chain.png')
         ans=''
 
         return ans

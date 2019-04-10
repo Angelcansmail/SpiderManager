@@ -46,7 +46,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']=data_s
                 result['VerifyInfo']['result'] =ret
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
         except:
             pass
         finally:

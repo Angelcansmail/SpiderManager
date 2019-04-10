@@ -23,7 +23,7 @@ class P(T):
         code, head, res, errcode, finalurl = curl.curl2(url, post=data)
 
         if res.find('3b8096391df29b2ce44a81b9e436f769') != -1 and "Parse Failure" not in res:
-            output('ElasticSearch Groovy remote code exec(CVE-2015-1427)', result, 'hole')
+            output('ElasticSearch Groovy remote code exec(CVE-2015-1427)', result, '高危(HOLE)')
         del curl
         return result
 

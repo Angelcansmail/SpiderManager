@@ -21,10 +21,10 @@ class P(T):
             result['result']=True
             result['VerifyInfo'] = {}
             result['VerifyInfo']['type']='MongoClient unauth'
-            result['VerifyInfo']['URL'] =ip+':'+port
+            result['VerifyInfo']['URL'] = 'http://' + ip + ':' + port
             result['VerifyInfo']['payload']='None'
             result['VerifyInfo']['result'] ='MongoClient unauth'
-            result['VerifyInfo']['level'] = 'hole'
+            result['VerifyInfo']['level'] = '高危(HOLE)'
         except Exception,e:
             print e.text
         finally:

@@ -1,9 +1,10 @@
+# !/usr/bin/env python
+# -*- encoding:utf-8 -*-
+# __author__ = '1c3z'
+# ref https://www.youtube.com/watch?v=Rk6di9REaM8
+
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-#-*- encoding:utf-8 -*-
-#__author__ = '1c3z'
-#ref https://www.youtube.com/watch?v=Rk6di9REaM8
 
 import random
 import re
@@ -37,7 +38,7 @@ class P(T):
             if shell:
                 code, head,res, errcode, _ = curl.curl2(url)
                 if 'e369853df766fa44e1ed0ff613f563bd' in res:
-                    output(shell[0],result,'hole')
+                    output(shell[0],result,'高危(HOLE)')
                     
 
         del curl

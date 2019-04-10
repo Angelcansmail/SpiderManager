@@ -25,7 +25,7 @@ class P(T):
         	res = re.findall('<b>([^<]+)</b> on line <b>', body)
         	if (len(res) > 0):
 		    cprint(res[0] + '存在joomla Vul漏洞', 'yellow')
-		    output(res[0],result,'warning')
+		    output(res[0],result,'中危(WARNING)')
         del curl
         return result
 
@@ -36,7 +36,7 @@ def output(url,result,label):
     result['VerifyInfo'] = {}
     result['VerifyInfo']['type']='joomla Vul'
     result['VerifyInfo']['URL'] =url
-    result['VerifyInfo']['payload']='/root/github/poccreate/thirdparty/joomla/joomla_f0d579746ee3b4a46f8b479b5c39aeaa.py'
+    result['VerifyInfo']['payload']='/thirdparty/joomla/joomla_f0d579746ee3b4a46f8b479b5c39aeaa.py'
     result['VerifyInfo']['level']=label
     result['VerifyInfo']['result'] =info
 

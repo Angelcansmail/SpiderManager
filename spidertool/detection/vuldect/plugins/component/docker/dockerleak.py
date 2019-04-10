@@ -57,7 +57,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =ip+':'+port
                 result['VerifyInfo']['payload']=usecommand
                 result['VerifyInfo']['result'] =msgresult
-                result['VerifyInfo']['level'] = 'hole'
+                result['VerifyInfo']['level'] = '高危(HOLE)'
 
         except Exception,e:
             print e.text

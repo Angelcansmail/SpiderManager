@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # coding:utf-8
+
 """
     Title:Script language recognition
     Description:Automatic identification of PHP, ASP,JSP, ASPX, HTML
@@ -64,7 +65,7 @@ class P(T):
         app_suffix = getScript(arg)
         if len(app_suffix) != 0:
 	    cprint(arg + ' detect language they use is ' + str(app_suffix), 'blue')
-            output(arg+' the language they use is '+ str(app_suffix),result,'一般')
+            output(arg+' the language they use is '+ str(app_suffix),result,'一般(NORMAL)')
         return result
 
 

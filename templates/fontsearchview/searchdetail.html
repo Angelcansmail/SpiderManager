@@ -371,7 +371,7 @@
 
                       // if (data2.username == 'admin') {
                       if (data2.userrole == '3') {
-              {#            bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ?  cutitem(encodeHtml(ports[i].head)) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitem(encodeHtml(ports[i].head)))  + "</pre></div>" +#}
+              {#            bodyhtml += "<div class=\"box\"><pre>" + (ports[i].script == '' ?  cutitemb(cutitem(encodeHtml(ports[i].head))) : cutitem(utf8to16(decode64(ports[i].script))) + '\n' + cutitemb(cutitem(encodeHtml(ports[i].head))))  + "</pre></div>" +#}
               {#                // "<div class=\"col-md-9 \">" +#}
               {#                "<p class=\"package-description\">风险信息：</p>";#}
 			  {#bodyhtml += "<div class=\"box\"><pre>" + (ports[i].disclosure == '' && cutitem(ports[i].hackresults) == '' ? '安全' : (ports[i].disclosure == '' ? '\n漏洞网址:\n' + cutitem(ports[i].hackresults).toString() : '\n攻击信息:\n' + cutitem(ports[i].disclosure).toString() + '\n漏洞网址:\n' + cutitem(ports[i].hackresults).toString())) + "</pre></div></div></div></div>";#}

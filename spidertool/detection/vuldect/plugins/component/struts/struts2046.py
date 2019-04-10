@@ -1,5 +1,6 @@
 #!/usr/bin/env python
-# encoding: utf-8
+# -*- coding: utf-8 -*-
+
 from ..t  import T
 import random
 import base64
@@ -70,6 +71,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =target_url
                 result['VerifyInfo']['payload']=payload
                 result['VerifyInfo']['result'] =info
+                result['VerifyInfo']['level'] = '高危(HOLE)'
                 return result
 
         except Exception,e:

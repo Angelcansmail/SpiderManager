@@ -36,7 +36,7 @@ class P(T):
 #    	print "code:%s,head:%s,res:%s,errcode:%s"%(code, head, res, errcode)
         if code == 200 and "Welcome to the OGNL console" in res:
             cprint(url + '存在structs ognl console漏洞', 'red')
-            output('find ognl console:' +url,result,'info')
+            output('find ognl console:' +url,result,'低危(INFO)')
         del curl
         return result
 

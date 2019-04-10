@@ -17,21 +17,21 @@ def identify_main(head='',context='',ip='',port='',productname='',protocol='',nm
         from vuldect import pocsearchtask
         # 通过webdetection获取webinfo，hackresults为空
         # keywords, hackresults = headdect.dect(head=head, context=context, ip=ip, port=port, protocol=protocol)
-        print "\n\ndetection::page_identify::identify_main() fuzztask begin detect...."
+#        print "\ndetection::page_identify::identify_main() fuzztask begin detect...."
         fuz = fuzztask.getObject()
         fuz.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
 
-        print "\n\ndetection::page_identify::identify_main() pocsearchtask begin init...."
+#        print "\ndetection::page_identify::identify_main() pocsearchtask begin init...."
 #        print ("detection::vuldetect::head[%s]\nip[%s]\nport[%s]\nproductname[%s]\nkeywords[%s]\nnmapscript[%s]\nprotocol[%s]\n"%(str(head),str(ip),str(port),str(productname),str(keywords),str(nmapscript),str(protocol)))
         temp = pocsearchtask.getObject()
-        print "\n\ndetection::page_identify::identify_main() pocsearchtask begin detect...."
+#        print "\ndetection::page_identify::identify_main() pocsearchtask begin detect...."
         temp.add_work([(head,context,ip,port,productname,keywords,nmapscript,protocol)])
     except Exception ,e:
         print traceback.print_exc()
         pass
     gc.collect()
-    objgraph.show_growth()
-    print '检测运行后状态'
+#    objgraph.show_growth()
+#    print '检测运行后状态'
 
     return keywords, hackresults
 

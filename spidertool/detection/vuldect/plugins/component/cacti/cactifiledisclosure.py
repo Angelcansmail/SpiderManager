@@ -21,7 +21,7 @@ class P(T):
                 result['VerifyInfo']['URL'] =ip+"/cacti.sql"
                 result['VerifyInfo']['payload']='IP/cacti.sql'
                 result['VerifyInfo']['result'] =''
-                result['VerifyInfo']['level'] = 'info'
+                result['VerifyInfo']['level'] = '低危(INFO)'
             else:
                 pass
         except Exception,e:

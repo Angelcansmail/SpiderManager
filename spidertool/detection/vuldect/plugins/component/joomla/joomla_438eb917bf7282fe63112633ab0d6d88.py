@@ -1,7 +1,8 @@
+# !/usr/bin/env python
+# -*- coding: utf-8 -*-
 from ..miniCurl import Curl
 from ..t  import T
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+
 import urlparse
 import sys
 import re
@@ -40,7 +41,7 @@ class P(T):
                     )
                 for username,password in pass_list:
                     if(force(url, username, password)):
-                        output('password : maybe ' + username + '/' + password,result,'hole')
+                        output('password : maybe ' + username + '/' + password,result,'高危(HOLE)')
                         break
     	
 
