@@ -14,7 +14,7 @@ import time
 import traceback
 
 from logger import initLog
-logger = initLog('logs/search.log', 1, False)
+logger = initLog('/root/log/detect/logs/search.log', 1, False)
 
 timeout=60*20
 
@@ -323,7 +323,7 @@ def mapsearch(request):
 
         redisresult = redistool.get(webtool.md5(str(jsoncontent.__str__)))
         if redisresult:
-	    logger.debug('Get data from redis.')
+            logger.debug('Get data from redis.')
 
             response_data['result'] = '1'
             response_data['ports'] = redisresult['ports']

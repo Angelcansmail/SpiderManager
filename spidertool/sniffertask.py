@@ -13,18 +13,20 @@ from nmaptoolbackground.control import jobcontrol
 from nmaptoolbackground.model import job  
 snifferinstance=None
 
+# def getObject(thread_num=10):
 def getObject():
     global snifferinstance
     if snifferinstance is None:
         snifferinstance = snifferTask(1)
-        snifferinstance.set_deal_num(3)
+        snifferinstance.set_deal_num(100)
+#        print "sniffertask::getObject set thread num ", thread_num
     return snifferinstance
 
 class snifferTask(TaskTool):
     def __init__(self, isThread=1):
         TaskTool.__init__(self,isThread)
         # DEBUG
-        self.logger = initLog('logs/sniffertask.log', 1, False,'sniffertask')
+        self.logger = initLog('/root/log/detect/logs/sniffertask.log', 1, False,'sniffertask')
         self.sqlTool = Sqldatatask.getObject()  # 设置线程数
         # 获取nmap的参数
         self.sniffer = sniffertool.SniffrtTool(logger=self.logger)
@@ -34,7 +36,6 @@ class snifferTask(TaskTool):
         self.logger.debug('%sNMAP 扫描执行任务中', threadname)
 
         # zmaptool.py中needdetail != 0 --> 初始化Job(jobaddress=str(i),jobport='',forcesearch='0',isjob='0')
-	# print "sniffertask::task() req->", req
         jobid = req.getJobid()
         jobid = str(jobid)
         hosts = req.getJobaddress();
@@ -46,7 +47,7 @@ class snifferTask(TaskTool):
             tempresult = jobcontrol.jobupdate(jobstatus='3',taskid=str(jobid),starttime=webtool.getlocaltime())
 
         ans = self.sniffer.scanaddress([hosts], [str(ports)], arguments)
-        self.logger.debug('%sNMAP 扫描任务结束%s\n', threadname)
+        self.logger.debug('%sNMAP 扫描任务结束.', threadname)
 
         if isjob=='1':
             tempresult=jobcontrol.jobupdate(jobstatus='5',taskid=str(jobid),finishtime=webtool.getlocaltime())

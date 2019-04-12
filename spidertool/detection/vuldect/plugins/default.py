@@ -174,9 +174,6 @@ class PocController(object):
 	    # 执行每个组件下的verify函数，验证是否存在漏洞，区别在于payload不同
         self.match_POC(head=head, context=context, ip=ip, port=port, productname=productname, keywords=keywords,
                        nmapscript=nmapscript, POCS=POCS, **kw)
-        # email_msg = self.match_POC(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,nmapscript=nmapscript,POCS=POCS, **kw)
-        # if email_msg:
-        #     callbackresult.sendemail(email_msg)
 
     @classmethod
     def match_POC(self,head='',context='',ip='',port='',productname=None,keywords='',nmapscript='',POCS=None, **kw):
@@ -188,15 +185,18 @@ class PocController(object):
         for poc in POCS:
             try:
                 result = poc.verify(head=head,context=context,ip=ip,port=port,productname=productname,keywords=keywords,hackresults=nmapscript)
-                # print('\033[1;36m ' + str(poc) + '::result->' + str(result) + '\033[0m')
+                # print type(result), str(result)
                 # 默认result['result']=False
                 if isinstance(result, dict):
                     if result['result']:
                         i = 1
                         dataresult.append(result['VerifyInfo'])
-                        if (level in result['VerifyInfo']['level'] for level in ["HOLE", "WARNING", "NOTE", "INFO"]):
-                            i = 2
-                            email_msg += """%s:%s存在%s风险，预警等级【%s】，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
+                        # print (i, "%s:%s存在【%s %s】风险"%(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level']))
+                        # logger.warning("%s:%s存在【%s %s】风险", (ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level']))
+                        if any(level in str(result['VerifyInfo']['level']) for level in ["HOLE", "WARNING", "NOTE", "INFO"]): 
+                            email_msg += """%s:%s存在【%s %s】风险，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
+                            callbackresult.sendemail('http://' + ip + ':' + port, email_msg)
+                            cprint('http://' + ip + ':' + port + '存在【' + result['VerifyInfo']['type'] + result['VerifyInfo']['level'] + '】风险', 'red')
                         # callbackresult.sendemail(result['VerifyInfo']['level'], ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险，请及时处理!')
                         # print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
                         # cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
@@ -204,13 +204,12 @@ class PocController(object):
                     # cprint('<<<<' + str(result) + '>>>>', 'grey')
                     pass
             except Exception, e:
-                # self.logger.error('%s verify failed!->%s', str(poc), str(e.message))
                 print str(poc) + ' verify failed!->' + str(e.message)
         if i > 0:
             # callbackresult.storeresult(result=dataresult)
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
-            if i == 2:
-                callbackresult.sendemail(ip + ':' + port, email_msg)
+            # if i == 2:
+            #    callbackresult.sendemail(ip + ':' + port, email_msg)
             pass
         # else:
         #    cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')

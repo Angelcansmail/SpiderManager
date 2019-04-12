@@ -204,6 +204,7 @@ class InfoDisScanner(InfoDisScannerBase):
             dataresult = self._scan_worker(url_queue=tempqueue,protocal=protocal,_status=status,has_404=has404,ip=ip,port=port)
             if dataresult is not None:
                 callbackfuzz.storedata(ip=ip, port=port, disclosures=dataresult)
+                self.logger.info('Fuzzey detect callbackfuzz: %s' , str(dataresult))
                 pass
         else:
             pass

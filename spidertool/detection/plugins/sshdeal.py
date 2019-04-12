@@ -26,24 +26,24 @@ def ssh2(ip='',port='22',name='',productname=''):
 				# 连接服务器
                 ssh.connect(ip,int(port),username,i,timeout=10)
 
-                hackresults = {'level':'高危(HOLE)', 'type':'SSH Weakness', 'result':'ssh the password is '+username+':'+i}
+                hackresults = {'level':'高危(HOLE)', 'type':'SSH Weakness', 'URL': ip + ':' + port, 'result':'ssh the password is '+username+':'+i}
                 # print ip+hackresults
                 keywords='ssh'
                 break
             except Exception,e:
                 keywords='ssh'
-                hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error', 'URL': ip + ':' + port, 'result': str(e)}
+                # hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error', 'URL': ip + ':' + port, 'result': str(e)}
                 # print "Exception:", e[0]
                 if e[0] is None:
                     msg=None
                     break
                 if e[0]==111:
-                    hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 111', 'URL': ip + ':' + port, 'result': str(e)}
+                    # hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 111', 'URL': ip + ':' + port, 'result': str(e)}
                     keywords='ssh'
                     # print ip+' passwd is not '+i
                     continue
                 if e[0]==113:
-                    hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 113', 'URL': ip + ':' + port, 'result': str(e)}
+                    # hackresults = {'level': '高危(HOLE)', 'type': 'SSH Error 113', 'URL': ip + ':' + port, 'result': str(e)}
                     keywords=' '
                     break
                 if e[0] in 'Authentication failed.':

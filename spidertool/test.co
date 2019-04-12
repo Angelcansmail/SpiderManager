@@ -1,9 +1,0 @@
-seed = 17553553669259543964
-rate = 100.00    
-
-
-# TARGET SELECTION (IP, PORTS, EXCLUDES)
-ports = 80
-range = 202.14.238.0/24
-range = 175.205.70.0/24
-

@@ -21,14 +21,14 @@ class PortscanTask(TaskTool):
     def __init__(self, isThread=1, deamon=False):
         TaskTool.__init__(self,isThread,deamon=deamon)
         import Sqldatatask
-        self.logger = initLog('logs/portScantask.log', 2, True,'portscantask')
+        self.logger = initLog('/root/log/detect/logs/portScantask.log', 2, False,'portscantask')
         self.sqlTool = Sqldatatask.getObject()  #init DBmanager
         #init ConnetcPool's parameters, eg: proxy_address, proxy_name...在webconfig.py中设定 
         self.connectpool = connectpool.getObject()
         # timeout:8, config:xxx, socketclient:None
         self.portscan = portscantool.Portscantool()
         self.config = config.Config
-        self.set_deal_num(15)
+        self.set_deal_num(30)
 
     def task(self,req,threadname):
         # print ("\n======================portscantask::task() req:%s======================\n"%str(req))

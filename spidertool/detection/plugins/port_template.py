@@ -31,7 +31,7 @@ def mysql(ip='',port='3306',name='',productname=''):
                 continue
             else:
                 keywords='mysql'
-                hackresults={'level':'高危(HOLE)', 'type': 'Mysql Connect Error.', 'URL': ip + ':' + port, 'result': 'Mysql Connect Error.'}
+                # hackresults={'level':'高危(HOLE)', 'type': 'Mysql Connect Error.', 'URL': ip + ':' + port, 'result': 'Mysql Connect Error.'}
                 print e,e[0]
                 break;
 

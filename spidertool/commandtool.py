@@ -20,19 +20,19 @@ def command(cmd, timeout=10000):
     p = subprocess.Popen(cmd, stderr=subprocess.STDOUT, stdout=subprocess.PIPE, close_fds=True,shell=True, preexec_fn=os.setsid if is_linux else None)
     if timeout==0:
         return p.stdout.read()
-    t_beginning = time.time()  
-    seconds_passed = 0  
-    while True:  
-        if p.poll() is not None:  
-            break  
-        seconds_passed = time.time() - t_beginning 
+    t_beginning = time.time()
+    seconds_passed = 0
+    while True:
+        if p.poll() is not None:
+            break
+        seconds_passed = time.time() - t_beginning
         if timeout and seconds_passed > timeout:
-	    cprint(cmd + "TimeoutError!", 'red')
-            if is_linux:  
-                os.killpg(p.pid, signal.SIGTERM)  
-            else:  
-                p.terminate()  
-            raise TimeoutError(cmd, timeout)  
+            cprint(cmd + "TimeoutError!", 'red')
+            if is_linux:
+                os.killpg(p.pid, signal.SIGTERM)
+            else:
+                p.terminate()
+            raise TimeoutError(cmd, timeout)
         time.sleep(0.1)  
     return p.stdout.read()
 

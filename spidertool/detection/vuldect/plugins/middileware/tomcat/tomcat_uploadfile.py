@@ -18,7 +18,7 @@ from ..t import T
 from termcolor import cprint
 
 
-class P:
+class P(T):
     def __init__(self):
         T.__init__(self)
 

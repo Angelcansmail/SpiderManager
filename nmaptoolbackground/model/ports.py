@@ -5,6 +5,7 @@
 from spidertool import webtool
 from location import Location
 import ast
+import traceback
 
 class Port(object):
     def __init__(self,ip='',port='',timesearch='',state='',name='',product='',version='',script='',detail='',head='',city='',hackinfo='',hackresults=None,disclosure=None,geoinfo=None,webtitle='',webkeywords=''):
@@ -56,7 +57,7 @@ class Port(object):
                 self.disclosure = ast.literal_eval(disclosure)
                 # print "ports detect disclosure.", type(self.disclosure), str(self.disclosure)
         except Exception, e:
-            print "ports trans hackresults and disclosures error: ", str(e)
+            print "ports trans hackresults and disclosures error: ", str(traceback.print_exc())
 
     def getIP(self):
         return self.ip

@@ -19,7 +19,7 @@ class ConnectPool:
 		self.__connect_pool = Queue.Queue(maxsize=poolsize) #连接池
         # 启用代理
 		self.connectTool = connecttool.ConnectTool()
-		self.logger = initLog('logs/connectpool.log', 2, True,'connectpool')
+		self.logger = initLog('/root/log/detect/logs/connectpool.log', 2, False,'connectpool')
 #		self.__connect_pool.put(connectTool,block=False)
 
 	def check_network(self):

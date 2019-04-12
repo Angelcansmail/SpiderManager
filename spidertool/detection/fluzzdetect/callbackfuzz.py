@@ -29,7 +29,7 @@ def storedata(ip='',port='',disclosures=None):
 	#     disclosure += str(disinfo) + '\\n '
 #	    disinfo_list.remove(disinfo)
 
-    print "fuzzey detect callbackfuzz: ", type(disclosures), str(disclosures)   # a dict
+#    print "fuzzey detect callbackfuzz: ", type(disclosures), str(disclosures)   # a dict
     disclosure = SQLTool.escapewordby(str(disclosures))
     extra=' on duplicate key update  disclosure=\''+disclosure+'\' , timesearch=\''+localtime+'\''
 

@@ -24,7 +24,7 @@ POClog=None
 def getloghandle():
     global POClog
     if POClog is None:
-        POClog=initLog('logs/POCDect.log', 1)
+        POClog=initLog('/root/log/detect/logs/POCDect.log', 1)
     return POClog
 
 class PocsearchTask(TaskTool):

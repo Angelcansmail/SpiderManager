@@ -101,7 +101,7 @@
     function getAesString(data,key,iv){
 	var key  = CryptoJS.enc.Utf8.parse(key); 
 	var iv   = CryptoJS.enc.Utf8.parse(iv); 
-	alert([data, key, iv]);
+	// alert([data, key, iv]);
 	var encrypted =CryptoJS.AES.encrypt(data,key,{
 		iv:iv, 
 		mode:CryptoJS.mode.CBC,

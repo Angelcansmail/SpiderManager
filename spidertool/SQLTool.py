@@ -17,7 +17,7 @@ DBlog = None
 def getloghandle():
 	global DBlog
 	if DBlog is None:
-	    DBlog = initLog('logs/sqltool.log', 1, False, 'sqltool')
+	    DBlog = initLog('/root/log/detect/logs/sqltool.log', 1, False, 'sqltool')
 	return DBlog
 
 def getObject():
@@ -169,7 +169,7 @@ class DBmanager:
 				sql += limit
 				sql += ';'
 
-				self.logger.info('search table %s execute %s', str(table), str(sql))
+				self.logger.info('Search table %s execute %s', str(table), str(sql))
 				count = None
 				try:
 					if self.__cur is not None:
@@ -243,13 +243,13 @@ class DBmanager:
 					sql = sql + '%s' + ')'			
 				else:
 					return False
-#				self.logger.debug('替换插入表%s操作\n%s', table, str(sql))
+				self.logger.info('Replace table %s', str(table))
 #				self.logger.debug('插入表%s内容为:\n%s', str(table), str(insert_values))
 
 				returnmeg = None
 				try:
 					returnmeg = self.__cur.executemany(sql, insert_values)
-					self.logger.debug('返回的消息:%s', str(returnmeg))
+					self.logger.info('返回的消息:%s', str(returnmeg))
 
 					self.__conn.commit()
 					if str(returnmeg) == '0':
@@ -265,7 +265,7 @@ class DBmanager:
 							self.logger.debug('ReConnect to %s', str(self.__db))
 							self.connectdb()
 							returnmeg = self.__cur.executemany(sql, insert_values)
-							self.logger.debug('返回的消息:%s', str(returnmeg))
+							self.logger.info('返回的消息:%s', str(returnmeg))
 				
 							self.__conn.commit()
 							return True
@@ -302,7 +302,6 @@ class DBmanager:
 					sql = sql + select_params[select_params_length-1] + ' = ' + set_params[select_params_length-1]
 				request_params_length = len(request_params)
 
-				self.logger.info("Update table %s by %s", str(table), request_params)
 				if request_params_length > 0:
 					sql = sql + ' where '
 					for k in range(0, request_params_length-1):
@@ -326,7 +325,8 @@ class DBmanager:
 					except Exception, e:
 						return False
 				if count > 0:
-					self.logger.debug('======================更新%s成功 >_= ->>======================', (str(table)))
+					self.logger.info("Update table %s by %s success", str(table), request_params)
+					# self.logger.info('======================更新%s成功 >_= ->>======================', (str(table)))
 					return True
 				else:
 					self.logger.debug('数据表%s中无需更新，请验证信息!', (table))
@@ -341,7 +341,7 @@ class DBmanager:
 
 	def inserttableinfo_byparams(self, table, select_params, insert_values, extra = ' ', updatevalue = []):
 		if len(insert_values)<1 :
-			self.logger.warning('There is not parameters.')
+			self.logger.warning('There is not parameters.' + str(select_params) + ' values:' + str(insert_values))
 			return False
 		elif  self.__isconnect == 1:
 			try:
@@ -366,7 +366,7 @@ class DBmanager:
 						sql = sql+updatevalue[o]+' =  values('+updatevalue[o]+')  , '
 					sql = sql+updatevalue[ulen-1]+'   = values('+updatevalue[ulen-1]+') '
 				sql += extra
-#				self.logger.debug('插入数据库操作\n%s',  str(sql))
+				self.logger.info('Insert into table %s',  str(table))
 #				self.logger.debug('插入数据库内容为:\n%s',  str(insert_values))
 
 				returnmeg = None
@@ -378,11 +378,11 @@ class DBmanager:
 							self.connectdb()
 							returnmeg = self.__cur.executemany(sql, insert_values)
 						else:
-						    self.logger.warning('Connect to %s Failed. %s', str(self.__db), str(e))
+						    self.logger.warning('Connect to %s::%s Failed. %s', str(self.__db), str(table), str(e))
 						    return False
 					except Exception, e:
 						return False
-				self.logger.info('Execute insert %s operation, return %s', str(self.__db), str(returnmeg))
+				self.logger.info('Execute insert %s::%s operation, return %s', str(self.__db), str(table), str(returnmeg))
 				if returnmeg > 0:
 					if self.__conn is not None:
 						self.__conn.commit()

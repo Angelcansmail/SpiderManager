@@ -7,6 +7,7 @@ import time
 import datetime
 import smtplib
 
+from termcolor import cprint
 from email.mime.text import MIMEText
 from email.header import Header
 
@@ -89,6 +90,6 @@ def sendemail(host_loc='', mail_msg=''):
         smtpObj.connect(mail_host, 25)
         smtpObj.login(mail_user, mail_pass)
         smtpObj.sendmail(sender, receivers, message.as_string())
-        print("Send Email Success.")
+        cprint('Send Email Success.', 'green')
     except smtplib.SMTPException as e:
-        print("Error: Send Email Failed.", e)
+        cprint('Error: Send Email Failed.' + str(e), 'grey')

@@ -326,7 +326,7 @@
         function getsearchvalue(id) {
             if (event.keyCode == 13) {
                 var tempcontent = document.getElementById(id).value;
-                window.location = '/fontsearch/searchmain/?page=0&searchcontent=' + tempcontent;
+                window.location = '/fontsearch/searchmain?page=0&searchcontent=' + tempcontent;
             }
             //
         }
@@ -570,10 +570,10 @@
                     var temphackresults = '';
 
                     if (ports[i].hackresults == null || ports[i].hackresults == '') {
-
                         temphackresults = '';
                     }
                     else {
+                        console.log(ports[i].hackresults[0]['level'] + ports[i].hackresults[0]['type']);
                         if (ports[i].hackresults.length > 30)
                             temphackresults = encodeHtml(ports[i].hackresults.substring(0, 30));
                         else

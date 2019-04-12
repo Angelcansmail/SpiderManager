@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>搜索详情</title>
+    <title>搜索详情页</title>
     <meta name="description" content="详细内容检索">
     <meta name="keywords" content="">
     <meta name="author" content="sherwel">
@@ -221,7 +221,7 @@
         var str = '';
         nowpage = currpage;
         str = 'content=' + content + '&page=' + number;
-	    alert(["searchdetail", str]);
+	    // alert(["searchdetail", str]);
         xmlhttp.open("POST", "/fontsearch/searchdetail", true);	// detailpage
         xmlhttp.onreadystatechange = callback;
         xmlhttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -311,7 +311,7 @@
 
                     for (var j = 0; j < l_hack; j++) {
                         hackinfos = hackresults[j];
-                        hackinfo += '类型: ' + cutitem(hackinfos['type']) + ' 等级: ' + cutitem(hackinfos['level']) + ' 链接: ' + cutitem(hackinfos['URL']) + '\n';
+                        hackinfo += '等级: ' + cutitem(hackinfos['level']) + ' 类型: ' + cutitem(hackinfos['type']) + ' 链接: ' + cutitem(hackinfos['URL']) + '\n';
                     }
                     h_flag = true;
                 }

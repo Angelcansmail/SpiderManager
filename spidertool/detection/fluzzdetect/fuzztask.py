@@ -20,7 +20,7 @@ fuzzlog=None
 def getloghandle():
     global fuzzlog
     if fuzzlog is None:
-        fuzzlog = initLog('logs/fuzzDect.log', 1, False)
+        fuzzlog = initLog('/root/log/detect/logs/fuzzDect.log', 1, False)
     return fuzzlog
 
 class FuzzTask(TaskTool):

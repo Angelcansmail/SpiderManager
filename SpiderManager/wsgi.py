@@ -10,7 +10,7 @@ https://docs.djangoproject.com/en/1.9/howto/deployment/wsgi/
 import os
 
 from django.core.wsgi import get_wsgi_application
-from nmaptoolbackground.control import taskcontrol
+from nmaptoolbackground.control import taskcontrol,taskitem
 
 import faulthandler
 import pdb
@@ -22,4 +22,7 @@ application = get_wsgi_application()
 # application = Dozer(application)
 # application = Logview(application)
 faulthandler.enable()
-taskcontrol.scheduleinit()
+# taskcontrol.scheduleinit()
+taskitem.tick()
+# pdb.set_trace()
+

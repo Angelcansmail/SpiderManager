@@ -26,7 +26,7 @@ def ftp_crack(host, user, pwd, port='21'):
         ftp.retrlines('LIST')
         ftp.quit()
         print '\n[+] 破解成功，用户名：' + user + ' 密码：' + pwd
-        return True, {'level':'warning', 'type': 'FTP Weak Passwd', 'URL': host + ':' + port, 'reslut':'ftp password is '+user+':'+pwd}
+        return True, {'level':'高危(HOLE)', 'type': 'FTP Weak Passwd', 'URL': host + ':' + port, 'reslut':'ftp password is '+user+':'+pwd}
     except ftplib.all_errors:
         return False,''
 
@@ -48,13 +48,5 @@ def ftpdeal(ip='',port='21',name='',productname=''):
             for pwd in passlist:
                 result, hackresults = ftp_crack(ip, user, pwd,port)
                 if result:
-                    result['result']=True
-                    result['VerifyInfo'] = {}
-                    result['VerifyInfo']['type']='Axis Weak password'
-                    result['VerifyInfo']['URL'] =target_url
-                    result['VerifyInfo']['payload']='application ftpweakpass payload!'
-                    result['VerifyInfo']['result'] = hackresults
-                    result['VerifyInfo']['level'] = "高危(HOLE)"
-
                     return head,ans,keywords,hackresults
         return head,ans,keywords,hackresults
