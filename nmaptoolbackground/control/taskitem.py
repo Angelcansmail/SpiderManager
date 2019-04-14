@@ -5,7 +5,7 @@ import random
 from datetime import datetime
 import taskscontrol, jobcontrol
 import objgraph
-import pdb
+# import pdb
 
 operator = {'1':'80','2':'8080','3':'443','4':'22','5':'21', '6': '3306', '7':'873', '8':'7547', '9':'9200'}
 
@@ -14,17 +14,17 @@ def test():
 
 def tick():
     gchelp()
-    print sniffertask.getObject().get_length()
-    pdb.set_trace()
-    if sniffertask.getObject().get_length()>100:
-        print('too much work: %s' % datetime.now())
+    print("\n\nsniffertask count:%d"%(sniffertask.getObject().get_length()))
+#    pdb.set_trace()
+    if sniffertask.getObject().get_length()>50:
+        print('Too much work: %s' % datetime.now())
         pass
     else:
         num = random.randint(1,9)
         # temp = zmaptool.getObject()
-        print (str(num), "init masscantool object.")
+#        print (str(num), "init masscantool object.")
         temp = masscantool.getObject()
-        print ("masscan do scan.")
+#        print ("masscan do scan.")
         temp.do_scan(port=operator.get(str(num)),num='50',needdetail='1')
     print('Tick! The time is: %s' % datetime.now())
 

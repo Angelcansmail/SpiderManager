@@ -1,5 +1,5 @@
-#!/usr/bin/python
-#coding:utf-8
+# !/usr/bin/python
+# -*- coding:utf-8 -*-
 
 '''
 Created on 2015年10月29日
@@ -62,13 +62,15 @@ class SniffrtTool(object):
         else :
             orders = None
         try:
-            if hignpersmission == '0':
+            if hignpersmission == '0' and orders == None:
                 acsn_result = self.nma.scan(hosts=hosts,ports=self.usual_ports,arguments=self.params+arguments)
 #                self.logger.debug("End scanaddress->%s:%s\n"%(hosts, orders))
-#                print ("%s:%s扫描结束\n%s\n"%(hosts, orders, acsn_result))
+                print ("%s:%s全端口扫描结束\n%s\n"%(hosts, orders, str(acsn_result)))
                 return callback(acsn_result) 
             else:
-                return callback(self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments))
+                acsn_result = self.nma.scan(hosts=hosts,ports=orders,arguments=self.params+arguments)
+                print ("%s:%s指定端口扫描结束\n%s\n"%(hosts, orders, str(acsn_result)))
+                return callback(acsn_result)
         except nmap.PortScannerError,e:
             self.logger.error("spidertool::scaninfo()", str(traceback.print_exc()))
             return ''
@@ -77,7 +79,7 @@ class SniffrtTool(object):
             return ''
 
     def callback_result(self, scan_result):
-        # self.logger.info("End scanaddress, execute sniffertool::callback_result store into DB.")
+        self.logger.info("End scanaddress, execute sniffertool::callback_result store into DB.")
         tmp = scan_result
         for i in tmp['scan'].keys():
             host = i
@@ -165,7 +167,8 @@ class SniffrtTool(object):
         self.logger.info("Begin scanaddress->%s:%s", str(hosts), str(ports))
 
         for i in range(len(hosts)):
-            # 不指定端口，则扫描全部端口
+            # 不指定端口，则扫描全部端口, 这里ports=['']虽然会进入指定端口哦，permission=1,但是仍然是NULL，还会扫描全部端口, 所以加了orders==None的判断
+	    self.logger.info("scanaddress i=%d, len(ports)=%d", i, len(ports))
             if len(ports) <= i:
                 result = self.scaninfo(hosts=hosts[i],arguments=arguments)
                 if result is None:

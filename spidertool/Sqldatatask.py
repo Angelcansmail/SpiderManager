@@ -6,7 +6,6 @@ import datetime
 import time
 import SQLTool
 from TaskTool import TaskTool
-import traceback
 
 sqltaskdata = None
 
@@ -40,7 +39,7 @@ class SqlDataTask(TaskTool):
 # 			调用elastictool中的func函数，参数通过Dic传过去
 			ans = getattr(elastictool, func, 'default')(**Dic)
 		except Exception,e:
-			print 'Error in Sqldatatask::elasticsearch task:', e, traceback.print_exc()
+			print('Error in Sqldatatask::elasticsearch task:', str(e))
 		del Dic
 		# print threadname+'数据库任务　结束' + str(datetime.datetime.now())
 

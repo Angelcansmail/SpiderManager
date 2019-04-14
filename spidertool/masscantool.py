@@ -50,6 +50,9 @@ class Masscantool:
 
             print "\n\nmasscantool get open ip: %d个\n\n"%(address_cnt)
 
+            if address_cnt < 1:
+                return False
+
             for i in ip_list:
                 insertdata.append((str(i), port, localtime, 'open', str(port)))
                 # print ("masscantool scan ip:%s"%i)
@@ -58,9 +61,10 @@ class Masscantool:
                 if needdetail=='0':
                     global portname
                     nowportname=portname.get(port,'')
+                    # use masscan can know which port is open, so we can use this result to scan port\'s result and detect dangerous
                     self.portscan.add_work([(nowportname,str(i), port,'open','','')])
                 else:
-		            # 执行masscan的时候开放后，默认nmap扫描全部端口；但是通过页面添加任务的时候如果指定了端口，不会扫描全部端口
+		    # 执行masscan的时候开放后，默认nmap扫描全部端口；但是通过页面添加任务的时候如果指定了端口，不会扫描全部端口
                     ajob = job.Job(jobaddress=str(i),jobport='',forcesearch='0',isjob='0')
                     jobs.append(ajob)
             # execute nmap scan, should range threadnum
@@ -70,20 +74,12 @@ class Masscantool:
                 tasktotally.add_work(jobs)
             extra=' on duplicate key update  state=\'open\' , timesearch=\''+localtime+'\''
 #             self.sqlTool.inserttableinfo_byparams(table=self.config.porttable,select_params=['ip','port','timesearch','state'],insert_values=insertdata,extra=extra)
-            sqldatawprk=[]
+            sqldatawork=[]
             dic={"table":self.config.porttable,"select_params":['ip','port','timesearch','state','portnumber'],"insert_values":insertdata,"extra":extra}
-            tempwprk = Sqldata.SqlData('inserttableinfo_byparams',dic)
-            sqldatawprk.append(tempwprk)
-            self.sqlTool.add_work(sqldatawprk)
-        # try:
-        #
-        #     p.terminate()
-        #
-        # except Exception,e:
-        #     print e
-        #     print 'error'
-
-#             self.sqlTool.closedb()
+            tempwork = Sqldata.SqlData('inserttableinfo_byparams',dic)
+            sqldatawork.append(tempwork)
+            self.sqlTool.add_work(sqldatawork)
+#            self.sqlTool.closedb()
 
 if __name__ == "__main__":
     temp = Masscantool()

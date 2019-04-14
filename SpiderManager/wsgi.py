@@ -13,7 +13,7 @@ from django.core.wsgi import get_wsgi_application
 from nmaptoolbackground.control import taskcontrol,taskitem
 
 import faulthandler
-import pdb
+# import pdb
 from dozer import Dozer,Logview
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SpiderManager.settings")

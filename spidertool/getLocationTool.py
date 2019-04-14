@@ -64,14 +64,14 @@ class GetLocationTask(TaskTool):
 
         extra = ' on duplicate key update updatetime='+SQLTool.formatstring(localtime)+',country='+SQLTool.formatstring(country)+', country_id='+SQLTool.formatstring(country_id)+',area='+SQLTool.formatstring(area)+', area_id='+SQLTool.formatstring(area_id)+',region='+SQLTool.formatstring(region)+', region_id='+SQLTool.formatstring(region_id)+',city='+SQLTool.formatstring(city)+', city_id='+SQLTool.formatstring(city_id)+',county='+SQLTool.formatstring(county)+', county_id='+SQLTool.formatstring(county_id)+',isp='+SQLTool.formatstring(isp)+', isp_id='+SQLTool.formatstring(isp_id)
 
-        sqldatawprk=[]
+        sqldatawork=[]
         dic={"table":self.config.iptable,"select_params":['ip','country','country_id','area','area_id','region','region_id','city','city_id','county','county_id','isp','isp_id','updatetime'],"insert_values":insertdata,"extra":extra}
         # 和之前的手工写入数据库操作一样
-        tempwprk = Sqldata.SqlData('inserttableinfo_byparams', dic)
-        sqldatawprk.append(tempwprk)
-        self.sqlTool.add_work(sqldatawprk)
+        tempwork = Sqldata.SqlData('inserttableinfo_byparams', dic)
+        sqldatawork.append(tempwork)
+        self.sqlTool.add_work(sqldatawork)
         del insertdata
-        time.sleep(0.1)
+        time.sleep(0.2)
         ans=''
         return ans
 #        
