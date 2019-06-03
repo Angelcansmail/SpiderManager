@@ -11,7 +11,7 @@ from elasticsearch_dsl.connections import connections
 import mapping
 from logger import initLog
 import chardet
-logger = initLog('/root/log/detect/logs/elastic.log', 2, True)
+logger = initLog('/root/log/baozhang/logs/elastic.log', 2, True)
 
 import base64
 

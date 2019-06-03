@@ -79,6 +79,7 @@ class P(T):
 		result['VerifyInfo']['payload'] = payload
 		result['VerifyInfo']['result'] = info
 		result['VerifyInfo']['level'] = '高危(HOLE)'
+		result['VerifyInfo']['hole_id'] = 'CVE-2018-17919'
 	    return result
 
 

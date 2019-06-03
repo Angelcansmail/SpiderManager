@@ -54,7 +54,7 @@ class P(T):
 	    finally:
 	    	if res is not None:
 		    res.close()
-                    del res
+#                    del res
 		if '302' in str(res.history) and res_html.find('222') <> -1:
 		    cprint(target_url + '存在structs057漏洞', 'red')
 		    info = target_url + "struts057  Vul"

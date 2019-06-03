@@ -17,14 +17,14 @@ def getObject():
     global snifferinstance
     if snifferinstance is None:
         snifferinstance = snifferTask(1)
-        snifferinstance.set_deal_num(50)
+        snifferinstance.set_deal_num(10)
     return snifferinstance
 
 class snifferTask(TaskTool):
     def __init__(self, isThread=1):
         TaskTool.__init__(self,isThread)
         # DEBUG
-        self.logger = initLog('/root/log/detect/logs/sniffertask.log', 1, False,'sniffertask')
+        self.logger = initLog('/root/log/baozhang/logs/sniffertask.log', 1, False,'sniffertask')
         self.sqlTool = Sqldatatask.getObject()  # 设置线程数
         # 获取nmap的参数
         self.sniffer = sniffertool.SniffrtTool(logger=self.logger)

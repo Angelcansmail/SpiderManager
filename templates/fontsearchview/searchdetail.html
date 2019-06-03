@@ -115,9 +115,7 @@
         <div class="row">
             <div class="about footer-col col-md-5 col-sm-12" id="about">
                 <h4>关于 Scan-Eye</h4>
-                <p> Scan-Eye 是 <a href="https://github.com/nanshihui/toolforspider" target="_blank">独立开发者</a>支持并维护的开源项目免费
-                    主机扫描服务，致力于成为 Bootstrap、jQuery、Angular 一样优秀的开源项目提供稳定、快速的免费主机扫描服务。Scan-Eye所收录的主机资源主要来源于
-                    <a href="https://github.com/nanshihui/toolforspider" target="_blank">实时扫描</a> 仓库。</p>
+                <p> Scan-Eye主机扫描服务，致力于成为 Bootstrap、jQuery、Angular 一样优秀的开源项目提供稳定、快速的免费主机扫描服务。Scan-Eye所收录的主机资源主要来源于实时扫描仓库。</p>
                 <p></p>
                 <p>反馈或建议请发送邮件至：gangzhanhui@cics-cert.com</p>
             </div>
@@ -305,7 +303,7 @@
                 hackresults = hackresults == null ? '': hackresults;
                 disclosures = disclosures == null ? '': disclosures;
 
-                console.log('hackresults:', hackresults, 'disclosure:', disclosures);
+                {#console.log('hackresults:', hackresults, 'disclosure:', disclosures);#}
                 if (hackresults != '') {
                     var l_hack = hackresults.length;
 

@@ -46,6 +46,7 @@ class P(T):
                 results['VerifyInfo']['refer'] = 'https://blog.csdn.net/DarkHQ/article/details/79302051'
                 results['VerifyInfo']['payload'] = url
                 results['VerifyInfo']['result'] = 'cve-2017-12615'
+                results['VerifyInfo']['hole_id'] = 'CVE-2017-12615'
                 results['VerifyInfo']['level'] = '高危(HOLE)'
                 cprint(url + ' tomcat file upload', 'red')
         except Exception, e:

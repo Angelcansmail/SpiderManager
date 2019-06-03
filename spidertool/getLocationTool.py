@@ -17,14 +17,14 @@ def getObject():
     return getlocationtaskinstance
 
 def getlocationjsondata(jsondata):
-#     print jsondata
-    if jsondata.get('code','1')  ==  0:   #get success
+    print jsondata, jsondata.get('status','1')
+    if jsondata.get('status','1')  ==  '0':   #get success
         country = jsondata['data'].get('country','0')
         country_id = str(jsondata['data'].get('country_id','0'))
         area = jsondata['data'].get('area','0')
         area_id = str(jsondata['data'].get('area_id','0'))
-        region = jsondata['data'].get('region','0')
-        region_id = str(jsondata['data'].get('region_id','0'))
+        region = jsondata['data'].get('province','0')
+        region_id = str(jsondata['data'].get('province_id','0'))
         city = jsondata['data'].get('city','0')
         city_id = str(jsondata['data'].get('city_id','0'))
         county = jsondata['data'].get('county','0')
@@ -48,15 +48,13 @@ def getlocationjsondata(jsondata):
 class GetLocationTask(TaskTool):
     def __init__(self,isThread=1,deamon=True):
         TaskTool.__init__(self,isThread,deamon=deamon)
-
         self.sqlTool = Sqldatatask.getObject()  #init DBmanager
         self.config = config.Config
         self.set_deal_num(1)
 
-    def task(self, req, threadname):
-        print 'getLocationTool::task() ip location do ......the ip is ' + req
-        ip = req
-        jsondata = webtool.getLocationinfo(req) #使用ip.taobao.com获取该ip对应的信息，返回一个json结构的字典
+    def task(self, ip, threadname):
+        print 'getLocationTool::task() ip location do ......the ip is ' + ip
+        jsondata = webtool.getLocationinfo(ip) #使用ip.taobao.com获取该ip对应的信息，返回一个json结构的字典
         country, country_id, area, area_id, region, region_id, city, city_id, county, county_id, isp, isp_id = getlocationjsondata(jsondata)
         localtime = str(time.strftime("%Y-%m-%d %X", time.localtime()))
         insertdata=[]
@@ -74,17 +72,7 @@ class GetLocationTask(TaskTool):
         time.sleep(0.2)
         ans=''
         return ans
-#        
-#{"code":0,"data":{"country":"\u4e2d\u56fd","country_id":"CN",
-#                   "area":"\u534e\u5317","area_id":"100000",
-#                   "region":"\u5317\u4eac\u5e02","region_id":"110000",
-#                   "city":"\u5317\u4eac\u5e02","city_id":"110100",
-#                   "county":"","county_id":"-1",
-#                   "isp":"\u8054\u901a","isp_id":"100026",
-#                   "ip":"123.123.123.123"
-#                   }
-#}
-#
+
 def test():
     jsondata = webtool.getLocationinfo('123.123.123.120')
     if jsondata.get('code','1') == 0:

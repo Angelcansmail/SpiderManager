@@ -70,16 +70,20 @@ def getLocationinfo(ip):
 	httpClient=None
 	response_data={}
 	try:
-		httpClient = httplib.HTTPConnection('ip.taobao.com', 80, timeout=30)
-		httpClient.request('GET', '/service/getIpInfo.php?ip='+ip)
+		httpClient = httplib.HTTPConnection('api.help.bj.cn', 80, timeout=30)
+		httpClient.request('GET', '/apis/ip/?ip='+ip)
  
+		# httpClient = httplib.HTTPConnection('ip.taobao.com', 80, timeout=30)
+		# httpClient.request('GET', '/service/getIpInfo.php?ip='+ip)
         #response是HTTPResponse对象
 		response = httpClient.getresponse()
 		# print response.status #200
 		# print response.reason #OK
 		response_data = response.read().strip() # 我理解数据应该存储到ip_maindata
-#        {"code":0,"data":{"ip":"110.110.110.120","country":"中国","area":"","region":"黑龙江","city":"哈尔滨","county":"XX","isp":"铁通","country_id":"CN","area_id":"","region_id":"230000","city_id":"230100","county_id":"xx","isp_id":"100020"}}
-		
+# {"code":0,"data":{"ip":"110.110.110.120","country":"中国","area":"","region":"黑龙江","city":"哈尔滨","county":"XX","isp":"铁通","country_id":"CN","area_id":"","region_id":"230000","city_id":"230100","county_id":"xx","isp_id":"100020"}}
+
+# {"status":"0","data":{"ip":"110.110.110.120","weathercode":"","country":"中国","area":"","province":"黑龙江","city":"哈尔滨","county":"XX","isp":"铁通","country_id":"CN","area_id":"","province_id":"230000","city_id":"230100","county_id":"xx","isp_id":"100020"}}
+
 	except Exception, e:
 		print '接受的数据出现异常'+str(traceback.print_exc())
 	finally:
@@ -89,7 +93,7 @@ def getLocationinfo(ip):
 			return json.loads(response_data)
 		except Exception,e:
 			print response_data
-			print str(e)+'json error'
+			print ip+ ':' + str(e)+' json error'
 			return {}
 
 def md5(str):

@@ -10,9 +10,11 @@ import lxml.html
 import re
 import sys
 import ssl
-from urllib2 import urlopen
 import socket
 import traceback
+
+from distutils.version import LooseVersion
+from urllib2 import urlopen
 from termcolor import cprint
 
 reload(sys)
@@ -46,16 +48,20 @@ class P(T):
             print target_url, "connect time out\n", traceback.print_exc()
 	    return result
 	if 'Advantech' in html_content:
-	    cprint(target_url + '可能存在漏洞(版本有待检测)', 'yellow')
-	    info = target_url + " Advantech Webaccess"
-	    result['result']=True
-	    result['VerifyInfo'] = {}
-	    result['VerifyInfo']['type']='Advantech Webaccess Vul'
-	    result['VerifyInfo']['URL'] = target_url
-	    result['VerifyInfo']['payload'] = 'Advantech Webaccess Vul'
-	    result['VerifyInfo']['result'] = info
-	    result['VerifyInfo']['level'] = '高危(HOLE)'
-	    return result
+		soup = BeautifulSoup(html_content, "html.parser")
+		version_info = soup.find(name="div", attrs={"class":"version"}).string.strip()
+		version = version_info.split(':')[1]
+		if LooseVersion(version) < LooseVersion('8.3.2'):
+			cprint(target_url + '可能存在漏洞(版本有待检测)', 'yellow')
+			info = target_url + " Advantech Webaccess"
+			result['result']=True
+			result['VerifyInfo'] = {}
+			result['VerifyInfo']['type']='Advantech Webaccess Vul'
+			result['VerifyInfo']['URL'] = target_url
+			result['VerifyInfo']['payload'] = 'Advantech Webaccess Vul'
+			result['VerifyInfo']['result'] = info
+			result['VerifyInfo']['level'] = '高危(HOLE)'
+			return result
 	return result
 
 if __name__ == '__main__':

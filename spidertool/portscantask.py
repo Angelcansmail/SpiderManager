@@ -21,7 +21,7 @@ class PortscanTask(TaskTool):
     def __init__(self, isThread=1, deamon=False):
         TaskTool.__init__(self,isThread,deamon=deamon)
         import Sqldatatask
-        self.logger = initLog('/root/log/detect/logs/portScantask.log', 2, False,'portscantask')
+        self.logger = initLog('/root/log/baozhang/logs/portScantask.log', 2, False,'portscantask')
         self.sqlTool = Sqldatatask.getObject()  #init DBmanager
         #init ConnetcPool's parameters, eg: proxy_address, proxy_name...在webconfig.py中设定 
         self.connectpool = connectpool.getObject()

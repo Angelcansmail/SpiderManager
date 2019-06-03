@@ -74,7 +74,7 @@ class P(T):
             res=urllib2.urlopen(poc_url, timeout=timeout)
             res_html = res.read()
         except (IOError, httplib.HTTPException):
-            print traceback.print_exc()
+            # print traceback.print_exc()
             return result
         finally:
             if res is not None:

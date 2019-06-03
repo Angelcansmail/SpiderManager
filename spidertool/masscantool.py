@@ -5,15 +5,17 @@ import re
 import commands
 from subprocess import Popen, PIPE
 import os
+import json
+
 import SQLTool
 import config,portscantask
-from nmaptoolbackground.control import taskcontrol
-from nmaptoolbackground.model import job
 import Sqldatatask
 import Sqldata
-import   trace 
+import trace 
 import getLocationTool
 import sniffertask
+from nmaptoolbackground.control import taskcontrol
+from nmaptoolbackground.model import job
 
 portname = {'80':'http','8080':'http','443':'https','22':'telnet','3306':'mysql','873':'rsync'} 
 masscaninstance=None
@@ -48,25 +50,31 @@ class Masscantool:
             jobs = []
             address_cnt = len(ip_list)
 
-            print "\n\nmasscantool get open ip: %d个\n\n"%(address_cnt)
+            print "\n\n%s masscantool get open ip: %d个\n\n"%(str(localtime), address_cnt)
+
+            a = open(r"data_source_list.txt", "w")
+            a.write(json.dumps(ip_list))
+            a.close()
 
             if address_cnt < 1:
                 return False
 
             for i in ip_list:
-                insertdata.append((str(i), port, localtime, 'open', str(port)))
+                ip = str(i).strip()
+                insertdata.append((ip, port, localtime, 'open', str(port)))
                 # print ("masscantool scan ip:%s"%i)
-                self.getlocationtool.add_work([str(i)]) # save ip info(get from ip.taobao.com) to ip_maindata
+                self.getlocationtool.add_work([ip]) # save ip info(get from ip.taobao.com) to ip_maindata
 
                 if needdetail=='0':
                     global portname
                     nowportname=portname.get(port,'')
                     # use masscan can know which port is open, so we can use this result to scan port\'s result and detect dangerous
-                    self.portscan.add_work([(nowportname,str(i), port,'open','','')])
+                    self.portscan.add_work([(nowportname, ip, port,'open','','')])
                 else:
-		    # 执行masscan的时候开放后，默认nmap扫描全部端口；但是通过页面添加任务的时候如果指定了端口，不会扫描全部端口
-                    ajob = job.Job(jobaddress=str(i),jobport='',forcesearch='0',isjob='0')
+                    # 执行masscan的时候开放后，默认nmap扫描全部端口；但是通过页面添加任务的时候如果指定了端口，不会扫描全部端口
+                    ajob = job.Job(jobaddress=ip,jobport='',forcesearch='0',isjob='0')
                     jobs.append(ajob)
+
             # execute nmap scan, should range threadnum
             if needdetail != '0':
                 tasktotally = sniffertask.getObject()

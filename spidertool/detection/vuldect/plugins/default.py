@@ -197,24 +197,14 @@ class PocController(object):
                             email_msg += """%s:%s存在【%s %s】风险，请及时处理！<br>""" %(ip, port, result['VerifyInfo']['type'],result['VerifyInfo']['level'])
                             callbackresult.sendemail('http://' + ip + ':' + port, email_msg)
                             cprint('http://' + ip + ':' + port + '存在【' + result['VerifyInfo']['type'] + result['VerifyInfo']['level'] + '】风险', 'red')
-                        # callbackresult.sendemail(result['VerifyInfo']['level'], ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险，请及时处理!')
-                        # print('\033[1;36m' + ip + ':' + port + '存在' + result['VerifyInfo']['type'] + '风险' + '\033[0m')
-                        # cprint(ip + ':' + port + '发现' + result['VerifyInfo']['type'] + '漏洞', 'red')
                 else:
-                    # cprint('<<<<' + str(result) + '>>>>', 'grey')
                     pass
             except Exception, e:
                 print str(poc) + ' verify failed!->' + str(e.message)
         if i > 0:
-            # callbackresult.storeresult(result=dataresult)
             callbackresult.storedata(ip=ip,port=port,hackresults=dataresult)
-            # if i == 2:
-            #    callbackresult.sendemail(ip + ':' + port, email_msg)
             pass
-        # else:
-        #    cprint(ip + ':' + port + '暂未发现相关漏洞', 'green')
         del POCS
-        # return email_msg
 
     @classmethod
     def __match_rules(self,pocclass=None,head='',context='',ip='',port='',productname=None,keywords='',hackresults='', **kw):

@@ -14,7 +14,7 @@ import time
 import traceback
 
 from logger import initLog
-logger = initLog('/root/log/detect/logs/search.log', 1, False)
+logger = initLog('/root/log/baozhang/logs/search.log', 1, False)
 
 timeout=60*20
 

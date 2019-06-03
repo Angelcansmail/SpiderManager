@@ -64,7 +64,8 @@ class InfoDisScanner(InfoDisScannerBase):
             conn_fuc = httplib.HTTPSConnection if protocal == 'https' else httplib.HTTPConnection
             conn = conn_fuc(url, timeout=timeout)
             conn.request(method='GET', url=path)
-                         # headers={'User-Agent': 'Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30'}
+                         # "User-Agent": "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:61.0) Gecko/20100101 Firefox/61.0"
+                         # 'User-Agent': 'Mozilla/5.0 (Windows NT 5.2) AppleWebKit/534.30 (KHTML, like Gecko) Chrome/12.0.742.122 Safari/534.30'
             # )
             resp = conn.getresponse()
             resp_headers = dict(resp.getheaders())
@@ -117,7 +118,7 @@ class InfoDisScanner(InfoDisScannerBase):
             self.final_severity = severity
 
     def _scan_worker(self,url_queue,protocal,_status,has_404,ip,port):
-        resultarray=[]
+        mail_msg = ''
         results={}
 
         print ("fuzzdetect::_scan_worker() url:%s, status:%d"%(str(url_queue), _status))
@@ -129,10 +130,6 @@ class InfoDisScanner(InfoDisScannerBase):
             url=None
             try:
                 url_description, severity, tag, p_status, content_type, content_type_no, path = item
-                # print ("======================fuzzdetect::_scan_worker()::url_queue======================\n" \
-                #         "url_description:%s, severity:%s, tag:%s, p_status:%d, content_type:%s, content_type_no:%s path:%s\n"%(
-                #         url_description, severity, tag, p_status, content_type, content_type_no, path))
-
                 url = url_description['full_url']
                 prefix = url_description['prefix']
             except Exception, e:
@@ -142,9 +139,6 @@ class InfoDisScanner(InfoDisScannerBase):
                 break
             try:
                 c_status, headers, html_doc = self._http_request(url=prefix,protocal=protocal,path=path)
-                # print ('======================fuzzdetect::_scan_worker()======================\n[c_status:%d]\n[headers:]\n%s\n[has_404:%d]\n[p_status:%d]\n[_status:%d]\n[html_doc type:%s]=================================================================================\n' % (c_status, headers, has_404, p_status, _status, type(html_doc)))
-                # print ('======================fuzzdetect::_scan_worker() [c_status:%s]\n[headers:%s]\n[html_doc:%s]======================' % (c_status, headers, html_doc))
-                # self.logger.info(str(status)+url)
                 # if (c_status in [200, 301, 302, 303]) and (has_404 or c_status!=_status):
                 if (c_status in [200]) and (has_404 or c_status !=_status):
                     if p_status and c_status != p_status:
@@ -153,26 +147,24 @@ class InfoDisScanner(InfoDisScannerBase):
                         if content_type and headers.get('content-type', '').find(content_type) < 0 or \
                             content_type_no and headers.get('content-type', '').find(content_type_no) >=0:
                             continue
-                        # print '======================fuzzdetect::_scan_worker()[+] [Prefix:%s] [%s] %s======================' % (prefix, status, 'http://' + self.host +  url)
                         if results.get(prefix,None) is None:
                             results[prefix] = []
-			add_disclosure = {'status':c_status, 'url':'%s' % (url)}
-			if add_disclosure in results[prefix]:
-			# if add_disclosure in resultarray:
-			    continue
-                        results[prefix].append(add_disclosure)
-                        self._update_severity(severity)
+                            add_disclosure = {'status':c_status, 'url':'%s' % (url)}
+                            if add_disclosure in results[prefix]:
+                                continue
+                            mail_msg += """<p>泄漏路径：%s</p>"""%url
+                            results[prefix].append(add_disclosure)
+                            self._update_severity(severity)
 
                 if len(results) >= 30:
-                # if len(resultarray) >= 30:
                     self.logger.warning('More than 30 vulnerabilities found for [%s], could be false positive.', url)
             except Exception, e:
                 self.logger.error('[InfoDisScanner._scan_worker][2][%s] Exception %s' % (url, e))
 
         # return a dict, this disclosure detect will be used in pocdetect's keywords
         if len(results) >= 1:
+            callbackfuzz.sendemail('http://' + prefix, mail_msg)
             return results
-            # return resultarray
 
     def check_404(self,url,protocal):
         """

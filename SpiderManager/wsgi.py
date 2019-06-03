@@ -23,6 +23,6 @@ application = get_wsgi_application()
 # application = Logview(application)
 faulthandler.enable()
 # taskcontrol.scheduleinit()
-taskitem.tick()
+taskitem.ticknormal()
 # pdb.set_trace()
 

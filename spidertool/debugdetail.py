@@ -10,7 +10,7 @@ def getObject():
         logger = logging.getLogger('debug')
         logger.setLevel(logging.DEBUG)
 # 创建一个handler，用于写入日志文件
-        fh = logging.FileHandler('logs/debugspidertool.log')
+        fh = logging.FileHandler('/root/log/baozhang/logs/debugspidertool.log')
         fh.setLevel(logging.DEBUG)
 # 再创建一个handler，用于输出到控制台
         ch = logging.StreamHandler()
